@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'TRIAL_Oceanic-Bold';
+  src: url('./fonts/TRIAL_Oceanic-Bold.otf');
+}
+
+@font-face {
+  font-family: 'TRIAL_Oceanic-Extrabold';
+  src: url('./fonts/TRIAL_Oceanic-Extrabold.otf');
+}
+
+@font-face {
+  font-family: 'TRIAL_Oceanic-Light';
+  src: url('./fonts/TRIAL_Oceanic-Light.otf');
+}
+
+@font-face {
+  font-family: 'TRIAL_Oceanic-Medium';
+  src: url('./fonts/TRIAL_Oceanic-Medium.otf');
+}
+
+@font-face {
+  font-family: 'TRIAL_Oceanic-Poster';
+  src: url('./fonts/TRIAL_Oceanic-Poster.otf');
+}
+
+@font-face {
+  font-family: 'TRIAL_Oceanic-Regular';
+  src: url('./fonts/TRIAL_Oceanic-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat-Black';
+  src: url('./fonts/Montserrat-Black.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url('./fonts/Montserrat-Bold.ttf');
+}

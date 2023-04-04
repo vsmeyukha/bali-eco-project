@@ -1,0 +1,42 @@
+import { StaticImageData } from 'next/image';
+import { ReactElement } from 'react';
+
+export interface NavLink {
+  title: string,
+  link: string,
+  id: number,
+}
+
+export interface CredType {
+  'ru': {
+    'Разработка': string,
+    'Дизайн': string,
+    'copy': string,
+  },
+  'en': {
+    'Development': string,
+    'Design': string,
+    'copy': string,
+  }
+}
+
+export interface PostType {
+  title: string,
+  date: string,
+  id: number,
+  text: string,
+  photo: StaticImageData,
+  photoUrl?: string,
+}
+
+export interface QuickToolsMenuType {
+  id: number,
+  icon: ReactElement,
+  text: string,
+  href: string,
+}
+
+export interface ToggleArticlesAndTipsType {
+  en: Array<string>,
+  ru: Array<string>,
+}
