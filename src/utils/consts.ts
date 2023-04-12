@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-import { NavLink, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType } from "./types";
+import { NavLink, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup } from "./types";
 import { getRandom } from "./utils";
 
 import Tool from '../../public/images/svgs/icons/tool.svg';
@@ -150,6 +150,24 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
 
 const volunteersImages: Array<StaticImageData> = [Lini, Turtle, BaliEcoStay, Biorock, Fish, Coral];
 
+const regPopup: RegSignInPopup = {
+  title: 'Регистрация',
+  buttonText: 'Зарегистрироваться',
+  appleText: 'Зарегистрироваться с Apple',
+  googleText: 'Зарегистрироваться с Google',
+  areYouRegistered: 'Уже зарегистрированы?',
+  signIn: 'Войти',
+}
+
+const signInPopup: RegSignInPopup = {
+  title: 'Вход',
+  buttonText: 'Войти',
+  appleText: 'Войти с Apple',
+  googleText: 'Войти с Google',
+  areYouRegistered: 'Еще не зарегистрированы?',
+  signIn: 'Зарегистрироваться',
+}
+
 export {
   navListRu,
   navListEng,
@@ -165,4 +183,6 @@ export {
   projectDescriptionEnd,
   quickToolsMenu,
   volunteersImages,
+  regPopup,
+  signInPopup,
 };

@@ -1,9 +1,9 @@
 import { ReactElement, useState, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import ChevronDown from '../../../public/images/svgs/icons/arrow-down.svg';
+import ChevronDown from '../../../../public/images/svgs/icons/arrow-down.svg';
 
 const LanguageChoice: React.FC = (): ReactElement => {
-  const langs = [
+  const langs: Array<string> = [
     'Русский (RU)',
     'English (EN)',
     'Indonesia (ID)',
@@ -26,10 +26,10 @@ const LanguageChoice: React.FC = (): ReactElement => {
       leaveFrom="opacity-100 translate-y-0"
       leaveTo="opacity-0 translate-y-1"
     >
-    <Listbox.Options className="absolute top-[30px] right-0">
+    <Listbox.Options className="absolute top-[30px] right-0 focus:outline-none active:outline-none">
       {langs.map((lang, index) => {
         return (
-          <Listbox.Option key={index} value={lang} className="my-[10px]">
+          <Listbox.Option key={index} value={lang} className={({active}) => `my-[10px] hover:cursor-pointer ${active && "text-[#0D87FF]"}`}>
             <p>{lang}</p>
           </Listbox.Option>
         )

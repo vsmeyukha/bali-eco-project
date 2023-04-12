@@ -5,6 +5,7 @@ import { Popover, Transition } from "@headlessui/react";
 import Manatee from '../../public/images/backgrounds/manatee.png';
 import { quickToolsMenu } from "@/utils/consts";
 import Profile from '../../public/images/svgs/icons/profile.svg';
+import { QuickToolsMenuType } from '../utils/types';
 
 const QuickToolsPopup: React.FC = (): ReactElement => {
   return (
@@ -51,13 +52,13 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
         </div>
         <h3 className="font-montserrat-black text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</h3>
         <ul className="w-full pl-[36px] mt-[16px]">
-          {quickToolsMenu.map(paragraph => {
+          {quickToolsMenu.map((paragraph: QuickToolsMenuType) => {
             const Icon = paragraph.icon;
             return (
               <li key={paragraph.id} className="mt-[24px]">
                 <Link href={paragraph.href} className="flex">
                   <Icon />
-                  <p className="ml-[20px] font-montserrat text-[16px] leading-[20px] text-[#00265F]">{paragraph.text}</p>
+                  <p className="ml-[20px] font-montserrat text-[16px] leading-[20px] text-[#00265F] hover:text-[#0D87FF]">{paragraph.text}</p>
                 </Link>
               </li>
             )

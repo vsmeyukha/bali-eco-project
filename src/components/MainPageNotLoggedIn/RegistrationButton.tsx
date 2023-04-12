@@ -5,10 +5,11 @@ interface ButtonProps {
   size: string,
   type: "button" | "submit" | "reset",
   onClick?: () => void,
+  text: string
 }
 
-const RegistrationButton: React.FC<ButtonProps> = ({size, type, onClick}): ReactElement => {
-  const changingStyles = size === "small" ? "w-[282px] mt-[16px]" : "w-[442px] mt-[40px]";
+const RegistrationButton: React.FC<ButtonProps> = ({size, type, onClick, text}): ReactElement => {
+  const changingStyles = size === "small" ? "w-[293px] mt-[16px]" : "w-[442px] mt-[40px]";
 
   return (
     <button
@@ -16,19 +17,19 @@ const RegistrationButton: React.FC<ButtonProps> = ({size, type, onClick}): React
       type={type}
       className={`
         ${changingStyles}
-        h-[77px]
+        h-[75px]
       bg-[#2196F3]
         rounded-[12px]
       text-white
-        font-oceanic-medium
+        font-montserrat
         text-[24px]
         leading-[29px]
-      hover:scale-105
-      transition-all 
-      duration-300 
-      ease-in-out`}
+        hover:scale-105
+        transition-all 
+        duration-300 
+        ease-in-out`}
     >
-      {register.ru}
+      <p>{text}</p>
     </button>
   )
 }

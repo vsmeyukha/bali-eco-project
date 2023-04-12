@@ -36,6 +36,10 @@ module.exports = {
       'montserrat-black': ['Montserrat-Black'],
       'montserrat-bold': ['Montserrat-Bold']
     },
+    boxShadow: {
+      'button': '0px 1px 6px rgba(255, 255, 255, 1)',
+      'button-hover': '0px 1px 12px rgba(255, 255, 255, 1)',
+    }
   },
   plugins: [
     require('@tailwindcss/line-clamp'),

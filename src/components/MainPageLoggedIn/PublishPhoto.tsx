@@ -4,7 +4,9 @@ import BlueWave from '../../../public/images/backgrounds/bluewave.svg';
 const PublishPhoto: React.FC = (): ReactElement => {
   return (
     <>
-      <BlueWave className="w-full absolute top-0 left-0 z-10" />
+      <div className="max-w-[1440px] mx-auto relative">
+        <BlueWave className="w-full absolute top-0 left-0 z-10" />
+      </div>
       <div className="relative flex flex-row justify-between ml-[183px] mr-[243px] mt-[154px] z-20">
         <h2 className="font-oceanic-bold text-[52px] leading-[62px] text-white max-w-[440px]">BaliGreenMap</h2>
         <button

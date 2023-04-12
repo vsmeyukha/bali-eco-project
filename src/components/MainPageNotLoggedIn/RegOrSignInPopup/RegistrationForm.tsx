@@ -1,12 +1,14 @@
 import { ReactElement, FormEvent } from "react";
-import RegistrationButton from './RegistrationButton';
+import RegistrationButton from '../RegistrationButton';
 import { inputStyles } from "@/utils/styles";
+import { RegSignInPopup } from '../../../utils/types';
 
 interface RegFormPropsType {
   onRegButtonClick: (e: FormEvent<HTMLFormElement>) => void,
+  whichPopup: RegSignInPopup,
 }
 
-const RegistrationForm: React.FC<RegFormPropsType> = ({onRegButtonClick}: RegFormPropsType): ReactElement => {
+const RegistrationForm: React.FC<RegFormPropsType> = ({onRegButtonClick, whichPopup}: RegFormPropsType): ReactElement => {
   return (
     <form onSubmit={onRegButtonClick} className="flex flex-col mt-[40px] font-montserrat text-[16px] leading-[20px]">
       <label className="flex flex-col">
@@ -21,7 +23,7 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({onRegButtonClick}: RegFor
         Пароль
         <input type="text" name="password" className={inputStyles}></input>
       </label>
-      <RegistrationButton size="big" type="submit" />
+      <RegistrationButton size="big" type="submit" text={whichPopup.buttonText} />
     </form>
   );
 }

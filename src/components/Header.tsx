@@ -1,10 +1,16 @@
-import { ReactElement, useContext, Fragment } from "react";
+import { ReactElement, useContext, Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import Menu from './Menu';
 import Logo from "./Logo";
 import QuickToolsPopup from "./QuickToolsPopup";
+import SignInButton from "./MainPageNotLoggedIn/SignInButton";
 
-export default function Header(): ReactElement {
+interface HeaderProps {
+  onPopupOpen: () => void,
+  openSignInPopup: () => void,
+}
+
+export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): ReactElement {
   const router = useRouter();
   const currentPage = router.pathname;
 
@@ -13,6 +19,11 @@ export default function Header(): ReactElement {
       currentPage === '/resources' ? 'bg-[#4CAF50]' : 'bg-[#0D87FF]';
 
   // ! градиент хэдера bg-gradient-to-b from-green-800 via green-500 to-transparent
+
+  const handleSignInPopupOpen = () => {
+    openSignInPopup();
+    onPopupOpen();
+  }
 
   return (
     <header
@@ -29,9 +40,11 @@ export default function Header(): ReactElement {
       ${backgroundDependingOnThePage}`}
     >
       <Logo />
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center justify-center">
         <Menu />
-        <QuickToolsPopup />
+        {
+          currentPage === '/' ? <SignInButton openPopup={handleSignInPopupOpen} /> : <QuickToolsPopup />
+        }
       </div>
     </header>
   )

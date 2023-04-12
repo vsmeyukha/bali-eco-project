@@ -2,9 +2,7 @@ import { ReactElement } from "react";
 import { credits } from "@/utils/consts";
 import Logo from "./Logo";
 import Link from "next/link";
-import Fb from '../../public/images/svgs/icons/fb.svg';
-import Inst from '../../public/images/svgs/icons/inst.svg';
-import Twitter from '../../public/images/svgs/icons/twitter.svg';
+import InstTwiFb from "./InstTwiFb";
 
 export default function Footer(): ReactElement {
   return (
@@ -27,11 +25,7 @@ export default function Footer(): ReactElement {
           <Link href="/" className="ml-[60px]">Отзывы</Link>
           <Link href="/" className="ml-[60px]">Профиль</Link>
         </div>
-        <div className="flex flex-row items-center">
-          <Inst style={{ fill: "white" }} />
-          <Twitter className="ml-[32px]" style={{ fill: "white" }}/>
-          <Fb className="max-h-[20px] ml-[32px]" style={{ fill: "white" }} />
-        </div>
+        <InstTwiFb fill="white" />
       </div>
       <div className="flex flex-row text-[14px] leading-[17px] mt-[36px]">
         <p>Разработка:

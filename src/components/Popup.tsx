@@ -26,9 +26,9 @@ const Popup: React.FunctionComponent = () => {
             <div className="flex flex-row-reverse">
               <Cross onClick={handlePopupClose} className="opacity-30 outline-none hover:scale-110 transition-transform duration-200"/>
             </div>
-            <Dialog.Title className="font-roboto-black text-[32px]">Войти</Dialog.Title>
-            <Dialog.Description className="font-roboto-thin">Чтобы войти, введите почту и пароль</Dialog.Description>
-            <form onSubmit={handleSubmit} className="min-w-100 font-roboto-thin flex flex-col items-center mt-[12px]">
+            <Dialog.Title className="font-montserrat-bold text-[#4CAF50] text-[32px]">Войти</Dialog.Title>
+            <Dialog.Description className="font-montserrat">Чтобы войти, введите почту и пароль</Dialog.Description>
+            <form onSubmit={handleSubmit} className="min-w-100 font-montserrat flex flex-col items-center mt-[12px]">
               <input type="text" placeholder="email" className="w-full border-b border-solid border-[#4CAF50] outline-none focus:ring-2 focus:ring-[#4CAF50] focus:ring-opacity-50"></input>
               <input type="text" placeholder="password" className="w-full mt-[20px] border-b border-solid border-[#4CAF50] outline-none focus:ring-2 focus:ring-[#4CAF50] focus:ring-opacity-50"></input>
               <button
@@ -51,11 +51,11 @@ const Popup: React.FunctionComponent = () => {
               {logIn.ru}
             </button>
             </form>
-            <p className="font-roboto-medium text-[16px] mt-[16px] text-gray-500">Или через соцсети:</p>
+            <p className="font-montserrat text-[16px] mt-[16px] text-gray-500">Или через соцсети:</p>
             <div className="flex flex-row justify-center mt-[16px]">
-              <Apple className="opacity-80 hover:scale-110 transition-transform duration-200" />
-              <Yandex className="ml-[30px] opacity-80 hover:scale-110 transition-transform duration-200" />
-              <Google className="ml-[30px] opacity-80 hover:scale-110 transition-transform duration-200" />
+              <Apple className="opacity-80 hover:scale-110 transition-transform duration-200" style={{ fill: "green" }} />
+              <Yandex className="ml-[30px] opacity-80 hover:scale-110 transition-transform duration-200" style={{ fill: "green" }} />
+              <Google className="ml-[30px] opacity-80 hover:scale-110 transition-transform duration-200" style={{ fill: "green" }} />
               <Fb className="ml-[30px] opacity-80 hover:scale-110 transition-transform duration-200" style={{ fill: "green" }} />
             </div>
           </Dialog.Panel>

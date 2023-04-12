@@ -5,7 +5,7 @@ import { navListRu } from "@/utils/consts";
 
 export default function Menu(): ReactElement {
   return (
-    <nav className="flex mr-[74px] font-montserrat font-medium">
+    <nav className="flex mr-[40px] font-montserrat font-medium">
       <ul className="flex flex-row items-center">
         {navListRu.map((paragraph: NavLink) => (
           <li

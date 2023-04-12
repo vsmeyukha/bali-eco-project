@@ -31,7 +31,7 @@ export interface PostType {
 
 export interface QuickToolsMenuType {
   id: number,
-  icon: ReactElement,
+  icon:  React.FC<React.SVGProps<SVGSVGElement>>,
   text: string,
   href: string,
 }
@@ -39,4 +39,13 @@ export interface QuickToolsMenuType {
 export interface ToggleArticlesAndTipsType {
   en: Array<string>,
   ru: Array<string>,
+}
+
+export interface RegSignInPopup {
+  title: string,
+  buttonText: string,
+  appleText: string,
+  googleText: string,
+  areYouRegistered: string,
+  signIn: string,
 }

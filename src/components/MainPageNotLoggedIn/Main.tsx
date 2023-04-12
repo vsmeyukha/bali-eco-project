@@ -4,21 +4,25 @@ import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
 import RegistrationButton from './RegistrationButton';
 import Popup from '../Popup';
-import RegistrationPopup from './RegistrationPopup';
+import SidePopup from './RegOrSignInPopup/SidePopup';
 
-export default function Main(): ReactElement {
-  const [isRegPopupOpen, setIsRegPopupOpen] = useState(false);
+interface MainProps {
+  isPopupOpen: boolean,
+  onPopupOpen: () => void,
+  onPopupClose: () => void,
+  isRegPopup: boolean,
+  openRegPopup: () => void,
+  openSignInPopup: () => void,
+}
 
-  const handlePopupOpen = () => {
-    setIsRegPopupOpen(true);
-  }
-
-  const handlePopupClose = () => {
-    setIsRegPopupOpen(false);
+export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopup, openRegPopup, openSignInPopup}: MainProps): ReactElement {
+  const handleRegPopupOpen = () => {
+    openRegPopup();
+    onPopupOpen();
   }
 
   return (
-    <section className="ml-[65px] mr-[96px]" >
+    <section className="ml-[65px] mr-[96px] relative">
       <h1
         className="
         text-white
@@ -34,12 +38,17 @@ export default function Main(): ReactElement {
       <div className="flex flex-row justify-between align-top">
         <div>
           <HiddenDesc />
-          <RegistrationButton size="small" type="button" onClick={handlePopupOpen} />
+          <RegistrationButton size="small" type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
         </div>
         <BaliMap className="max-w-[533px] max-h-[330px]" />
       </div>
       <Popup />
-      <RegistrationPopup open={isRegPopupOpen} onClose={handlePopupClose} />
+      <SidePopup
+        open={isPopupOpen}
+        onClose={onPopupClose}
+        isRegPopup={isRegPopup}
+        openRegPopup={openRegPopup}
+        openSignInPopup={openSignInPopup} />
     </section>
   )
 }
