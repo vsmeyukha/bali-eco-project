@@ -137,7 +137,7 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
   {
     id: 4,
     icon: Laptop,
-    text: 'Внешний вид',
+    text: 'Темная тема',
     href: '/',
   },
   {

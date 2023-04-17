@@ -2,12 +2,12 @@ import { ReactElement, useContext, Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import Menu from './Menu';
 import Logo from "./Logo";
-import QuickToolsPopup from "./QuickToolsPopup";
+import QuickToolsPopup from "./QuickToolsPopup/QuickToolsPopup";
 import SignInButton from "./MainPageNotLoggedIn/SignInButton";
 
 interface HeaderProps {
-  onPopupOpen: () => void,
-  openSignInPopup: () => void,
+  onPopupOpen?: () => void,
+  openSignInPopup?: () => void,
 }
 
 export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): ReactElement {
@@ -21,8 +21,8 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
   // ! градиент хэдера bg-gradient-to-b from-green-800 via green-500 to-transparent
 
   const handleSignInPopupOpen = () => {
-    openSignInPopup();
-    onPopupOpen();
+    openSignInPopup?.();
+    onPopupOpen?.();
   }
 
   return (

@@ -2,10 +2,24 @@ import { ReactElement, Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
-import Manatee from '../../public/images/backgrounds/manatee.png';
+import Manatee from '../../../public/images/backgrounds/manatee.png';
 import { quickToolsMenu } from "@/utils/consts";
-import Profile from '../../public/images/svgs/icons/profile.svg';
-import { QuickToolsMenuType } from '../utils/types';
+import Profile from '../../../public/images/svgs/icons/profile.svg';
+import { QuickToolsMenuType } from '../../utils/types';
+import QuickToolsMenuItem from './QuickToolsMenuItem';
+import QuickPopupSwitchContainer from './QuickPopupSwitchContainer';
+import { switchContent } from '../../utils/types';
+
+const languages: Array<switchContent> = [
+  { code: 'en', label: 'EN' },
+  { code: 'ru', label: 'RU' },
+  { code: 'id', label: 'ID' },
+];
+
+const dayAndNight: Array<switchContent> = [
+  { code: 'on', label: 'ON' },
+  { code: 'off', label: 'OFF' },
+];
 
 const QuickToolsPopup: React.FC = (): ReactElement => {
   return (
@@ -29,11 +43,11 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
                 top-0
                 left-0
                 mt-[35px]
-                ml-[-350px]
+                ml-[-420px]
                 z-300
                 bg-white
-                w-[358px]
-                h-[460px]
+                w-[430px]
+                h-[465px]
                 rounded-[10px]
                 py-[32px]
                 flex
@@ -50,17 +64,21 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
             className="rounded-full"
           />
         </div>
-        <h3 className="font-montserrat-black text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</h3>
-        <ul className="w-full pl-[36px] mt-[16px]">
-          {quickToolsMenu.map((paragraph: QuickToolsMenuType) => {
+              <h3 className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</h3>
+        <ul className="w-full px-[36px] mt-[16px]">
+          {quickToolsMenu.map((paragraph: QuickToolsMenuType, index) => {
             const Icon = paragraph.icon;
             return (
-              <li key={paragraph.id} className="mt-[24px]">
-                <Link href={paragraph.href} className="flex">
-                  <Icon />
-                  <p className="ml-[20px] font-montserrat text-[16px] leading-[20px] text-[#00265F] hover:text-[#0D87FF]">{paragraph.text}</p>
-                </Link>
-              </li>
+              <QuickToolsMenuItem
+                key={paragraph.id}
+                icon={Icon}
+                href={paragraph.href}
+                text={paragraph.text}
+                isDiv={index === 2 || index === 3}
+              >
+                {index === 2 && (<QuickPopupSwitchContainer content={languages} />)}
+                {index === 3 && (<QuickPopupSwitchContainer content={dayAndNight} />)}
+              </QuickToolsMenuItem>
             )
           })}
         </ul>

@@ -1,5 +1,5 @@
 import { StaticImageData } from 'next/image';
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export interface NavLink {
   title: string,
@@ -30,10 +30,12 @@ export interface PostType {
 }
 
 export interface QuickToolsMenuType {
-  id: number,
+  id?: number,
   icon:  React.FC<React.SVGProps<SVGSVGElement>>,
   text: string,
   href: string,
+  children?: ReactNode,
+  isDiv?: boolean,
 }
 
 export interface ToggleArticlesAndTipsType {
@@ -48,4 +50,9 @@ export interface RegSignInPopup {
   googleText: string,
   areYouRegistered: string,
   signIn: string,
+}
+
+export interface switchContent {
+  code: string,
+  label: string,
 }
