@@ -54,7 +54,7 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
                 flex-col
                 items-center"
             >
-        <div className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
+        <Link href="/profile" className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
           <Image
             src={Manatee}
             alt="manatee"
@@ -63,8 +63,8 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
             objectPosition="center"
             className="rounded-full"
           />
-        </div>
-              <h3 className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</h3>
+        </Link>
+              <Link href="/profile" className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</Link>
         <ul className="w-full px-[36px] mt-[16px]">
           {quickToolsMenu.map((paragraph: QuickToolsMenuType, index) => {
             const Icon = paragraph.icon;

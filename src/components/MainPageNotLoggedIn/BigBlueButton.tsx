@@ -1,5 +1,4 @@
 import { ReactElement, useContext } from "react";
-import { register } from '@/utils/consts';
 
 interface ButtonProps {
   size: string,
@@ -8,7 +7,7 @@ interface ButtonProps {
   text: string
 }
 
-const RegistrationButton: React.FC<ButtonProps> = ({size, type, onClick, text}): ReactElement => {
+const BigBlueButton: React.FC<ButtonProps> = ({size, type, onClick, text}): ReactElement => {
   const changingStyles = size === "small" ? "w-[293px] mt-[16px]" : "w-[442px] mt-[40px]";
 
   return (
@@ -34,4 +33,4 @@ const RegistrationButton: React.FC<ButtonProps> = ({size, type, onClick, text}):
   )
 }
 
-export default RegistrationButton;
+export default BigBlueButton;

@@ -21,6 +21,9 @@ module.exports = {
         text: 'text',
       },
       alignSelf: ['start', 'end', 'center', 'baseline', 'stretch'],
+      screens: {
+        '1440px': '1440px',
+      }
     },
     fontFamily: {
       'oceanic-bold': ['TRIAL_Oceanic-Bold'],

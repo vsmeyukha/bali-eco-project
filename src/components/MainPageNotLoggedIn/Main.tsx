@@ -2,7 +2,7 @@ import { ReactElement, useState, MouseEvent, useContext } from 'react';
 import { projectName } from '@/utils/consts';
 import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
-import RegistrationButton from './RegistrationButton';
+import BigBlueButton from './BigBlueButton';
 import Popup from '../Popup';
 import SidePopup from './RegOrSignInPopup/SidePopup';
 
@@ -38,7 +38,7 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
       <div className="flex flex-row justify-between align-top">
         <div>
           <HiddenDesc />
-          <RegistrationButton size="small" type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
+          <BigBlueButton size="small" type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
         </div>
         <BaliMap className="max-w-[533px] max-h-[330px]" />
       </div>

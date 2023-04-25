@@ -20,7 +20,17 @@ interface PopupProps {
 
 const SidePopup: React.FC<PopupProps> = ({ open, onClose, isRegPopup, openRegPopup, openSignInPopup }: PopupProps): ReactElement => {
   const viewportWidth = useViewportWidth();
-  const maxPageWidth = 1440;
+
+  const getContentWidth = (viewportWidth: number) => {
+    if (viewportWidth >= 1536) return 1536;
+    if (viewportWidth >= 1440) return 1440;
+    if (viewportWidth >= 1280) return 1280;
+    if (viewportWidth >= 1024) return 1024;
+    return viewportWidth;
+  }
+  
+  const maxPageWidth = getContentWidth(viewportWidth);
+
   const leftOffset = Math.max((viewportWidth - maxPageWidth) / 2, 0);
 
   const whichPopup = isRegPopup ? regPopup : signInPopup;

@@ -9,7 +9,7 @@ const AboutUs: React.FC = (): ReactElement => {
   arr.pop();
 
   return (
-    <div className="flex flex-col items-center mx-[65px] pt-[30px] mb-[96px]">
+    <div className="flex flex-col items-center 1440px:mx-[152px] xl:mx-[100px] lg:mx-[50px] pt-[30px] mb-[96px]">
       <div className="flex flex-col items-start">
         <h2
           className="
@@ -19,7 +19,7 @@ const AboutUs: React.FC = (): ReactElement => {
             font-oceanic-bold
             "
         >О нас</h2>
-        <div className="flex flex-row justify-center mt-[32px]">
+        <div className="flex xl:flex-row lg:flex-col-reverse justify-center mt-[32px]">
           <div
             className="
               grid
@@ -46,7 +46,9 @@ const AboutUs: React.FC = (): ReactElement => {
               })
             }
           </div>
-          <Image width={671} src={JellyFish} alt="jellyfish" className="min-w-[671px] ml-[30px]"/>
+          <div className="1440px:min-w-[560px] xl:min-w-[500px] lg:min-w-[450px] lg:min-h-[500px] ml-[30px] relative mb-[36px]">
+            <Image src={JellyFish} alt="jellyfish" fill className="object-cover object-center rounded-[10px]"/>
+          </div>
         </div>
       </div>
     </div>

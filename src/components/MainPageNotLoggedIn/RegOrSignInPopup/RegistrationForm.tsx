@@ -1,7 +1,9 @@
 import { ReactElement, FormEvent } from "react";
-import RegistrationButton from '../RegistrationButton';
+import BigBlueButton from '../BigBlueButton';
 import { inputStyles } from "@/utils/styles";
 import { RegSignInPopup } from '../../../utils/types';
+import Form from "@/components/Form/Form";
+import Input from "@/components/Form/Input";
 
 interface RegFormPropsType {
   onRegButtonClick: (e: FormEvent<HTMLFormElement>) => void,
@@ -10,21 +12,12 @@ interface RegFormPropsType {
 
 const RegistrationForm: React.FC<RegFormPropsType> = ({onRegButtonClick, whichPopup}: RegFormPropsType): ReactElement => {
   return (
-    <form onSubmit={onRegButtonClick} className="flex flex-col mt-[40px] font-montserrat text-[16px] leading-[20px]">
-      <label className="flex flex-col">
-        Имя
-        <input type="text" name="username" className={inputStyles}></input>
-      </label>
-      <label className="flex flex-col mt-[32px]">
-        E-mail
-        <input type="text" name="email" className={inputStyles}></input>
-      </label>
-      <label className="flex flex-col mt-[32px]">
-        Пароль
-        <input type="text" name="password" className={inputStyles}></input>
-      </label>
-      <RegistrationButton size="big" type="submit" text={whichPopup.buttonText} />
-    </form>
+    <Form onSubmit={onRegButtonClick}>
+      <Input label="Имя" name="username" />
+      <Input label="E-mail" name="email" />
+      <Input label="Пароль" name="password" />
+      <BigBlueButton size="big" type="submit" text={whichPopup.buttonText} />
+    </Form>
   );
 }
 

@@ -120,7 +120,7 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
     id: 1,
     icon: Tool,
     text: 'Настройки',
-    href: '/',
+    href: '/profile',
   },
   {
     id: 2,

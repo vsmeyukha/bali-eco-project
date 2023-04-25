@@ -3,7 +3,7 @@ import { PostType } from "@/utils/types";
 const PostForFour: React.FC<PostType> = ({title, date, id, text, photo, photoUrl}: PostType) => {
   return (
     <div
-      className="bg-cover bg-center flex flex-col-reverse rounded-[8px] w-[323px] h-[333px]"
+      className="bg-cover bg-center flex flex-col-reverse rounded-[8px] max-w-[500px] h-[333px]"
       style={{
         backgroundImage: `url(${photoUrl})`,
       }}
