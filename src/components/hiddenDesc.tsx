@@ -16,7 +16,8 @@ export default function HiddenDesc(): ReactElement {
       className="
         max-w-[589px]
         text-white
-        font-roboto-thin
+        font-montserrat
+        font-light
         text-[22px]
         leading-[26px]
         mt-[42px]

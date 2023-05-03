@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
-import MapComponent from "@/components/MainPageLoggedIn/GoogleMaps";
+import MapComponent from "@/components/MainPageLoggedIn/map/GoogleMaps";
 import ClimateAndEduContainer from "@/components/MainPageLoggedIn/ClimateAndEduContainer";
 import ClimateChange from "@/components/MainPageLoggedIn/ClimateChange";
 import Education from "@/components/MainPageLoggedIn/Education";
@@ -10,6 +10,7 @@ import Tips from "@/components/MainPageLoggedIn/Tips";
 import Volunteers from "@/components/MainPageLoggedIn/Volunteers";
 import Footer from "@/components/Footer";
 import Popup from "@/components/Popup";
+import PostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/PostOnMap";
 
 const LoggedInMain: React.FC = (): ReactElement => {
   return (
