@@ -11,6 +11,7 @@ import Volunteers from "@/components/MainPageLoggedIn/Volunteers";
 import Footer from "@/components/Footer";
 import Popup from "@/components/Popup";
 import PostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/PostOnMap";
+import SmallPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/SmallPostOnMap";
 
 const LoggedInMain: React.FC = (): ReactElement => {
   return (

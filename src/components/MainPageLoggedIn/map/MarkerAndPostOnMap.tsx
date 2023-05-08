@@ -1,6 +1,8 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { Marker, OverlayView } from "@react-google-maps/api";
 import PostOnMap from "./postOnMap/PostOnMap";
+import SmallPostOnMap from "./postOnMap/SmallPostOnMap";
+
 import { Coordinates } from "./GoogleMaps";
 
 const markerIcon = {
@@ -19,7 +21,7 @@ const MarkerAndPostOnMap: React.FC<MarkerAndPostOnMapProps> = ({ marker, isPostO
     <Marker position={marker} icon={markerIcon} onClick={onMarkerClick} />
     {isPostOnMapOpen &&
       <OverlayView position={marker} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
-        <PostOnMap />
+        <SmallPostOnMap />
       </OverlayView>
     }
     </>

@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-import { NavLink, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup } from "./types";
+import { NavLink, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup, SmallPostOnMapInfo } from "./types";
 import { getRandom } from "./utils";
 
 import Tool from '../../public/images/svgs/icons/tool.svg';
@@ -8,6 +8,11 @@ import Clock from '../../public/images/svgs/icons/clock.svg';
 import Globe from '../../public/images/svgs/icons/globe.svg';
 import Laptop from '../../public/images/svgs/icons/laptop.svg';
 import Exit from '../../public/images/svgs/icons/exit.svg';
+
+import GeoTag from '../../public/images/svgs/icons/geotag.svg';
+import Quotation from '../../public/images/svgs/icons/quotation.svg';
+import Dialog from '../../public/images/svgs/icons/dialog.svg';
+import Dirt from '../../public/images/svgs/icons/dirt.svg';
 
 import BaliEcoStay from '../../public/images/volunteers/baliEcoStay.png';
 import Biorock from '../../public/images/volunteers/biorock.png';
@@ -146,6 +151,29 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
     text: 'Выход',
     href: '/',
   },
+];
+
+const smallPostOnMapInfo: Array<SmallPostOnMapInfo> = [
+  {
+    id: 1,
+    icon: GeoTag,
+    text: `Деревня Чангу, Северная Кута`,
+  },
+  {
+    id: 2,
+    icon: Quotation,
+    text: 'Крутая терраса',
+  },
+  {
+    id: 3,
+    icon: Dialog,
+    text: 'Комментарии (2)',
+  },
+  {
+    id: 4,
+    icon: Dirt,
+    text: 'Отметки "Грязно" (1)',
+  }
 ]
 
 const volunteersImages: Array<StaticImageData> = [Lini, Turtle, BaliEcoStay, Biorock, Fish, Coral];
@@ -185,4 +213,5 @@ export {
   volunteersImages,
   regPopup,
   signInPopup,
+  smallPostOnMapInfo,
 };

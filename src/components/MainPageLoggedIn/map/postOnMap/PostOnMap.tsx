@@ -10,7 +10,7 @@ import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile
 
 const PostOnMap: React.FC = (): ReactElement => {
   return (
-    <div className="w-[334px] relative rounded-[10px] bg-white flex flex-col z-50">
+    <div className="w-[334px] rounded-[10px] bg-white flex flex-col mt-[-620px] ml-[20px]">
       <div className="w-full h-[200px] relative">
         <Image src={Jungle} alt="jungle" fill className="rounded-[10px] object-cover object-center" />
       </div>
@@ -28,7 +28,7 @@ const PostOnMap: React.FC = (): ReactElement => {
           <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Имя Фамилия</p>
         </div>
         <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">Место отличное! Красиво, уютно, птички поют, Можно покормить обезьянок. Советую всем)</p>
-        <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
+        {/* <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
           <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">Оцените место</p>
           <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>
           <p className="font-montserrat text-[14px] leading-[17px] ml-[12px] mt-[8px]">Грязно?</p>
@@ -36,7 +36,7 @@ const PostOnMap: React.FC = (): ReactElement => {
             <DirtButton smile={<SadSmile />} text="Да" />
             <DirtButton smile={<CheerfulSmile />} text="Нет" />
           </div>
-        </div>
+        </div> */}
         <h4 className="font-montserrat font-semibold text-[14px] leading-[17px] my-[16px]">Комментарии (2)</h4>
         <h3 className="font-montserrat font-semibold text-[16px] leading-[19.5px]">Имя Фамилия</h3>
         <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">Место отличное! Красиво, уютно, птички поют, Можно покормить обезьянок. Советую всем)</p>

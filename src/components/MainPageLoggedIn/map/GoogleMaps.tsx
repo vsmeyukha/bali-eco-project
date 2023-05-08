@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { GoogleMap, LoadScript, Marker, OverlayView } from '@react-google-maps/api';
-import PostOnMap from './postOnMap/PostOnMap';
+import { useState, useRef } from 'react';
+import { GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
 import MarkerAndPostOnMap from './MarkerAndPostOnMap';
+import SmallPostOnMap from './postOnMap/SmallPostOnMap';
+
+type GoogleMapsInstance = google.maps.Map;
 
 const containerStyle = {
   width: '100%',
   height: '1000px',
-  zIndex: 1
+  zIndex: 1,
 }
 
 export interface Coordinates {
@@ -14,9 +16,17 @@ export interface Coordinates {
   lng: number,
 }
 
+export interface CoordsConvertedToPixels {
+  x: number,
+  y: number,
+}
+
+// ? на всяк пусть тут полежит тайпинг гугловый google.maps.Point
+
 interface MapComponentState {
   coordinates: Coordinates,
   isPostOnMapOpen: boolean,
+  popupPosition?: CoordsConvertedToPixels,
 }
 
 const center: Coordinates = {
@@ -24,15 +34,20 @@ const center: Coordinates = {
   lng: 115.1889,
 };
 
+const markerIcon = {
+  url: '/images/svgs/icons/marker.png',
+}
+
 function MapComponent() {
-  // todo поменять стейт компонента с картой. с нем должен лежать не только массив с координатами для каждого маркера, но и тру/фолс, определяющий, открыт ли прикрепленный к определенному маркеру попап - done
+  // ? создаем реф карты, пока пустой
+  const mapRef = useRef<GoogleMapsInstance | null>(null);
 
-  // todo поменять интерфейсы, соответственно, прокинуть необходимое пропсами в маркер и попап, там использоваеть пропсы, а не собственный стейт - done
+  // ? в этом методе сохраняем в реф инстанс класса гугл карт, потом при рендеринге передадим в проп onLoad карты
+  const handleMapLoad = (mapInstance: GoogleMapsInstance): void => {
+    mapRef.current = mapInstance;
+  }
 
-  // todo поменять функцию, которая отвечает за клик по карте. открытый попап по клику по карте должен закрываться. маркеры пока должны ставиться по клику на карту, потом эта логика перекочует в обработчик клика по кнопке опубликовать фото
-
-  // todo сделать так, чтобы при клике по другому маркеру не только открывался попап, прикрепленный к новому маркеру, но и закрывался открытый ранее попап. возможно, для этого потребуется отдельная функция. или изменение в текущую функцию открытия попапа, чтобы все попапы, кроме текущего, закрывались - done
-
+  // ? создаем стейт компонента. в стейте лежит массив объектов, в каждом объекте - координаты маркера и булевое значение, показывающее, открыт ли попап
   const [markers, setMarkers] = useState<MapComponentState[]>([{
     coordinates: {
       lat: 0,
@@ -52,6 +67,7 @@ function MapComponent() {
     }
 
     setMarkers((prevMarkers: MapComponentState[]) => {
+      // ? также закрываем все попапы по клику на карту, если какой-то попап был открыт
       const updatedMarkers = prevMarkers.map(prevmarker => {
         return { ...prevmarker, isPostOnMapOpen: false }
       });
@@ -62,11 +78,43 @@ function MapComponent() {
 
   // ? функция нажатия на маркер. когда мы нажимаем на маркер, открывается привязанный к нему пост. если до этого был открыт другой пост, он закрывается
   const handleMarkerClick = (index: number): void => {
+    // ? переводим координаты маркера в пиксели
+    // ? вызываем метод getProjection инстанса карты, получаем проекцию, которая является объектом
+    // ? у этого объекта есть метод fromLatLngToPoint, который принимает объект LatLng с координатами по широте и долготе
+    // ? метод fromLatLngToPoint возвращает объект с координатами по оси х и оси у в пикселях
+    // ? возвращенный объект записываем в стейт чуть ниже
+    const popupPosition = mapRef.current?.getProjection()?.fromLatLngToPoint(markers[index].coordinates);
+    // ? получаем масштаб карты
+    const bounds = mapRef.current?.getBounds();
+    const topLeftLatLng = bounds ? new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng()) : null;
+    const topLeftPixel = topLeftLatLng ? mapRef.current?.getProjection()?.fromLatLngToPoint(topLeftLatLng) : null;
+
+
+    // ? проверяем, что в popupPosition не лежит null, иначе ts ругается
+    if (!popupPosition || !topLeftPixel) return;
+
+    const zoom = mapRef.current?.getZoom();
+    const scale = Math.pow(2, zoom ?? 0);
+    const scaledPopupPosition = {
+      x: popupPosition.x * scale,
+      y: popupPosition.y * scale,
+    };
+
+    const localPosition = {
+      x: Math.floor(scaledPopupPosition.x - topLeftPixel.x * scale),
+      y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
+    };
+    
+
     setMarkers((prevMarkers: MapComponentState[]) => 
-      prevMarkers.map((prevMarker, prevIndex) => 
+      prevMarkers.map((prevMarker: MapComponentState, prevIndex: number) => 
         prevIndex === index
           ?
-          { ...prevMarker, isPostOnMapOpen: !prevMarker.isPostOnMapOpen }
+          {
+            ...prevMarker,
+            isPostOnMapOpen: !prevMarker.isPostOnMapOpen,
+            popupPosition: localPosition,
+          }
           :
           { ...prevMarker, isPostOnMapOpen: false }
       )
@@ -83,6 +131,32 @@ function MapComponent() {
     setMarkers(markersWithoutSelectedMarker);
   }
 
+  // return (
+  //   <div className="relative h-[1000px] w-full">
+  //     <LoadScript googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
+  //       <GoogleMap
+  //         mapContainerStyle={containerStyle}
+  //         center={center}
+  //         zoom={10}
+  //         onClick={handleMapClick}
+  //         onLoad={handleMapLoad}
+  //       >
+  //         {/* Additional map components, like markers or overlays, can be added as children here */}
+  //         {markers.map((marker, index) => {
+  //           return (
+  //             <MarkerAndPostOnMap
+  //               key={index}
+  //               marker={marker.coordinates}
+  //               isPostOnMapOpen={marker.isPostOnMapOpen}
+  //               onMarkerClick={() => handleMarkerClick(index)}
+  //             />
+  //           );
+  //         })}
+  //       </GoogleMap>
+  //     </LoadScript>
+  //   </div>
+  // );
+
   return (
     <div className="relative h-[1000px] w-full">
       <LoadScript googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
@@ -91,22 +165,27 @@ function MapComponent() {
           center={center}
           zoom={10}
           onClick={handleMapClick}
+          onLoad={handleMapLoad}
         >
           {/* Additional map components, like markers or overlays, can be added as children here */}
           {markers.map((marker, index) => {
             return (
-              <MarkerAndPostOnMap
-                key={index}
-                marker={marker.coordinates}
-                isPostOnMapOpen={marker.isPostOnMapOpen}
-                onMarkerClick={() => handleMarkerClick(index)}
-              />
+              <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(index)} icon={markerIcon} />
             );
           })}
         </GoogleMap>
       </LoadScript>
+      {markers.map((marker, index) => {
+        if (marker.isPostOnMapOpen) {
+          return (
+            <SmallPostOnMap key={index} position={marker.popupPosition} />
+          )
+        }
+      })}
     </div>
   );
 }
 
 export default MapComponent;
+
+// ? два возможных варианта решения проблемы с попапом. первый - как говорит электротетя, используя useRef, создавая реф карты, получая координаты маркера и переводя их в пиксели, далее рендерим абсолютно спозиционированный попап. но если идет перерисовка и у нас в итоге не один узкий попап, а маленький попап и большой попап, открывающийся по клику на маленький, то, возможно, есть смысл не заморачиваться с useRef и всем остальным, а маленький попап оставить внутри карты. и посмотреть, будет ли много кейсов, когда его отображению мешает волна сверху иил что-то еще. а большой попап рендерится вне карты, но в том же компоненте, просто лежит снизу. например, так. 
