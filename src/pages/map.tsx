@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useState, useRef } from "react";
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
 import MapComponent from "@/components/MainPageLoggedIn/map/GoogleMaps";
@@ -10,15 +10,28 @@ import Tips from "@/components/MainPageLoggedIn/Tips";
 import Volunteers from "@/components/MainPageLoggedIn/Volunteers";
 import Footer from "@/components/Footer";
 import Popup from "@/components/Popup";
-import PostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/PostOnMap";
-import SmallPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/SmallPostOnMap";
+import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnMap";
 
 const LoggedInMain: React.FC = (): ReactElement => {
+  const [isBigPopupOpen, setIsBigPopupOpen] = useState<boolean>(false);
+
+  const handleBigPopupOpen = (): void => {
+    setIsBigPopupOpen(true);
+  }
+
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
+  const handlePopupClose = (e: React.MouseEvent): void => {
+    if (isBigPopupOpen === true && popupRef.current && !popupRef.current.contains(e.target as Node)) {
+      setIsBigPopupOpen(false);
+    }
+  }
+
   return (
-    <section className="min-w-screen">
+    <section className="min-w-screen relative" onClick={handlePopupClose}>
       <Header />
       <PublishPhoto />
-      <MapComponent />
+      <MapComponent handleBigPopupOpen={handleBigPopupOpen} />
       <ClimateAndEduContainer>
         <ClimateChange />
         <Education />
@@ -26,6 +39,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <AboutUs />
       <Tips />
       <Volunteers />
+      <BigPostOnMap ref={popupRef} isBigPopupOpen={isBigPopupOpen} />
       <Footer />
       <Popup />
     </section>

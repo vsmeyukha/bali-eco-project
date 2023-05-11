@@ -1,6 +1,5 @@
-import { useState, useRef } from 'react';
-import { GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
-import MarkerAndPostOnMap from './MarkerAndPostOnMap';
+import { useState, useRef, ReactElement } from 'react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import SmallPostOnMap from './postOnMap/SmallPostOnMap';
 
 type GoogleMapsInstance = google.maps.Map;
@@ -26,6 +25,7 @@ export interface CoordsConvertedToPixels {
 interface MapComponentState {
   coordinates: Coordinates,
   isPostOnMapOpen: boolean,
+  isBigPostOpen: boolean,
   popupPosition?: CoordsConvertedToPixels,
 }
 
@@ -38,7 +38,11 @@ const markerIcon = {
   url: '/images/svgs/icons/marker.png',
 }
 
-function MapComponent() {
+interface MapProps {
+  handleBigPopupOpen: () => void,
+}
+
+const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => {
   // ? создаем реф карты, пока пустой
   const mapRef = useRef<GoogleMapsInstance | null>(null);
 
@@ -54,6 +58,7 @@ function MapComponent() {
       lng: 0,
     },
     isPostOnMapOpen: false,
+    isBigPostOpen: false,
   }]);
 
   // ? здесь по клику на карту создается маркер с координатами клика и isPostOnMapOpen, по дефолту установленным в false. затем обновляется стейт компонента гугл-карт - массив дополняется новым значением
@@ -64,6 +69,7 @@ function MapComponent() {
         lng: event.latLng?.lng() ?? 0,
       },
       isPostOnMapOpen: false,
+      isBigPostOpen: false,
     }
 
     setMarkers((prevMarkers: MapComponentState[]) => {
@@ -131,31 +137,16 @@ function MapComponent() {
     setMarkers(markersWithoutSelectedMarker);
   }
 
-  // return (
-  //   <div className="relative h-[1000px] w-full">
-  //     <LoadScript googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
-  //       <GoogleMap
-  //         mapContainerStyle={containerStyle}
-  //         center={center}
-  //         zoom={10}
-  //         onClick={handleMapClick}
-  //         onLoad={handleMapLoad}
-  //       >
-  //         {/* Additional map components, like markers or overlays, can be added as children here */}
-  //         {markers.map((marker, index) => {
-  //           return (
-  //             <MarkerAndPostOnMap
-  //               key={index}
-  //               marker={marker.coordinates}
-  //               isPostOnMapOpen={marker.isPostOnMapOpen}
-  //               onMarkerClick={() => handleMarkerClick(index)}
-  //             />
-  //           );
-  //         })}
-  //       </GoogleMap>
-  //     </LoadScript>
-  //   </div>
-  // );
+  const handleSmallPostClick = (): void => {
+    handleBigPopupOpen();
+    
+    const allSmallPopupsClosed: MapComponentState[] = markers.map(prevMarker => {
+      prevMarker.isPostOnMapOpen = false;
+      return prevMarker;
+    });
+
+    setMarkers(allSmallPopupsClosed);
+  }
 
   return (
     <div className="relative h-[1000px] w-full">
@@ -176,11 +167,14 @@ function MapComponent() {
         </GoogleMap>
       </LoadScript>
       {markers.map((marker, index) => {
-        if (marker.isPostOnMapOpen) {
           return (
-            <SmallPostOnMap key={index} position={marker.popupPosition} />
+            <SmallPostOnMap
+              key={index}
+              position={marker.popupPosition}
+              isPostOnMapOpen={marker.isPostOnMapOpen}
+              onClick={handleSmallPostClick}
+            />
           )
-        }
       })}
     </div>
   );

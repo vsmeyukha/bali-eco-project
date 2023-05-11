@@ -14,7 +14,6 @@ const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
       bg-white
       bg-opacity-1
       rounded-[10px]
-      shadow
       border-b-2
       border-opacity-10
       border-[#00265F]
@@ -22,7 +21,8 @@ const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
       flex-col
       justify-between
       items-center
-      pt-[11px]"
+      pt-[11px]
+      "
     >
       {smile}
       <p className='mb-[4px]'>{text}</p>
