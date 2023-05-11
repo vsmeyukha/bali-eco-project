@@ -4,6 +4,8 @@ import Menu from './Menu';
 import Logo from "./Logo";
 import QuickToolsPopup from "./QuickToolsPopup/QuickToolsPopup";
 import SignInButton from "./MainPageNotLoggedIn/SignInButton";
+import useViewportWidth from "@/hooks/calculateWidth";
+import BurgerMenu from "./BurgerMenu";
 
 interface HeaderProps {
   onPopupOpen?: () => void,
@@ -13,6 +15,8 @@ interface HeaderProps {
 export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): ReactElement {
   const router = useRouter();
   const currentPage = router.pathname;
+
+  const viewportWidth = useViewportWidth();
 
   const backgroundDependingOnThePage =
     currentPage === '/' ? 'bg-gradient-to-b from-green-800 via green-500 to-transparent' :
@@ -40,12 +44,17 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
       ${backgroundDependingOnThePage}`}
     >
       <Logo />
-      <div className="flex flex-row items-center justify-center">
+      {viewportWidth >= 1280
+        ?
+        <div className="flex flex-row items-center justify-center">
         <Menu />
         {
           currentPage === '/' ? <SignInButton openPopup={handleSignInPopupOpen} /> : <QuickToolsPopup />
         }
-      </div>
+        </div>
+        :
+        <BurgerMenu />
+      }
     </header>
   )
 }

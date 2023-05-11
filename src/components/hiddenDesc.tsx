@@ -7,7 +7,7 @@ import UpArrow from "../../public/images/svgs/up-arrow.svg";
 export default function HiddenDesc(): ReactElement {
   const [visible, setVisible] = useState<boolean>(false);
 
-  const handleVisible = (e: MouseEvent<HTMLButtonElement>): void => {
+  const handleVisible = (): void => {
     setVisible((prevState) => !prevState);
   };
 

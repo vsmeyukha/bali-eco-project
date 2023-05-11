@@ -17,6 +17,7 @@ const BigBlueButton: React.FC<ButtonProps> = ({size, type, onClick, text}): Reac
       className={`
         ${changingStyles}
         h-[75px]
+        mb-[32px]
       bg-[#2196F3]
         rounded-[12px]
       text-white

@@ -5,6 +5,7 @@ import BaliMap from '../../../public/images/svgs/map.svg';
 import BigBlueButton from './BigBlueButton';
 import Popup from '../Popup';
 import SidePopup from './RegOrSignInPopup/SidePopup';
+import useViewportWidth from '@/hooks/calculateWidth';
 
 interface MainProps {
   isPopupOpen: boolean,
@@ -20,6 +21,8 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
     openRegPopup();
     onPopupOpen();
   }
+
+  const viewportWidth = useViewportWidth();
 
   return (
     <section className="ml-[65px] mr-[96px] relative">
@@ -40,7 +43,7 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
           <HiddenDesc />
           <BigBlueButton size="small" type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
         </div>
-        <BaliMap className="max-w-[533px] max-h-[330px]" />
+        {viewportWidth >= 1280 && <BaliMap className="max-w-[533px] max-h-[330px]" />}
       </div>
       <Popup />
       <SidePopup

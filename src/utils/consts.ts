@@ -28,12 +28,12 @@ const navListRu: NavLink[] = [
     id: getRandom(1000),
   },
   {
-    title: 'Образовательный контент',
+    title: 'Факты',
     link: '/resources',
     id: getRandom(1000),
   },
   {
-    title: 'Эко-волонтерские организации',
+    title: 'Волонтеры',
     link: '/organizations',
     id: getRandom(1000),
   },
