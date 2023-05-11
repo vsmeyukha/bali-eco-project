@@ -47,7 +47,7 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
                 z-300
                 bg-white
                 w-[430px]
-                h-[465px]
+                h-[490px]
                 rounded-[10px]
                 py-[32px]
                 flex
@@ -58,10 +58,8 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
               <Image
                 src={Manatee}
                 alt="manatee"
-                fill={true}
-                objectFit="cover"
-                objectPosition="center"
-                className="rounded-full"
+                fill
+                className="object-cover object-center"
               />
             </Link>
               <Link href="/profile" className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</Link>
