@@ -9,6 +9,7 @@ import Manatee from '../../../../../public/images/backgrounds/manatee.png';
 import SadSmile from '../../../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile.svg';
 import ShareArrow from '../../../../../public/images/svgs/icons/shareArrow.svg';
+import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 
 const BigPostOnMap = forwardRef<HTMLDivElement, {isBigPopupOpen: boolean}>((props, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
   const [heightForPositioning, setHeightForPositioning] = useState<number>(0);
@@ -50,7 +51,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, {isBigPopupOpen: boolean}>((prop
         <div className="flex flex-row justify-between">
           <h3 className="text-[18px] leading-[22px] font-montserrat-bold">Крутая терраса</h3>
           <button>
-            <ShareArrow />
+            <CopyIcon />
           </button>
         </div>
         <div className="flex flex-row justify-start items-center mt-[12px]">

@@ -34,8 +34,8 @@ const center: Coordinates = {
   lng: 115.1889,
 };
 
-const markerIcon = {
-  url: '/images/svgs/icons/marker.png',
+const markerIconSVG = {
+  url: '/images/svgs/icons/marker.svg',
 }
 
 interface MapProps {
@@ -161,7 +161,7 @@ const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => 
           {/* Additional map components, like markers or overlays, can be added as children here */}
           {markers.map((marker, index) => {
             return (
-              <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(index)} icon={markerIcon} />
+              <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(index)} icon={markerIconSVG} />
             );
           })}
         </GoogleMap>

@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-import { NavLink, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup, SmallPostOnMapInfo } from "./types";
+import { NavLink, NavLinkForBurger, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup, SmallPostOnMapInfo } from "./types";
 import { getRandom } from "./utils";
 
 import Tool from '../../public/images/svgs/icons/tool.svg';
@@ -21,6 +21,12 @@ import Fish from '../../public/images/volunteers/fish.png';
 import Lini from '../../public/images/volunteers/lini.png';
 import Turtle from '../../public/images/volunteers/turtle.png';
 
+import mapIcon from '../../public/images/svgs/icons/mapIcon.svg';
+import factsIcon from '../../public/images/svgs/icons/factsIcon.svg';
+import volunteersIcon from '../../public/images/svgs/icons/volunteersIcon.svg';
+import aboutUsIcon from '../../public/images/svgs/icons/aboutUsIcon.svg';
+
+
 const navListRu: NavLink[] = [
   {
     title: 'Карта',
@@ -40,6 +46,33 @@ const navListRu: NavLink[] = [
   {
     title: 'О нас',
     link: '/aboutUs',
+    id: getRandom(1000),
+  },
+];
+
+const navListForBurgerRu: NavLinkForBurger[] = [
+  {
+    title: 'Карта',
+    link: '/map',
+    icon: mapIcon,
+    id: getRandom(1000),
+  },
+  {
+    title: 'Факты',
+    link: '/resources',
+    icon: factsIcon,
+    id: getRandom(1000),
+  },
+  {
+    title: 'Волонтеры',
+    link: '/organizations',
+    icon: volunteersIcon,
+    id: getRandom(1000),
+  },
+  {
+    title: 'О нас',
+    link: '/aboutUs',
+    icon: volunteersIcon,
     id: getRandom(1000),
   },
 ];
@@ -198,6 +231,7 @@ const signInPopup: RegSignInPopup = {
 
 export {
   navListRu,
+  navListForBurgerRu,
   navListEng,
   credits,
   participateButton,

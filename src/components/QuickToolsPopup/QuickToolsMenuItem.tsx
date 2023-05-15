@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import Link from "next/link";
 import { QuickToolsMenuType } from '../../utils/types';
 
-const QuickToolsMenuItem: React.FC<QuickToolsMenuType> = ({ icon: Icon, href, text, children, isDiv = false }: QuickToolsMenuType): ReactElement => {
+const QuickToolsMenuItem: React.FC<QuickToolsMenuType> = ({ icon: Icon, href, text, children, isDiv = false }): ReactElement => {
   const content =
     (<>
       <div className="flex flex-row justify-between items-center w-full">

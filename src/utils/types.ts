@@ -7,6 +7,10 @@ export interface NavLink {
   id: number,
 }
 
+export interface NavLinkForBurger extends NavLink {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>,
+}
+
 export interface CredType {
   'ru': {
     'Разработка': string,
