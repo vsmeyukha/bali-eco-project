@@ -8,9 +8,9 @@ interface SwitchPopupsPropsType {
 
 const SwitchPopups: React.FC<SwitchPopupsPropsType> = ({whichPopup, handleSwitchPopups}: SwitchPopupsPropsType): ReactElement => {
   return (
-    <div className='flex flex-row'>
+    <div className='flex flex-col items-start'>
       <p className="text-[#00265F]">{whichPopup.areYouRegistered}</p>
-      <button onClick={handleSwitchPopups} type="button" className="text-[#0D87FF] ml-[16px]"><a>{whichPopup.signIn}</a></button>
+      <button onClick={handleSwitchPopups} type="button" className="text-[#0D87FF] mt-[8px]"><a>{whichPopup.signIn}</a></button>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { FormEvent, ReactElement } from "react";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer/Footer";
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
 import BigBlueButton from "@/components/MainPageNotLoggedIn/BigBlueButton";

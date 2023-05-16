@@ -33,13 +33,14 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
     <header
       className={
       `relative
+      w-full
       flex
       flex-row
       justify-between
     text-white
       pt-[0px]
-      pl-[65px]
-      pr-[65px]
+      md:px-[65px]
+      px-[32px]
       z-30
       ${backgroundDependingOnThePage}`}
     >
@@ -47,10 +48,10 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
       {viewportWidth >= 1280
         ?
         <div className="flex flex-row items-center justify-center">
-        <Menu />
-        {
-          currentPage === '/' ? <SignInButton openPopup={handleSignInPopupOpen} /> : <QuickToolsPopup />
-        }
+          <Menu />
+          {
+            currentPage === '/' ? <SignInButton openPopup={handleSignInPopupOpen} /> : <QuickToolsPopup />
+          }
         </div>
         :
         <BurgerMenu />

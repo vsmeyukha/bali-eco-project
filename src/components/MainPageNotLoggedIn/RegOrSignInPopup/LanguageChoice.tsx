@@ -13,9 +13,9 @@ const LanguageChoice: React.FC = (): ReactElement => {
 
   return (
     <Listbox value={selectedLang} onChange={setSelectedLang}>
-    <Listbox.Button className='flex flex-row items-center'>
-      <p>{selectedLang}</p>
-      <ChevronDown className="ml-[11px]" />
+    <Listbox.Button className='flex flex-col items-end'>
+      <p className="text-right">{selectedLang}</p>
+      <ChevronDown className="mt-[8px]" />
     </Listbox.Button>
     <Transition
       as={Fragment}
@@ -26,7 +26,7 @@ const LanguageChoice: React.FC = (): ReactElement => {
       leaveFrom="opacity-100 translate-y-0"
       leaveTo="opacity-0 translate-y-1"
     >
-    <Listbox.Options className="absolute top-[30px] right-0 focus:outline-none active:outline-none">
+    <Listbox.Options className="absolute top-[35px] right-0 focus:outline-none active:outline-none">
       {langs.map((lang, index) => {
         return (
           <Listbox.Option key={index} value={lang} className={({active}) => `my-[10px] hover:cursor-pointer ${active && "text-[#0D87FF]"}`}>

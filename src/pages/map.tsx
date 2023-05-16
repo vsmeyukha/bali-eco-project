@@ -8,7 +8,7 @@ import Education from "@/components/MainPageLoggedIn/Education";
 import AboutUs from "@/components/MainPageLoggedIn/AboutUs";
 import Tips from "@/components/MainPageLoggedIn/Tips";
 import Volunteers from "@/components/MainPageLoggedIn/Volunteers";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer/Footer";
 import Popup from "@/components/Popup";
 import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnMap";
 

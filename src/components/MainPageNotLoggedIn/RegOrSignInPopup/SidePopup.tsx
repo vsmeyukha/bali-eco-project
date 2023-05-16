@@ -26,6 +26,8 @@ const SidePopup: React.FC<PopupProps> = ({ open, onClose, isRegPopup, openRegPop
     if (viewportWidth >= 1440) return 1440;
     if (viewportWidth >= 1280) return 1280;
     if (viewportWidth >= 1024) return 1024;
+    if (viewportWidth >= 768) return 768;
+    if (viewportWidth >= 640) return 640;
     return viewportWidth;
   }
   
@@ -46,7 +48,7 @@ const SidePopup: React.FC<PopupProps> = ({ open, onClose, isRegPopup, openRegPop
       enterTo="translate-x-0"
       >
         <Dialog onClose={onClose} as={Fragment}>
-          <Dialog.Panel style={{ left: `${leftOffset}px` }} className='bg-white h-screen w-[653px] pl-[65px] pr-[33px] pt-[43px] absolute top-0 z-50 flex flex-col slide-in'>
+          <Dialog.Panel style={{ left: `${leftOffset}px` }} className='bg-white h-screen md:w-[653px] sm:w-[640px] w-full sm:pl-[65px] sm:pr-[33px] px-0 pt-[43px] absolute top-0 z-50 flex flex-col sm:items-start items-center slide-in overflow-auto'>
             <SwitchAndLangsContainer >
               <SwitchPopups whichPopup={whichPopup} handleSwitchPopups={handleSwitchPopups} />
               <LanguageChoice />
@@ -58,7 +60,7 @@ const SidePopup: React.FC<PopupProps> = ({ open, onClose, isRegPopup, openRegPop
               :
               <SignInLayout onClose={onClose} whichPopup={whichPopup} />
               }
-            {isRegPopup && <p className="font-montserrat text-[10px] leading-[12px] text-[#00265F] text-opacity-40 mt-[40px]">Регистрируясь, вы принимаете условия соглашения</p>}
+            {isRegPopup && <p className="font-montserrat text-[10px] leading-[12px] text-[#00265F] text-opacity-40 mt-[40px] mb-[16px]">Регистрируясь, вы принимаете условия соглашения</p>}
           </Dialog.Panel>
         </Dialog>
       </Transition>

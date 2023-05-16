@@ -2,14 +2,13 @@ import { ReactElement, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { navListRu, navListForBurgerRu } from "@/utils/consts";
+import BurgerMenuIcon from '../../public/images/svgs/icons/burgerMenu.svg';
 
 const BurgerMenu: React.FC = (): ReactElement => {
   return (
     <Menu as="div" className="flex">
       <Menu.Button className="flex flex-col space-y-[4px] justify-center focus:outline-none">
-        <div className="bg-white w-[30px] h-[3px]"></div>
-        <div className="bg-white w-[30px] h-[3px]"></div>
-        <div className="bg-white w-[30px] h-[3px]"></div>
+        <BurgerMenuIcon />
       </Menu.Button>
       <Transition
         as={Fragment}

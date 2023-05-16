@@ -14,13 +14,16 @@ export default function HiddenDesc(): ReactElement {
   return (
     <div
       className="
-        max-w-[589px]
+        sm:max-w-[589px]
         text-white
         font-montserrat
         font-light
         text-[22px]
         leading-[26px]
-        mt-[42px]
+        text-center
+        sm:text-left
+        sm:mt-[42px]
+        mt-[20px]
       "
     >
       <p className="pb-[16px]">{projectDescription}</p>

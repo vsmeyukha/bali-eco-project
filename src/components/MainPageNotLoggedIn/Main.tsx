@@ -17,31 +17,55 @@ interface MainProps {
 }
 
 export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopup, openRegPopup, openSignInPopup}: MainProps): ReactElement {
-  const handleRegPopupOpen = () => {
+  const handleRegPopupOpen = (): void => {
     openRegPopup();
+    onPopupOpen();
+  }
+
+  const handleSignInPopupOpen = (): void => {
+    openSignInPopup();
     onPopupOpen();
   }
 
   const viewportWidth = useViewportWidth();
 
+  const buttonSize = viewportWidth >= 600 ? 'big' : 'small';
+
   return (
-    <section className="ml-[65px] mr-[96px] relative">
+    <section className="1440px:pl-[152px] sm:pl-[65px] sm:pr-[96px] px-0 sm:relative flex flex-col items-center sm:items-start w-full">
       <h1
         className="
         text-white
         font-oceanic-poster
-        text-[105px]
-        leading-[126px]
+        lg:text-[105px]
+        lg:leading-[126px]
+        md:text-[80px]
+        md:leading-[100px]
+        sm:text-[60px]
+        sm:leading-[80px]
+        text-[42px]
+        leading-[36px]
         bg-clip-text
         bg-gradient-text
-        text-transparent"
+        text-transparent
+        mt-[378px]
+        sm:mt-0"
       >
         {projectName}
       </h1>
-      <div className="flex flex-row justify-between align-top">
-        <div>
+      <div className="flex flex-row justify-between align-top sm:w-full w-4/5 mb-[32px]">
+        <div className='flex flex-col sm:items-start items-center '>
           <HiddenDesc />
-          <BigBlueButton size="small" type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
+          <div className='flex flex-col items-center'>
+            <BigBlueButton size={buttonSize} type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
+            {viewportWidth < 1280
+              &&
+              <div className=' flex flex-row mt-[15px] font-montserrat text-[14px] leading-[17px] text-white'>
+                <p className='font-normal'>Уже зарегистрированы?</p>
+                <button className='ml-[10px] font-bold text-[#0D87FF]' onClick={handleSignInPopupOpen}>Войти</button>
+              </div>
+            }
+          </div>
         </div>
         {viewportWidth >= 1280 && <BaliMap className="max-w-[533px] max-h-[330px]" />}
       </div>

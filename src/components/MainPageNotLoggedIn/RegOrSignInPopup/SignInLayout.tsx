@@ -16,11 +16,11 @@ const SignInLayout: React.FC<LayoutProps> = ({ onClose, whichPopup }: LayoutProp
   }
 
   return (
-    <>
+    <div className="w-4/5 flex flex-col items-center">
       <SignInForm onSignInButtonClick={handleSubmit} whichPopup={whichPopup} />
       <OrBlock />
       <RegOrSignViaSocialMedia regOrSign={whichPopup} />
-    </>
+    </div>
   );
 }
 

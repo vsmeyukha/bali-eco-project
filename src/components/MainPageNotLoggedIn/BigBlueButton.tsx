@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 const BigBlueButton: React.FC<ButtonProps> = ({size, type, onClick, text}): ReactElement => {
-  const changingStyles = size === "small" ? "w-[293px] mt-[16px]" : "w-[442px] mt-[40px]";
+  const changingStyles = size === "small" ? "w-full mt-[16px] text-[18px] leading-[22px]" : "w-[442px] mt-[40px] text-[24px] leading-[29px]";
 
   return (
     <button
@@ -17,13 +17,10 @@ const BigBlueButton: React.FC<ButtonProps> = ({size, type, onClick, text}): Reac
       className={`
         ${changingStyles}
         h-[75px]
-        mb-[32px]
-      bg-[#2196F3]
+        bg-[#2196F3]
         rounded-[12px]
-      text-white
+        text-white
         font-montserrat
-        text-[24px]
-        leading-[29px]
         hover:scale-105
         transition-all 
         duration-300 
