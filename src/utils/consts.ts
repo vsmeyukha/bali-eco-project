@@ -1,6 +1,7 @@
 import { StaticImageData } from "next/image";
 
 import { NavLink, NavLinkForBurger, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup, SmallPostOnMapInfo } from "./types";
+
 import { getRandom } from "./utils";
 
 import Tool from '../../public/images/svgs/icons/tool.svg';
@@ -72,7 +73,7 @@ const navListForBurgerRu: NavLinkForBurger[] = [
   {
     title: 'О нас',
     link: '/aboutUs',
-    icon: volunteersIcon,
+    icon: aboutUsIcon,
     id: getRandom(1000),
   },
 ];

@@ -1,4 +1,4 @@
-import { ReactElement, useContext, Fragment, useState } from "react";
+import { ReactElement } from "react";
 import { useRouter } from "next/router";
 import Menu from './Menu';
 import Logo from "./Logo";
@@ -24,7 +24,7 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
 
   // ! градиент хэдера bg-gradient-to-b from-green-800 via green-500 to-transparent
 
-  const handleSignInPopupOpen = () => {
+  const handleSignInPopupOpen = (): void => {
     openSignInPopup?.();
     onPopupOpen?.();
   }
@@ -54,7 +54,7 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
           }
         </div>
         :
-        <BurgerMenu />
+        <BurgerMenu onSignInClick={handleSignInPopupOpen} />
       }
     </header>
   )

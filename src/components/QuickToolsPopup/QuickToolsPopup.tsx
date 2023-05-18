@@ -27,7 +27,7 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
       {({ open }) => (
         <div className="relative"> 
           <Popover.Button className="active:border-none active:outline-none focus:outline-none">
-            <Profile className={open ? 'opacity-25' : ''} />
+            <Profile className={`text-white fill-current h-[28px] w-[28px] ${open ? 'opacity-25' : ''}`} />
           </Popover.Button>
           <Transition
             as={Fragment}
