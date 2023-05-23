@@ -1,5 +1,4 @@
-import { ReactElement, ReactNode, useState } from "react";
-import { posts } from "@/utils/posts";
+import { ReactElement, useState } from "react";
 import { getRandom } from "@/utils/utils";
 import { ecoTips } from '../utils/shortAdvices';
 
@@ -35,22 +34,22 @@ const TipsButton: React.FC = (): ReactElement => {
         <p className="text-[20px] leading-[26px] font-montserrat-black max-w-[110px]">Получить совет</p>
       </button>
       {random !== null ?
-        <div className="max-w-[700px] bg-[#2196F3] rounded-[24px] mt-[74px]">
-          <h1
+        <div className="max-w-[700px] max-h-[168px] bg-[#2196F3] rounded-[24px] mt-[74px] overflow-auto">
+          <h2
             className="
-              pr-[24px]
-              pl-[24px]
+              px-[24px]
               my-[24px]
               font-montserrat
               text-[32px]
               leading-[40px]
               text-center
-              text-white w-full"
-          >{random !== null && ecoTips[random]}</h1>
+              text-white 
+              w-full"
+          >{random !== null && ecoTips[random]}</h2>
         </div>
         :
-        <div className="min-w-[676px] min-h-[198px] bg-[#2196F3] rounded-[10px] mt-[74px] flex justify-center items-center">
-          <h1
+        <div className="xl:min-w-[676px] xl:min-h-[198px] bg-[#2196F3] rounded-[10px] mt-[74px] flex justify-center items-center">
+          <h2
             className="
               pr-[24px]
               pl-[24px]
@@ -59,8 +58,9 @@ const TipsButton: React.FC = (): ReactElement => {
               text-[20px]
               leading-[24px]
               text-center
-              text-white w-full"
-          >Здесь будет ответ ChatGPT</h1>
+              text-white 
+              w-full"
+          >Здесь будет ответ ChatGPT</h2>
         </div>
       }
     </>

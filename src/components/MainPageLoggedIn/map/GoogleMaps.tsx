@@ -95,7 +95,6 @@ const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => 
     const topLeftLatLng = bounds ? new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng()) : null;
     const topLeftPixel = topLeftLatLng ? mapRef.current?.getProjection()?.fromLatLngToPoint(topLeftLatLng) : null;
 
-
     // ? проверяем, что в popupPosition не лежит null, иначе ts ругается
     if (!popupPosition || !topLeftPixel) return;
 

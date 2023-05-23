@@ -3,7 +3,7 @@ import TipsButton from "@/components/TipsButton";
 
 const Tips: React.FC = (): ReactElement => {
   return (
-    <div className="min-h-[1000px] bg-tips-blue-wave flex flex-col px-[152px] pt-[138px]">
+    <div className="min-h-[1000px] bg-tips-blue-wave flex flex-col lg:px-[152px] md:px-[80px] pt-[138px]">
       <h2 className="font-oceanic-bold text-[32px] leading-[38px] text-white mb-[32px]">Советы</h2>
       <div className="flex flex-col items-center">
         <h3 className="font-oceanic-bold text-[18px] leading-[26px] text-white max-w-[352px] text-center mb-[102px]">Получите простой и легко применимый эко-совет от ChatGPT</h3>

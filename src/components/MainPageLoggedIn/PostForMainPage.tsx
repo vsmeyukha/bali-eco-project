@@ -13,13 +13,13 @@ interface PostForMainPageType extends PostType {
 const PostForMainPage: React.FC<PostForMainPageType> = ({title, date, id, text, photo, layout }: PostForMainPageType): ReactElement => {
     // ? Styles for the large post on the left
   const largePostStyles: StylesType = {
-    div: 'row-start-2 row-span-3 flex flex-col',
-    imageWrapperDiv: 'h-[415px] relative',
+    div: 'lg:row-start-2 lg:row-span-3 flex flex-col w-full',
+    imageWrapperDiv: 'h-[415px] relative w-full',
     image: 'rounded-[8px] object-cover object-center',
-    title: 'line-clamp-2 text-[#00265F] text-[24px] leading-[28px] font-oceanic-bold mt-[16px]',
-    text: 'line-clamp-2 font-montserrat font-normal text-[18px] leading-[26px] text-[#00265F] mt-[7px]',
+    title: 'line-clamp-2 text-[#00265F] text-[24px] leading-[28px] font-oceanic-bold mt-[16px] text-left',
+    text: 'line-clamp-2 font-montserrat font-normal text-[18px] leading-[26px] text-[#00265F] mt-[7px] text-left',
     date: 'line-clamp-2'
-  } 
+  }
 
   // Styles for the smaller posts on the right
   const smallPostStyles: StylesType = {

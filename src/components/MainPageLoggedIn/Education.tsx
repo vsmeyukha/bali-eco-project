@@ -8,8 +8,8 @@ const Education: React.FC = (): ReactElement => {
   const cuttedPosts: Array<PostType> = posts.slice(0, 4);
 
   return (
-    <div className=" flex flex-col items-center mt-[120px]">
-      <div className="flex flex-col">
+    <div className="w-full flex flex-col items-center mt-[120px]">
+      <div className="w-full flex flex-col">
         <h2
           className="
           font-oceanic-bold
@@ -18,7 +18,18 @@ const Education: React.FC = (): ReactElement => {
           leading-[38px]
           self-start"
         >Образовательный контент</h2>
-        <div className="flex flex-row space-x-[16px] mt-[32px]">
+        <div className="
+          w-full 
+          flex
+          flex-row
+          lg:space-x-[16px]
+          md:space-x-[12px]
+          sm:space-x-[8px]
+          space-x-[6px]
+          mt-[32px]
+          overflow-x-auto
+          lg:overflow-x-visible"
+        >
           {cuttedPosts.map((post) => {
             return (
               <PostForFour

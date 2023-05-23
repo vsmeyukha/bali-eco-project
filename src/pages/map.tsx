@@ -11,6 +11,8 @@ import Volunteers from "@/components/MainPageLoggedIn/Volunteers";
 import Footer from "@/components/Footer/Footer";
 import Popup from "@/components/Popup";
 import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnMap";
+import useViewportWidth from "@/hooks/calculateWidth";
+import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
 
 const LoggedInMain: React.FC = (): ReactElement => {
   const [isBigPopupOpen, setIsBigPopupOpen] = useState<boolean>(false);
@@ -27,11 +29,18 @@ const LoggedInMain: React.FC = (): ReactElement => {
     }
   }
 
+  const viewportWidth = useViewportWidth();
+
   return (
-    <section className="min-w-screen relative" onClick={handlePopupClose}>
+    <section className="w-full relative" onClick={handlePopupClose}>
       <Header />
       <PublishPhoto />
       <MapComponent handleBigPopupOpen={handleBigPopupOpen} />
+      {
+        viewportWidth < 1024
+        &&
+        <PublishPhotoButton />
+      }
       <ClimateAndEduContainer>
         <ClimateChange />
         <Education />
@@ -40,8 +49,22 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <Tips />
       <Volunteers />
       <BigPostOnMap ref={popupRef} isBigPopupOpen={isBigPopupOpen} />
+      {/* <div className="overflow-x-auto space-x-[10px] flex flex-row whitespace-nowrap">
+          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
+          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
+          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
+          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
+          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
+        </div>
+      <div className="flex overflow-x-auto whitespace-nowrap">
+        <div className="flex-shrink-0 w-[200px] h-[200px] bg-red-500 m-2"></div>
+        <div className="flex-shrink-0 w-[200px] h-[200px] bg-blue-500 m-2"></div>
+        <div className="flex-shrink-0 w-[200px] h-[200px] bg-green-500 m-2"></div>
+        <div className="flex-shrink-0 w-[200px] h-[200px] bg-yellow-500 m-2"></div>
+      </div> */}
+
       <Footer />
-      <Popup />
+      {/* <Popup /> */}
     </section>
   )
 }
