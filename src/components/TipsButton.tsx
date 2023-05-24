@@ -34,7 +34,18 @@ const TipsButton: React.FC = (): ReactElement => {
         <p className="text-[20px] leading-[26px] font-montserrat-black max-w-[110px]">Получить совет</p>
       </button>
       {random !== null ?
-        <div className="max-w-[700px] max-h-[168px] bg-[#2196F3] rounded-[24px] mt-[74px] overflow-auto">
+        <div
+          className="
+          max-w-[700px]
+          lg:max-h-[168px]
+          bg-[#2196F3]
+          rounded-[24px]
+          lg:mt-[74px]
+          md:mt-[50px]
+          sm:mt-[40px]
+          mt-[30px]
+          lg:overflow-auto"
+        >
           <h2
             className="
               px-[24px]
@@ -48,7 +59,20 @@ const TipsButton: React.FC = (): ReactElement => {
           >{random !== null && ecoTips[random]}</h2>
         </div>
         :
-        <div className="xl:min-w-[676px] xl:min-h-[198px] bg-[#2196F3] rounded-[10px] mt-[74px] flex justify-center items-center">
+        <div
+          className="
+          xl:min-w-[676px]
+          xl:min-h-[198px]
+          bg-[#2196F3]
+          rounded-[10px]
+          lg:mt-[74px]
+          md:mt-[50px]
+          sm:mt-[40px]
+          mt-[30px]
+          flex
+          justify-center
+          items-center"
+        >
           <h2
             className="
               pr-[24px]

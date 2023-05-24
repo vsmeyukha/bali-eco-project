@@ -35,7 +35,7 @@ const ClimateCarousel: React.FC = (): ReactElement => {
         </button>)
       }
     >
-      {cuttedPosts.map((post, index) => {
+      {/* {cuttedPosts.map((post, index) => {
         return (
           <PostForMainPage
             key={index}
@@ -47,9 +47,9 @@ const ClimateCarousel: React.FC = (): ReactElement => {
             layout="large"
           />
         )
-      })}
+      })} */}
 
-      {/* <div className="lg:row-start-2 lg:row-span-3 flex flex-col w-full">
+      <div className="lg:row-start-2 lg:row-span-3 flex flex-col w-full">
         <div className="h-[415px] relative w-full">
           <Image src={Manatee} alt="hui" className="rounded-[8px] object-cover object-center" fill />
         </div>
@@ -71,7 +71,7 @@ const ClimateCarousel: React.FC = (): ReactElement => {
         </div>
         <h3 className="line-clamp-2 text-[#00265F] text-[24px] leading-[28px] font-oceanic-bold mt-[16px] text-left">{cuttedPosts[2].title}</h3>
         <p className="line-clamp-2 font-montserrat font-normal text-[18px] leading-[26px] text-[#00265F] mt-[7px] text-left">{cuttedPosts[0].text}</p>
-      </div> */}
+      </div>
 
       {/* <PostForMainPage
         title={cuttedPosts[0].title}

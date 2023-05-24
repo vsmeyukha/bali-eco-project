@@ -16,6 +16,8 @@ module.exports = {
         'ocean-reef': "url('/images/backgrounds/111.webp')",
         'gradient-text': 'linear-gradient(180deg, white 0%, #2196F3 100%)',
         'tips-blue-wave': "url('/images/backgrounds/TipsBlueWave.svg')",
+        'tips-blue-wave-small': "url(/images/backgrounds/tipsWaveSmall.svg)",
+        'tips-png': "url(/images/backgrounds/tipsPNG.png)",
       },
       backgroundClip: {
         text: 'text',

@@ -49,22 +49,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <Tips />
       <Volunteers />
       <BigPostOnMap ref={popupRef} isBigPopupOpen={isBigPopupOpen} />
-      {/* <div className="overflow-x-auto space-x-[10px] flex flex-row whitespace-nowrap">
-          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
-          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
-          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
-          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
-          <div className="flex-shrink-0 bg-red-500 w-1/2 h-[100px]"></div>
-        </div>
-      <div className="flex overflow-x-auto whitespace-nowrap">
-        <div className="flex-shrink-0 w-[200px] h-[200px] bg-red-500 m-2"></div>
-        <div className="flex-shrink-0 w-[200px] h-[200px] bg-blue-500 m-2"></div>
-        <div className="flex-shrink-0 w-[200px] h-[200px] bg-green-500 m-2"></div>
-        <div className="flex-shrink-0 w-[200px] h-[200px] bg-yellow-500 m-2"></div>
-      </div> */}
-
       <Footer />
-      {/* <Popup /> */}
     </section>
   )
 }
