@@ -7,9 +7,14 @@ const PublishPhoto: React.FC = (): ReactElement => {
 
   return (
     <>
-      <div className="max-w-full mx-auto relative">
-        <BlueWave className="w-full absolute top-0 left-0 z-10" />
-      </div>
+        <div className="max-w-full mx-auto relative">
+          {viewportWidth > 500
+            ?
+            <BlueWave className="w-full absolute top-0 left-0 z-10" />
+            :
+            <div className='w-full bg-[#0D87FF] h-[140px] absolute top-0 left-0 z-10' />
+          }
+        </div>
       <div
         className="
         relative

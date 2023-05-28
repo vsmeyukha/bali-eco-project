@@ -17,6 +17,8 @@ const SmallPostOnMap: React.FC<smallPostProps> = ({ position, isPostOnMapOpen, o
   const defaultPosition: CoordsConvertedToPixels = { x: 0, y: 0 };
   const currentPosition = position || defaultPosition;
 
+  const calculatedXPosition = currentPosition.x < 390 ? currentPosition.x + 15 : currentPosition.x - 390;
+
   return (
     <Transition
       as={Fragment}
@@ -41,7 +43,7 @@ const SmallPostOnMap: React.FC<smallPostProps> = ({ position, isPostOnMapOpen, o
           absolute
         `}
         style={{
-          left: `${currentPosition.x - 390}px`,
+          left: `${calculatedXPosition}px`,
           top: `${currentPosition.y - 235}px`,
         }}
         onClick={onClick}

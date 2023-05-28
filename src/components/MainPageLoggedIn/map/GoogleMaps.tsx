@@ -110,6 +110,7 @@ const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => 
       y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
     };
     
+    console.log(localPosition);
 
     setMarkers((prevMarkers: MapComponentState[]) => 
       prevMarkers.map((prevMarker: MapComponentState, prevIndex: number) => 
@@ -148,7 +149,7 @@ const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => 
   }
 
   return (
-    <div className="relative h-[1000px] w-full">
+    <div className="relative h-[1000px] w-full sm:mt-[-20px] md:mt-0 mt-[-70px]">
       <LoadScript googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
         <GoogleMap
           mapContainerStyle={containerStyle}

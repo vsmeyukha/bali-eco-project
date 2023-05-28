@@ -1,11 +1,11 @@
-import { ReactElement, useState, MouseEvent, useContext } from 'react';
+import { ReactElement } from 'react';
 import { projectName } from '@/utils/consts';
 import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
 import BigBlueButton from './BigBlueButton';
 import Popup from '../Popup';
-import SidePopup from './RegOrSignInPopup/SidePopup';
 import useViewportWidth from '@/hooks/calculateWidth';
+import RegOrSignInPopup from './RegOrSignInPopup/RegOrSignInPopup';
 
 interface MainProps {
   isPopupOpen: boolean,
@@ -70,7 +70,7 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
         {viewportWidth >= 1280 && <BaliMap className="max-w-[533px] max-h-[330px]" />}
       </div>
       <Popup />
-      <SidePopup
+      <RegOrSignInPopup
         open={isPopupOpen}
         onClose={onPopupClose}
         isRegPopup={isRegPopup}
