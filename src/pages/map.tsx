@@ -13,6 +13,9 @@ import Popup from "@/components/Popup";
 import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnMap";
 import useViewportWidth from "@/hooks/calculateWidth";
 import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
+import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
+
+import { usePopper } from "react-popper";
 
 const LoggedInMain: React.FC = (): ReactElement => {
   const [isBigPopupOpen, setIsBigPopupOpen] = useState<boolean>(false);
@@ -29,12 +32,22 @@ const LoggedInMain: React.FC = (): ReactElement => {
     }
   }
 
+  const [isAddPostPopupOpen, setIsAddPostPopupOpen] = useState<boolean>(false);
+
+  const handleAddPostPopupOpen = (): void => {
+    setIsAddPostPopupOpen(true);
+  }
+
+  const handleAddPostPopupClose = (): void => {
+    setIsAddPostPopupOpen(false);
+  }
+
   const viewportWidth = useViewportWidth();
 
   return (
     <section className="w-full relative" onClick={handlePopupClose}>
       <Header />
-      <PublishPhoto />
+      <PublishPhoto openPopup={handleAddPostPopupOpen} />
       <MapComponent handleBigPopupOpen={handleBigPopupOpen} />
       {
         viewportWidth < 1024
@@ -49,6 +62,11 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <Tips />
       <Volunteers />
       <BigPostOnMap ref={popupRef} isBigPopupOpen={isBigPopupOpen} />
+      <AddPostPopup open={isAddPostPopupOpen} onClose={handleAddPostPopupClose} />
+      <div className="w-full h-[500px] bg-gray-500 flex flex-col justify-center items-center">
+        <div className="bg-red-500 w-[300px] h-[300px] mx-auto flex flex-col items-center hover:translate-x-full">
+        </div>
+      </div>
       <Footer />
     </section>
   )

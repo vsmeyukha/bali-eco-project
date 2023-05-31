@@ -2,6 +2,8 @@ import { useState, useRef, ReactElement } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import SmallPostOnMap from './postOnMap/SmallPostOnMap';
 
+import { usePopper } from 'react-popper';
+
 type GoogleMapsInstance = google.maps.Map;
 
 const containerStyle = {
@@ -166,6 +168,7 @@ const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => 
           })}
         </GoogleMap>
       </LoadScript>
+
       {markers.map((marker, index) => {
           return (
             <SmallPostOnMap
@@ -176,6 +179,30 @@ const MapComponent: React.FC<MapProps> = ({handleBigPopupOpen}):ReactElement => 
             />
           )
       })}
+
+      {/* {markers.map((marker, index) => {
+          const popupReference = {
+            getBoundingClientRect() {
+              return {
+                top: marker.popupPosition?.y,
+                left: marker.popupPosition?.x,
+                bottom: marker.popupPosition?.y,
+                right: marker.popupPosition?.x,
+                width: 0,
+                height: 0,
+              };
+            },
+          };
+        
+          return (
+            <SmallPostOnMap
+              key={index}
+              reference={popupReference}
+              isPostOnMapOpen={marker.isPostOnMapOpen}
+              onClick={handleSmallPostClick}
+            />
+          )
+      })} */}
     </div>
   );
 }

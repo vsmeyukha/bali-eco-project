@@ -2,7 +2,11 @@ import { ReactElement } from 'react';
 import BlueWave from '../../../public/images/backgrounds/bluewave.svg';
 import useViewportWidth from '@/hooks/calculateWidth';
 
-const PublishPhoto: React.FC = (): ReactElement => {
+interface PublishPhotoProps {
+  openPopup: () => void,
+}
+
+const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   return (
@@ -50,6 +54,8 @@ const PublishPhoto: React.FC = (): ReactElement => {
             hover:transform 
             hover:scale-105 
             duration-300"
+
+            onClick={openPopup}
           >
             Опубликовать фото
           </button>

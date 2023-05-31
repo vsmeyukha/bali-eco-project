@@ -25,7 +25,7 @@ const ArticleContent: React.FC<{article: Array<ArticleChunkType>}> = ({article})
             );
           case 'image':
             return (
-              chunk.src && <Image src={chunk.src} alt={chunk.content} className="mt-[24px]" />
+              chunk.src && <Image src={chunk.src} alt={chunk.content} className="mt-[24px] rounded-[10px]" />
             );
           default:
             return null;

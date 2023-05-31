@@ -6,7 +6,7 @@ import {RegSignInPopup} from '../../../utils/types'
 
 const RegOrSignViaSocialMedia: React.FC<{regOrSign: RegSignInPopup}> = ({regOrSign}): ReactElement => {
   return (
-    <div className="mt-[24px] w-full">
+    <div className="mt-[24px] w-full flex flex-col items-center">
       <button className={buttonStyles}>
         <Apple style={{ fill: "#00265F" }} className="h-[20px] w-[17px]" />
         <p className="ml-[10px]">{regOrSign.appleText}</p>

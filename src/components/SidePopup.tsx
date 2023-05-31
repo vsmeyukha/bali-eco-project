@@ -30,24 +30,24 @@ const SidePopup: React.FC<PopupProps> = ({ open, onClose, children }: PopupProps
   return (
     <div className="relative">
       <Transition
-      show={open}
-      enter="transform transition duration-500 ease-in-out"
-      enterFrom="-translate-x-full"
-      enterTo="translate-x-0"
+        as={Fragment}
+        show={open}
+        enter="transform transition duration-500 ease-in-out"
+        enterFrom="-translate-x-full"
+        enterTo="translate-x-0"
       >
         <Dialog onClose={onClose} as={Fragment}>
           <Dialog.Panel
-            style={{ left: `${leftOffset}px` }}
             className='
             bg-white
             h-screen
             md:w-[653px]
             sm:w-[640px]
             w-full
-            sm:pl-[65px]
-            sm:pr-[33px]
-            px-0
+            sm:px-[65px]
+            px-[32px]
             pt-[43px]
+            pb-[65px]
             absolute
             top-0
             z-50
@@ -57,6 +57,7 @@ const SidePopup: React.FC<PopupProps> = ({ open, onClose, children }: PopupProps
             items-center
             slide-in
             overflow-auto'
+            style={{ left: `${leftOffset}px` }}
           >
             {children}
           </Dialog.Panel>
