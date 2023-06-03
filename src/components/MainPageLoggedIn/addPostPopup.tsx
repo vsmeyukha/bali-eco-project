@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement, useRef } from "react";
+import { FormEvent, ReactElement, useRef, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
@@ -10,53 +10,114 @@ import DirtButton from "./map/postOnMap/DirtButton";
 import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
 
+import { handlingInputs } from '../../pages/map';
+
 interface AddPostPopupProps {
   open: boolean,
   onClose: () => void,
+  handlingInputs: handlingInputs,
+  setImageState: React.Dispatch<React.SetStateAction<string | null>>,
+  postImage: string | null,
+  handleBigPopupOpen: () => void,
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
 
-const AddPostPopup: React.FC<AddPostPopupProps> = ({ open, onClose }: AddPostPopupProps): ReactElement => {
+const AddPostPopup: React.FC<AddPostPopupProps> = ({
+  open,
+  onClose,
+  handlingInputs,
+  setImageState,
+  postImage,
+  handleBigPopupOpen}: AddPostPopupProps): ReactElement => {
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onClose();
+    handleBigPopupOpen();
   }
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = () => {
+  const handleFileUpload = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    event.preventDefault();
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = event.target.files?.[0];
     if (file) {
-      console.log(file);
-      // Do something with the selected file...
+      const imageUrl = URL.createObjectURL(file);
+      setImageState(imageUrl);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (postImage) {
+        URL.revokeObjectURL(postImage);
+      }
+    };
+  }, [postImage]);
+
+  const ifButtonisActive: boolean =
+    Boolean(handlingInputs.values.postTitle)
+    &&
+    Boolean(handlingInputs.values.postComment)
+    &&
+    Boolean(handlingInputs.values.postGeo)
+    &&
+    Boolean(handlingInputs.values.postImage);
 
   return (
     <SidePopup open={open} onClose={onClose}>
       <Dialog.Title className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]">Добавить фото</Dialog.Title>
       <Form onSubmit={handleSubmit}>
-        <input type="file" style={{ display: "none" }} ref={fileInputRef} onChange={handleFileChange} />
-        <button onClick={handleFileUpload} className={`${photoUploadInputStyles} flex flex-col items-center`}>
-          <BigPlus className="mt-[116px] mb-[23px] hover:scale-110 transition-transform duration-200" />
-          <p className="font-medium text-[18px] leading-[22px] hover:scale-105 transition-transform duration-200">Добавьте или перетащите файл сюда</p>
-        </button>
-        <Input label="Заголовок" name="title" />
-        <TextAreaInput label="Комментарий к фото" name="comment" />
-        <Input label="Геолокация" name="geo" />
+        {!postImage
+          ?
+          <>
+            <input
+              type="file"
+              name="photo"
+              accept=".jpg, .jpeg, .png, .webp"
+              style={{ display: "none" }}
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+            <button onClick={handleFileUpload} className={`${photoUploadInputStyles} flex flex-col items-center`}>
+              <BigPlus className="mt-[116px] mb-[23px] hover:scale-110 transition-transform duration-200" />
+              <p className="font-medium text-[18px] leading-[22px] hover:scale-105 transition-transform duration-200">Добавьте или перетащите файл сюда</p>
+            </button>
+          </>
+          :
+          <img src={postImage} className="rounded-[10px]"/>
+        }
+        <Input
+          label="Заголовок"
+          name="title"
+          value={handlingInputs.values.postTitle}
+          handleChange={handlingInputs.handlers.handlePostTitleInput}
+        />
+        <TextAreaInput
+          label="Комментарий к фото"
+          name="comment"
+          value={handlingInputs.values.postComment}
+          handleChange={handlingInputs.handlers.handlePostCommentInput}
+        />
+        <Input
+          label="Геолокация"
+          name="geo"
+          value={handlingInputs.values.postGeo}
+          handleChange={handlingInputs.handlers.handlePostGeoInput}
+        />
         <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">Грязно?</p>
         <div className="flex space-x-[16px] self-start mt-[16px]">
           <DirtButton smile={<SadSmile />} text="Да" />
           <DirtButton smile={<CheerfulSmile />} text="Нет" />
         </div>
-        <BigBlueButton size="large" type="submit" text="Опубликовать" />
+        <BigBlueButton size="large" type="submit" text="Опубликовать" disabled={!ifButtonisActive} />
       </Form>
     </SidePopup>
   );

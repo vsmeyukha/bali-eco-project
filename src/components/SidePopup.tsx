@@ -48,7 +48,7 @@ const SidePopup: React.FC<PopupProps> = ({ open, onClose, children }: PopupProps
             px-[32px]
             pt-[43px]
             pb-[65px]
-            absolute
+            fixed
             top-0
             z-50
             flex
