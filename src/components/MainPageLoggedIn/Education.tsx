@@ -1,12 +1,16 @@
 import { ReactElement } from "react";
+import { StaticImageData } from "next/image";
 import { posts } from "@/utils/posts";
 import { getRandom } from "@/utils/utils";
 import { PostType } from "@/utils/types";
 import PostForFour from "@/components/MainPageLoggedIn/PostForFour";
+import extractArticleChunks from "@/helpers/extractArticleChunks";
+
+import { articles } from '../../data/edu-articles';
+
+import DefaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 
 const Education: React.FC = (): ReactElement => {
-  const cuttedPosts: Array<PostType> = posts.slice(0, 4);
-
   return (
     <div className="w-full flex flex-col items-center mt-[120px]">
       <div className="w-full flex flex-col">
@@ -30,16 +34,20 @@ const Education: React.FC = (): ReactElement => {
           overflow-x-auto
           lg:overflow-x-visible"
         >
-          {cuttedPosts.map((post) => {
+          {articles.map((article, index) => {
+            const { titleChunk, textChunk, photoChunk } = extractArticleChunks(article);
+
+            let photoUrl: string;
+            photoChunk ? photoUrl = (photoChunk as StaticImageData).src : photoUrl = DefaultImage.src;
+
             return (
               <PostForFour
-                key={getRandom(1000)}
-                title={post.title}
-                text={post.text}
-                photo={post.photo}
-                id={post.id}
-                date={post.date}
-                photoUrl={post.photoUrl}
+                key={index}
+                title={titleChunk || 'Title not available'}
+                lead={textChunk || 'Lead not available'}
+                photo={photoChunk}
+                id={article.id}
+                photoUrl={photoUrl}
               />
             )
           })}

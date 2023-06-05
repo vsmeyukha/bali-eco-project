@@ -18,11 +18,11 @@ export interface ArticlePreviewType {
   photoUrl?: string,
 }
 
-interface PostForMainPageType extends ArticlePreviewType {
+interface ArticleWithLayoutPreviewType extends ArticlePreviewType {
   layout: string,
 }
 
-const PostForMainPage: React.FC<PostForMainPageType> = ({title, id, lead, photo, layout }: PostForMainPageType): ReactElement => {
+const PostForMainPage: React.FC<ArticleWithLayoutPreviewType> = ({title, id, lead, photo, layout }: ArticleWithLayoutPreviewType): ReactElement => {
     // ? Styles for the large post on the left
   const largePostStyles: StylesType = {
     div: 'lg:row-start-2 lg:row-span-3 flex flex-col w-full',

@@ -1,12 +1,8 @@
 import { ReactElement } from 'react';
-import { StaticImageData } from "next/image";
-import { posts } from "@/utils/posts";
-import { getRandom } from "@/utils/utils";
-import { PostType } from "@/utils/types";
-import styles from '../../styles/dynamic-gap.module.css';
 import PostForMainPage from "@/components/MainPageLoggedIn/PostForMainPage";
 import useViewportWidth from '@/hooks/calculateWidth';
 import ClimateCarousel from './ClimateCarousel';
+import extractArticleChunks from '@/helpers/extractArticleChunks';
 
 import { articles } from '@/data/climate-articles';
 
@@ -33,28 +29,7 @@ const ClimateChange: React.FC = (): ReactElement => {
           {viewportWidth >= 1024
             ?
             articles.map((article, index) => {
-              let titleChunk;
-              let textChunk;
-              let photoChunk: StaticImageData | null = null;
-              
-              article.chunks.find(chunk => {
-                if (chunk.type === 'title') {
-                  titleChunk = chunk.content;
-                }
-              });
-
-              article.chunks.find(chunk => {
-                if (chunk.type === 'lead') {
-                  textChunk = chunk.content;
-                }
-              });
-
-              article.chunks.find(chunk => {
-                if (chunk.type === 'image') {
-                  photoChunk = chunk.src as StaticImageData;
-                }
-              });
-              
+              const { titleChunk, textChunk, photoChunk } = extractArticleChunks(article);
 
               if (index === 0) {
                 return (
