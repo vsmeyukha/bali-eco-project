@@ -16,7 +16,7 @@ export type ArticleType = {
   chunks: Array<ArticleChunkType>,
 }
 
-type AllArticlesType = Array<ArticleType>;
+export type AllArticlesType = Array<ArticleType>;
 
 export const articles: AllArticlesType = [
   {

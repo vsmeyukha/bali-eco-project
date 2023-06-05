@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { StaticImageData } from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { posts } from "@/utils/posts";
@@ -9,7 +10,9 @@ import RightArrow from '../../../public/images/svgs/icons/rightArrow.svg';
 import Manatee from '../../../public/images/backgrounds/manatee.png';
 import Image from "next/image";
 
-const ClimateCarousel: React.FC = (): ReactElement => {
+import { AllArticlesType } from "@/data/climate-articles";
+
+const ClimateCarousel: React.FC<{articles: AllArticlesType}> = ({articles}): ReactElement => {
   const cuttedPosts: PostType[] = posts.slice(0, 4);
 
   // ? расклад такой: если использовать array.map, то начинает все ломаться на ширине 555 пикселей. если использовать просто несколько PostForMainPage, ведет себя лучше, но на супермаленьком разрешении типа там 400 с чем-то тоже ломается. если вытащить весь код из PostForMainPage и несколько раз его повторить тут, то все шикарно работает. как так???
@@ -35,21 +38,41 @@ const ClimateCarousel: React.FC = (): ReactElement => {
         </button>)
       }
     >
-      {/* {cuttedPosts.map((post, index) => {
+      {articles.map((article, index) => {
+        let titleChunk;
+        let textChunk;
+        let photoChunk: StaticImageData | null = null;
+        
+        article.chunks.find(chunk => {
+          if (chunk.type === 'title') {
+            titleChunk = chunk.content;
+          }
+        });
+
+        article.chunks.find(chunk => {
+          if (chunk.type === 'lead') {
+            textChunk = chunk.content;
+          }
+        });
+
+        article.chunks.find(chunk => {
+          if (chunk.type === 'image') {
+            photoChunk = chunk.src as StaticImageData;
+          }
+        });
         return (
           <PostForMainPage
             key={index}
-            title={post.title}
-            text={post.text}
-            date={post.date}
-            photo={post.photo}
-            id={post.id}
+            title={titleChunk || 'Title not available'}
+            lead={textChunk || 'Lead not available'}
+            photo={photoChunk}
+            id={article.id}
             layout="large"
           />
         )
-      })} */}
+      })}
 
-      <div className="lg:row-start-2 lg:row-span-3 flex flex-col w-full">
+      {/* <div className="lg:row-start-2 lg:row-span-3 flex flex-col w-full">
         <div className="h-[415px] relative w-full">
           <Image src={Manatee} alt="hui" className="rounded-[8px] object-cover object-center" fill />
         </div>
@@ -71,7 +94,7 @@ const ClimateCarousel: React.FC = (): ReactElement => {
         </div>
         <h3 className="line-clamp-2 text-[#00265F] text-[24px] leading-[28px] font-oceanic-bold mt-[16px] text-left">{cuttedPosts[2].title}</h3>
         <p className="line-clamp-2 font-montserrat font-normal text-[18px] leading-[26px] text-[#00265F] mt-[7px] text-left">{cuttedPosts[0].text}</p>
-      </div>
+      </div> */}
 
       {/* <PostForMainPage
         title={cuttedPosts[0].title}

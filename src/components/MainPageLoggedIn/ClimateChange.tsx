@@ -77,7 +77,7 @@ const ClimateChange: React.FC = (): ReactElement => {
                 />)
             })
             :
-            <ClimateCarousel />
+            <ClimateCarousel articles={articles} />
           }
       </div>
   )
