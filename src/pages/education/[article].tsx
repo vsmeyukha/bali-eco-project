@@ -3,7 +3,7 @@ import InstTwiFb from "@/components/InstTwiFb";
 import ArticleContent from "@/components/ArticleContent";
 import Footer from "@/components/Footer/Footer";
 
-import { baliEnvironmentalThreats } from '../utils/posts';
+import { baliEnvironmentalThreats } from '../../utils/posts';
 
 const Article = () => {
   return (

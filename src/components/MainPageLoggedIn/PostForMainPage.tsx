@@ -1,16 +1,28 @@
-import { PostType } from "@/utils/types";
+import { StaticImageData } from 'next/image';
 import Image from "next/image";
 import { ReactElement } from "react";
+import Link from "next/link";
+import { PostType } from "@/utils/types";
+
+import DefaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 
 interface StylesType {
   [key: string]: string,
 }
 
-interface PostForMainPageType extends PostType {
+export interface ArticlePreviewType {
+  title: string,
+  id: number,
+  lead: string,
+  photo: StaticImageData | null,
+  photoUrl?: string,
+}
+
+interface PostForMainPageType extends ArticlePreviewType {
   layout: string,
 }
 
-const PostForMainPage: React.FC<PostForMainPageType> = ({title, date, id, text, photo, layout }: PostForMainPageType): ReactElement => {
+const PostForMainPage: React.FC<PostForMainPageType> = ({title, id, lead, photo, layout }: PostForMainPageType): ReactElement => {
     // ? Styles for the large post on the left
   const largePostStyles: StylesType = {
     div: 'lg:row-start-2 lg:row-span-3 flex flex-col w-full',
@@ -33,13 +45,13 @@ const PostForMainPage: React.FC<PostForMainPageType> = ({title, date, id, text, 
 
   const postStyles: StylesType = layout === 'large' ? largePostStyles : smallPostStyles;
   return (
-    <div className={postStyles.div}>
+    <Link href={`/climate/${id}`} className={postStyles.div}>
       <div className={postStyles.imageWrapperDiv}>
-        <Image src={photo} alt={title} className={postStyles.image} fill />
+        <Image src={photo || DefaultImage} alt={title} className={postStyles.image} fill />
       </div>
       <h3 className={postStyles.title}>{ title }</h3>
-      <p className={postStyles.text}>{ text }</p>
-    </div>
+      <p className={postStyles.text}>{ lead }</p>
+    </Link>
   );
 }
 

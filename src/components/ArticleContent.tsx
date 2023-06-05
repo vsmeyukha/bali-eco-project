@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import Image from "next/image";
-import { ArticleChunkType } from '../utils/posts';
+import { ArticleChunkType } from "@/data/climate-articles";
 
 const ArticleContent: React.FC<{article: Array<ArticleChunkType>}> = ({article}): ReactElement => {
   return (
     <section className="w-full">
       {article.map((chunk, index) => {
         switch (chunk.type) {
-          case 'heading':
+          case 'title':
             return (
               <h2 className="font-oceanic-bold text-[32px] leading-[38px] text-[#00265F] mt-[24px]">{chunk.content}</h2>
             );
@@ -25,7 +25,7 @@ const ArticleContent: React.FC<{article: Array<ArticleChunkType>}> = ({article})
             );
           case 'image':
             return (
-              chunk.src && <Image src={chunk.src} alt={chunk.content} className="mt-[24px] rounded-[10px]" />
+              chunk.src && <Image src={chunk.src} alt={chunk.content} className="mt-[24px] rounded-[10px] max-h-[670px] object-cover object-top" />
             );
           default:
             return null;
