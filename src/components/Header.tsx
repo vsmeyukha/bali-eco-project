@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
 import Menu from './Menu';
 import Logo from "./Logo";
@@ -6,6 +6,8 @@ import QuickToolsPopup from "./QuickToolsPopup/QuickToolsPopup";
 import SignInButton from "./MainPageNotLoggedIn/SignInButton";
 import useViewportWidth from "@/hooks/calculateWidth";
 import BurgerMenu from "./BurgerMenu";
+
+import { UseTranslation, useTranslation } from "next-i18next";
 
 interface HeaderProps {
   onPopupOpen?: () => void,
@@ -29,6 +31,20 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
     onPopupOpen?.();
   }
 
+  const { i18n } = useTranslation();
+
+  const [selectedLang, setSelectedLang] = useState<string>(i18n.language);
+
+  const handleSetSelectedLang = (code: string): void => {
+    setSelectedLang(code);
+  }
+
+  const [isDay, setIsDay] = useState<string>('on');
+  
+  const handleColorTheme = (code: string): void => {
+    setIsDay(code);
+  }
+
   return (
     <header
       className={
@@ -50,7 +66,16 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
         <div className="flex flex-row items-center justify-center">
           <Menu />
           {
-            currentPage === '/' ? <SignInButton openPopup={handleSignInPopupOpen} /> : <QuickToolsPopup />
+            currentPage === '/'
+              ?
+              <SignInButton openPopup={handleSignInPopupOpen} />
+              :
+              <QuickToolsPopup
+                selectedLang={selectedLang}
+                handleSetSelectedLang={handleSetSelectedLang}
+                isDay={isDay}
+                handleColorTheme={handleColorTheme}
+              />
           }
         </div>
         :

@@ -1,7 +1,8 @@
-import { ReactElement, Fragment } from "react";
+import { ReactElement, Fragment} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
+
 import Manatee from '../../../public/images/backgrounds/manatee.png';
 import { quickToolsMenu } from "@/utils/consts";
 import Profile from '../../../public/images/svgs/icons/profile.svg';
@@ -9,19 +10,17 @@ import { QuickToolsMenuType } from '../../utils/types';
 import QuickToolsMenuItem from './QuickToolsMenuItem';
 import QuickPopupSwitchContainer from './QuickPopupSwitchContainer';
 import { switchContent } from '../../utils/types';
+import SwitchLanguage from "./SwitchLanguage";
+import SwitchDayAndNight from "./SwitchDayAndNight";
 
-const languages: Array<switchContent> = [
-  { code: 'en', label: 'EN' },
-  { code: 'ru', label: 'RU' },
-  { code: 'id', label: 'ID' },
-];
+interface QuickToolsPopupProps {
+  selectedLang: string,
+  handleSetSelectedLang: (code: string) => void,
+  isDay: string, 
+  handleColorTheme: (code: string) => void,
+}
 
-const dayAndNight: Array<switchContent> = [
-  { code: 'on', label: 'ON' },
-  { code: 'off', label: 'OFF' },
-];
-
-const QuickToolsPopup: React.FC = (): ReactElement => {
+const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({selectedLang, handleSetSelectedLang, isDay, handleColorTheme}): ReactElement => {
   return (
     <Popover>
       {({ open }) => (
@@ -74,8 +73,22 @@ const QuickToolsPopup: React.FC = (): ReactElement => {
                 text={paragraph.text}
                 isDiv={index === 2 || index === 3}
               >
-                {index === 2 && (<QuickPopupSwitchContainer content={languages} />)}
-                {index === 3 && (<QuickPopupSwitchContainer content={dayAndNight} />)}
+                {index === 2
+                  &&
+                  (
+                    <QuickPopupSwitchContainer>
+                      <SwitchLanguage selectedLang={selectedLang} handleSetSelectedLang={handleSetSelectedLang} />
+                    </QuickPopupSwitchContainer>
+                  )
+                }
+                {index === 3
+                  &&
+                  (
+                  <QuickPopupSwitchContainer>
+                    <SwitchDayAndNight isDay={isDay} handleColorTheme={handleColorTheme} />
+                  </QuickPopupSwitchContainer>
+                  )
+                }
               </QuickToolsMenuItem>
             )
           })}

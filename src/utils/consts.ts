@@ -30,86 +30,86 @@ import aboutUsIcon from '../../public/images/svgs/icons/aboutUsIcon.svg';
 
 const navListRu: NavLink[] = [
   {
-    title: 'Карта',
+    titleKey: 'map',
     link: '/map',
-    id: getRandom(1000),
+    id: 1,
   },
   {
-    title: 'Факты',
+    titleKey: 'facts',
     link: '/resources',
-    id: getRandom(1000),
+    id: 2,
   },
   {
-    title: 'Волонтеры',
+    titleKey: 'volunteers',
     link: '/organizations',
-    id: getRandom(1000),
+    id: 3,
   },
   {
-    title: 'О нас',
+    titleKey: 'aboutUs',
     link: '/aboutUs',
-    id: getRandom(1000),
+    id: 4,
   },
 ];
 
 const navListForBurgerRu: NavLinkForBurger[] = [
   {
-    title: 'Карта',
+    titleKey: 'map',
     link: '/map',
     icon: mapIcon,
     id: getRandom(1000),
   },
   {
-    title: 'Факты',
+    titleKey: 'facts',
     link: '/resources',
     icon: factsIcon,
     id: getRandom(1000),
   },
   {
-    title: 'Волонтеры',
+    titleKey: 'volunteers',
     link: '/organizations',
     icon: volunteersIcon,
     id: getRandom(1000),
   },
   {
-    title: 'О нас',
+    titleKey: 'aboutUs',
     link: '/aboutUs',
     icon: aboutUsIcon,
     id: getRandom(1000),
   },
 ];
 
-const navListEng: NavLink[] = [
-  {
-    title: 'Ocean pollution',
-    link: '/pollution',
-    id: getRandom(1000),
-  },
-  {
-    title: 'Climate change',
-    link: '/climateChange',
-    id: getRandom(1000),
-  },
-  {
-    title: 'Solution',
-    link: '/solution',
-    id: getRandom(1000),
-  },
-  {
-    title: 'News',
-    link: '/news',
-    id: getRandom(1000),
-  },
-  {
-    title: 'Resources',
-    link: '/resources',
-    id: getRandom(1000),
-  },
-  {
-    title: 'About us',
-    link: '/aboutUs',
-    id: getRandom(1000),
-  }
-];
+// const navListEng: NavLink[] = [
+//   {
+//     title: 'Ocean pollution',
+//     link: '/pollution',
+//     id: getRandom(1000),
+//   },
+//   {
+//     title: 'Climate change',
+//     link: '/climateChange',
+//     id: getRandom(1000),
+//   },
+//   {
+//     title: 'Solution',
+//     link: '/solution',
+//     id: getRandom(1000),
+//   },
+//   {
+//     title: 'News',
+//     link: '/news',
+//     id: getRandom(1000),
+//   },
+//   {
+//     title: 'Resources',
+//     link: '/resources',
+//     id: getRandom(1000),
+//   },
+//   {
+//     title: 'About us',
+//     link: '/aboutUs',
+//     id: getRandom(1000),
+//   }
+// ];
 
 const credits: CredType = {
   'ru': {
@@ -233,7 +233,6 @@ const signInPopup: RegSignInPopup = {
 export {
   navListRu,
   navListForBurgerRu,
-  navListEng,
   credits,
   participateButton,
   register,

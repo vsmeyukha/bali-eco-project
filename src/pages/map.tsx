@@ -1,4 +1,6 @@
-import { ReactElement, useState, useRef, FormEvent, ChangeEvent } from "react";
+import { ReactElement, useState, useRef, FormEvent, ChangeEvent, useEffect } from "react";
+import { GetStaticProps } from "next";
+
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
 import MapComponent from "@/components/MainPageLoggedIn/map/GoogleMaps";
@@ -15,6 +17,10 @@ import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
 import { usePopper } from "react-popper";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+
+import i18n from 'next-i18next';
 
   // ? прописываем типизацию объекта обработки инпутов (сама логика ниже, на 63 строке), экспортируем интерфейс, чтобы использовать его в типизации пропсов addPostPopup
   export interface handlingInputs {
@@ -30,6 +36,15 @@ import { usePopper } from "react-popper";
       handlePostGeoInput: (e: ChangeEvent<HTMLInputElement>) => void,
     },
   }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const typedLocale = locale as string;
+  return {
+    props: {
+      ...(await serverSideTranslations(typedLocale, ['common', 'headerMenu'], null, ['en', 'ru', 'id'])),
+    },
+  }
+}
 
 const LoggedInMain: React.FC = (): ReactElement => {
   // ? считаем ширину экрана
@@ -104,6 +119,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
     },
   }
 
+  const { t } = useTranslation('common');
+
   return (
     <section className="w-full relative" onClick={handlePopupClose}>
       <Header />
@@ -114,6 +131,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
         &&
         <PublishPhotoButton />
       }
+      <h1>{t('hello')}</h1>
       <ClimateAndEduContainer>
         <ClimateChange />
         <Education />

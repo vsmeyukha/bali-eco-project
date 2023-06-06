@@ -2,7 +2,7 @@ import { StaticImageData } from 'next/image';
 import { ReactElement, ReactNode } from 'react';
 
 export interface NavLink {
-  title: string,
+  titleKey: string,
   link: string,
   id: number,
 }
