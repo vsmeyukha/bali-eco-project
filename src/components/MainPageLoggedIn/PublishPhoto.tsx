@@ -2,12 +2,16 @@ import { ReactElement } from 'react';
 import BlueWave from '../../../public/images/backgrounds/bluewave.svg';
 import useViewportWidth from '@/hooks/calculateWidth';
 
+import { UseTranslation, useTranslation } from 'next-i18next';
+
 interface PublishPhotoProps {
   openPopup: () => void,
 }
 
 const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement => {
   const viewportWidth = useViewportWidth();
+
+  const { t } = useTranslation('mapPage');
 
   return (
     <>
@@ -57,7 +61,7 @@ const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement =>
 
             onClick={openPopup}
           >
-            Опубликовать фото
+            {t('publishPhoto')}
           </button>
         }
       </div>

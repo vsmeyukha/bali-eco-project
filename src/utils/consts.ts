@@ -78,6 +78,25 @@ const navListForBurgerRu: NavLinkForBurger[] = [
   },
 ];
 
+const aboutUsContents = [
+  {
+    aboutUsTitle: 'aboutUsTitle1',
+    aboutUsDesc: 'aboutUsDesc1'
+  },
+  {
+    aboutUsTitle: 'aboutUsTitle2',
+    aboutUsDesc: 'aboutUsDesc2'
+  },
+  {
+    aboutUsTitle: 'aboutUsTitle3',
+    aboutUsDesc: 'aboutUsDesc3'
+  },
+  {
+    aboutUsTitle: 'aboutUsTitle4',
+    aboutUsDesc: 'aboutUsDesc4'
+  },
+]
+
 // const navListEng: NavLink[] = [
 //   {
 //     title: 'Ocean pollution',
@@ -248,4 +267,5 @@ export {
   regPopup,
   signInPopup,
   smallPostOnMapInfo,
+  aboutUsContents,
 };

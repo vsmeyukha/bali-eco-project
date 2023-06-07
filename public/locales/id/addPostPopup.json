@@ -1,0 +1,11 @@
+{
+  "addPhoto": "Tambah Foto",
+  "dragOrDrop": "Tambahkan atau Seret dan Jatuhkan File di Sini",
+  "title": "Judul",
+  "comment": "Komentar pada Foto",
+  "geo": "Geolokasi",
+  "isItDirty": "Apakah Ini Kotor?",
+  "itIsDirty": "Ya",
+  "itIsNotDirty": "Tidak",
+  "publish": "Terbitkan"
+}

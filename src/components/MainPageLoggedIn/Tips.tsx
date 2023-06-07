@@ -1,9 +1,13 @@
 import { ReactElement } from "react";
+import { useTranslation } from "next-i18next";
+
 import TipsButton from "@/components/TipsButton";
 import useViewportWidth from "@/hooks/calculateWidth";
 
 const Tips: React.FC = (): ReactElement => {
   const viewportWidth = useViewportWidth();
+
+  const { t } = useTranslation('mapPage');
 
   return (
     <div
@@ -21,7 +25,7 @@ const Tips: React.FC = (): ReactElement => {
       lg:pt-[138px]
       pt-[40px]"
     >
-      <h2 className="font-oceanic-bold text-[32px] leading-[38px] text-white">Советы</h2>
+      <h2 className="font-oceanic-bold text-[32px] leading-[38px] text-white">{ t('recommendationTitle') }</h2>
       <div className="flex flex-col items-center lg:my-[32px] my-[32px]">
         <h3
           className="
@@ -37,7 +41,7 @@ const Tips: React.FC = (): ReactElement => {
           sm:mb-[30px]
           mb-[20px]"
         >
-          Получите простой и легко применимый эко-совет от ChatGPT
+          { t('recommendationDesc') }
         </h3>
         <TipsButton />
       </div>

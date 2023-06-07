@@ -1,11 +1,23 @@
 import { ReactElement, useState, MouseEvent, useContext } from 'react';
+import { GetStaticProps } from 'next';
+
 import Head from 'next/head';
 import Header from '@/components/Header';
 import Main from '@/components/MainPageNotLoggedIn/Main';
 import Footer from '@/components/Footer/Footer';
 
-export default function Home() {
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const typedLocale = locale as string;
+  return {
+    props: {
+      ...(await serverSideTranslations(typedLocale, ['headerMenu'], null, ['en', 'ru', 'id'])),
+    },
+  }
+}
+
+export default function Home() {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
   const handlePopupOpen = () => {

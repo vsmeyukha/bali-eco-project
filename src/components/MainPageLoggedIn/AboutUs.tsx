@@ -1,10 +1,16 @@
 import { ReactElement } from "react";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
+
 import PlanetIcon from '../../../public/images/svgs/icons/planet.svg';
-import { projectDescription } from '../../utils/consts';
 import JellyFish from '../../../public/images/backgrounds/jellyfish.png';
 
+import { projectDescription } from '../../utils/consts';
+import { aboutUsContents } from "../../utils/consts";
+
 const AboutUs: React.FC = (): ReactElement => {
+  const { t } = useTranslation('mapPage');
+
   let arr = projectDescription.repeat(4).split('.');
   arr.pop();
 
@@ -36,7 +42,7 @@ const AboutUs: React.FC = (): ReactElement => {
             leading-[21px]
             font-oceanic-bold
             "
-        >О нас</h2>
+        >{ t('aboutUs')}</h2>
         <div className="flex xl:flex-row flex-col-reverse justify-center mt-[32px]">
           <div
             className="
@@ -55,14 +61,31 @@ const AboutUs: React.FC = (): ReactElement => {
               font-normal"
           >
             {
-              arr.map((paragraph, index) => {
+              aboutUsContents.map((paragraph, index) => {
                 return (
                   <div key={index} className="sm:max-w-[315px]">
                     <div className="w-[32px] h-[32px] bg-gray-300 rounded-[8px] flex justify-center items-center">
                       <PlanetIcon />
                     </div>
-                    <h3 className="font-oceanic-bold text-[#00265F] text-[20px] leading-[24px] mt-[15px]">Зеленая сторона Бали</h3>
-                    <p className="mt-[8px] font-montserrat-normal text-[18px] leading-[23px]">{paragraph}</p>
+                    <h3
+                      className="
+                      font-oceanic-bold
+                      text-[#00265F]
+                      text-[20px]
+                      leading-[24px]
+                      mt-[15px]"
+                    >
+                      {t(paragraph.aboutUsTitle)}
+                    </h3>
+                    <p
+                      className="
+                      mt-[8px]
+                      font-montserrat-normal
+                      text-[18px]
+                      leading-[23px]"
+                    >
+                      {t(paragraph.aboutUsDesc)}
+                    </p>
                   </div>
                 );
               })

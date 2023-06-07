@@ -1,6 +1,7 @@
 import { ReactElement, useState } from "react";
 import { getRandom } from "@/utils/utils";
 import { ecoTips } from '../utils/shortAdvices';
+import { useTranslation } from "next-i18next";
 
 const TipsButton: React.FC = (): ReactElement => {
   const [random, setRandom] = useState<number | null>(null);
@@ -8,6 +9,8 @@ const TipsButton: React.FC = (): ReactElement => {
   const handleRandom = (): void => {
     setRandom(getRandom(50));
   }
+
+  const { t } = useTranslation('chatGPT');
 
   return (
     <>    
@@ -31,7 +34,7 @@ const TipsButton: React.FC = (): ReactElement => {
         type="button"
         onClick={() => handleRandom()}
       >
-        <p className="text-[20px] leading-[26px] font-montserrat-black max-w-[110px]">Получить совет</p>
+        <p className="text-[20px] leading-[26px] font-montserrat-black max-w-[110px]">{ t('getATip')}</p>
       </button>
       {random !== null ?
         <div
@@ -84,7 +87,7 @@ const TipsButton: React.FC = (): ReactElement => {
               text-center
               text-white 
               w-full"
-          >Здесь будет ответ ChatGPT</h2>
+          >{ t('tipPlaceholder') }</h2>
         </div>
       }
     </>

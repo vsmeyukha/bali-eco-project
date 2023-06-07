@@ -1,5 +1,7 @@
 import { FormEvent, ReactElement, useRef, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
+import { useTranslation } from "next-i18next";
+
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
 import Input from '../Form/Input';
@@ -70,10 +72,12 @@ const AddPostPopup: React.FC<AddPostPopupProps> = ({
     Boolean(handlingInputs.values.postGeo)
     &&
     Boolean(handlingInputs.values.postImage);
+  
+  const { t } = useTranslation('addPostPopup');
 
   return (
     <SidePopup open={open} onClose={onClose}>
-      <Dialog.Title className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]">Добавить фото</Dialog.Title>
+      <Dialog.Title className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]">{ t('addPhoto') }</Dialog.Title>
       <Form onSubmit={handleSubmit}>
         {!postImage
           ?
@@ -88,36 +92,38 @@ const AddPostPopup: React.FC<AddPostPopupProps> = ({
             />
             <button onClick={handleFileUpload} className={`${photoUploadInputStyles} flex flex-col items-center`}>
               <BigPlus className="mt-[116px] mb-[23px] hover:scale-110 transition-transform duration-200" />
-              <p className="font-medium text-[18px] leading-[22px] hover:scale-105 transition-transform duration-200">Добавьте или перетащите файл сюда</p>
+              <p className="font-medium text-[18px] leading-[22px] hover:scale-105 transition-transform duration-200">
+                {t('dragOrDrop')}
+              </p>
             </button>
           </>
           :
           <img src={postImage} className="rounded-[10px]"/>
         }
         <Input
-          label="Заголовок"
+          label={t('title')}
           name="title"
           value={handlingInputs.values.postTitle}
           handleChange={handlingInputs.handlers.handlePostTitleInput}
         />
         <TextAreaInput
-          label="Комментарий к фото"
+          label={t('comment')}
           name="comment"
           value={handlingInputs.values.postComment}
           handleChange={handlingInputs.handlers.handlePostCommentInput}
         />
         <Input
-          label="Геолокация"
+          label={t('geo')}
           name="geo"
           value={handlingInputs.values.postGeo}
           handleChange={handlingInputs.handlers.handlePostGeoInput}
         />
-        <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">Грязно?</p>
+        <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">{t('isItDirty')}</p>
         <div className="flex space-x-[16px] self-start mt-[16px]">
-          <DirtButton smile={<SadSmile />} text="Да" />
-          <DirtButton smile={<CheerfulSmile />} text="Нет" />
+          <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
+          <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
         </div>
-        <BigBlueButton size="large" type="submit" text="Опубликовать" disabled={!ifButtonisActive} />
+        <BigBlueButton size="large" type="submit" text={t('publish')} disabled={!ifButtonisActive} />
       </Form>
     </SidePopup>
   );

@@ -6,11 +6,15 @@ import { PostType } from "@/utils/types";
 import PostForFour from "@/components/MainPageLoggedIn/PostForFour";
 import extractArticleChunks from "@/helpers/extractArticleChunks";
 
+import { UseTranslation, useTranslation } from "next-i18next";
+
 import { articles } from '../../data/edu-articles';
 
 import DefaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 
 const Education: React.FC = (): ReactElement => {
+  const { t } = useTranslation('mapPage');
+
   return (
     <div className="w-full flex flex-col items-center mt-[120px]">
       <div className="w-full flex flex-col">
@@ -21,7 +25,7 @@ const Education: React.FC = (): ReactElement => {
           text-[32px]
           leading-[38px]
           self-start"
-        >Образовательный контент</h2>
+        >{ t('ecoLife') }</h2>
         <div className="
           w-full 
           flex

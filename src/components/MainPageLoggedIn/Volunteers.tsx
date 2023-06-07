@@ -1,8 +1,12 @@
-import Image from "next/image";
 import { ReactElement } from "react";
+import Image from "next/image";
+import { UseTranslation, useTranslation } from "next-i18next";
+
 import { volunteersImages } from "@/utils/consts"; 
 
 const Volunteers: React.FC = (): ReactElement => {
+  const {t} = useTranslation('mapPage')
+
   return (
     <div
       className="
@@ -20,7 +24,7 @@ const Volunteers: React.FC = (): ReactElement => {
       lg:mt-[-70px] 
       mt-[20px]"
     >
-      <h3 className="font-oceanic-bold text-[32px] leading-[38px] text-[#00265F]">Волонтеры</h3>
+      <h3 className="font-oceanic-bold text-[32px] leading-[38px] text-[#00265F]">{t('volunteersTitle')}</h3>
       <div className="flex lg:flex-row flex-col justify-center mt-[50px]">
         <div
           className="
@@ -85,9 +89,9 @@ const Volunteers: React.FC = (): ReactElement => {
           leading-[24px]
           text-[#00265F]"
         >
-            <p>Здесь какой-то текст про волонтерские организации. Откуда они взялись, по какому принципу работают, кому помогают.</p>
-            <p className="lg:mt-[40px] md:mt-[30px] sm:mt-[20px] mt-[16px]">Здесь какой-то текст про волонтерские организации. Откуда они взялись, по какому принципу работают, кому помогают.</p>
-            <p className="lg:mt-[40px] md:mt-[30px] sm:mt-[20px] mt-[16px]">Здесь какой-то текст про волонтерские организации. Откуда они взялись, по какому принципу работают, кому помогают.</p>
+            <p>{ t('volunteersDesc1') }</p>
+            <p className="lg:mt-[40px] md:mt-[30px] sm:mt-[20px] mt-[16px]">{ t('volunteersDesc2') }</p>
+            <p className="lg:mt-[40px] md:mt-[30px] sm:mt-[20px] mt-[16px]">{ t('volunteersDesc3') }</p>
           </div>
       </div>
     </div>

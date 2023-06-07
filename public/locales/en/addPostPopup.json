@@ -1,0 +1,11 @@
+{
+  "addPhoto": "Add Photo",
+  "dragOrDrop": "Add or Drag and Drop a File Here",
+  "title": "Title",
+  "comment": "Comment on the Photo",
+  "geo": "Geolocation",
+  "isItDirty": "Is it Dirty?",
+  "itIsDirty": "Yes",
+  "itIsNotDirty": "No",
+  "publish": "Post"
+}

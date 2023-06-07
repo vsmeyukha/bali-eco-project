@@ -18,9 +18,6 @@ import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
 import { usePopper } from "react-popper";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
-
-import i18n from 'next-i18next';
 
   // ? прописываем типизацию объекта обработки инпутов (сама логика ниже, на 63 строке), экспортируем интерфейс, чтобы использовать его в типизации пропсов addPostPopup
   export interface handlingInputs {
@@ -41,7 +38,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const typedLocale = locale as string;
   return {
     props: {
-      ...(await serverSideTranslations(typedLocale, ['common', 'headerMenu'], null, ['en', 'ru', 'id'])),
+      ...(await serverSideTranslations(
+        typedLocale,
+        ['headerMenu', 'mapPage', 'chatGPT', 'addPostPopup'],
+        null,
+        ['en', 'ru', 'id']
+      )),
     },
   }
 }
@@ -119,8 +121,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
     },
   }
 
-  const { t } = useTranslation('common');
-
   return (
     <section className="w-full relative" onClick={handlePopupClose}>
       <Header />
@@ -131,7 +131,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
         &&
         <PublishPhotoButton />
       }
-      <h1>{t('hello')}</h1>
       <ClimateAndEduContainer>
         <ClimateChange />
         <Education />

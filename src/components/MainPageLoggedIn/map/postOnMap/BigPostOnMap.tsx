@@ -2,6 +2,8 @@ import { ForwardedRef, ReactElement, forwardRef, Fragment, useState, useEffect }
 import Image from "next/image";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
+import { UseTranslation } from "next-i18next";
+
 import DirtButton from "./DirtButton";
 import useViewportWidth from "@/hooks/calculateWidth";
 

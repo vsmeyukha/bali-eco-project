@@ -4,12 +4,14 @@ import useViewportWidth from '@/hooks/calculateWidth';
 import ClimateCarousel from './ClimateCarousel';
 import extractArticleChunks from '@/helpers/extractArticleChunks';
 
+import { UseTranslation, useTranslation } from 'next-i18next';
+
 import { articles } from '@/data/climate-articles';
 
 const ClimateChange: React.FC = (): ReactElement => {
-  // const cuttedPosts: Array<PostType> = posts.slice(0, 4);
-
   const viewportWidth = useViewportWidth();
+
+  const { t } = useTranslation('mapPage');
 
   return (
       <div
@@ -25,7 +27,7 @@ const ClimateChange: React.FC = (): ReactElement => {
             flex-col
           `}
         >
-          <h2 className="font-oceanic-bold text-[#00265F] text-[32px] leading-[38px] col-start-1 col-span-2">Изменение климата</h2>
+      <h2 className="font-oceanic-bold text-[#00265F] text-[32px] leading-[38px] col-start-1 col-span-2">{ t('climateChange') }</h2>
           {viewportWidth >= 1024
             ?
             articles.map((article, index) => {
