@@ -8,6 +8,7 @@ interface DirtButton {
 const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
   return (
     <button
+      type="button"
       className="
       w-[58px]
       h-[54px]
@@ -22,6 +23,9 @@ const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
       justify-between
       items-center
       pt-[11px]
+      hover:transform
+      hover:scale-125
+      duration-200
       "
     >
       {smile}

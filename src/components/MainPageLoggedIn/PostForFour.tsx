@@ -19,7 +19,9 @@ const PostForFour: React.FC<ArticlePreviewType> = ({title, id, lead, photo, phot
       lg:shrink
       shrink-0
       min-w-[170px]
-      "
+      hover:transform
+      hover:scale-105
+      duration-200"
       style={{
         backgroundImage: `url(${photoUrl})`,
       }}

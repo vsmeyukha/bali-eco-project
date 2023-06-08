@@ -2,7 +2,7 @@ import { ForwardedRef, ReactElement, forwardRef, Fragment, useState, useEffect }
 import Image from "next/image";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
-import { UseTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
 
 import DirtButton from "./DirtButton";
 import useViewportWidth from "@/hooks/calculateWidth";
@@ -43,6 +43,8 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
   useEffect(() => {
     setHeightForPositioning(window.innerHeight / 5);
   }, []);
+
+  const { t } = useTranslation('bigPostPopup');
 
   return (
     <Transition
@@ -104,15 +106,15 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
         </div>
           <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{props.comment}</p>
         <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
-          <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">Оцените место</p>
+            <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">{ t('rateThePlace')}</p>
           <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>
-          <p className="font-montserrat text-[14px] leading-[17px] ml-[12px] mt-[8px]">Грязно?</p>
+            <p className="font-montserrat text-[14px] leading-[17px] ml-[12px] mt-[8px]">{ t('isItDirty')}</p>
           <div className="flex flex-row justify-center w-full mt-[6px] mb-[15px] space-x-[14px]">
-            <DirtButton smile={<SadSmile />} text="Да" />
-            <DirtButton smile={<CheerfulSmile />} text="Нет" />
+            <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
+            <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
           </div>
         </div>
-        <h4 className="font-montserrat font-semibold text-[14px] leading-[17px] my-[16px]">Комментарии (2)</h4>
+          <h4 className="font-montserrat font-semibold text-[14px] leading-[17px] my-[16px]">{`${t('comments')} (2)`}</h4>
         <h3 className="font-montserrat font-semibold text-[16px] leading-[19.5px]">Имя Фамилия</h3>
         <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">Место отличное! Красиво, уютно, птички поют, Можно покормить обезьянок. Советую всем)</p>
         <div className="flex flex-row justify-start items-center mb-[24px]">
@@ -124,7 +126,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
               className="rounded-full object-cover object-center"
             />
           </Link>
-          <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Добавьте комментарий...</p>
+            <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">{ t('addAComment') }</p>
         </div>
       </div>
       </div>

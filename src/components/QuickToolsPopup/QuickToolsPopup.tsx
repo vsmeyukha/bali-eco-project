@@ -14,13 +14,11 @@ import SwitchLanguage from "./SwitchLanguage";
 import SwitchDayAndNight from "./SwitchDayAndNight";
 
 interface QuickToolsPopupProps {
-  selectedLang: string,
-  handleSetSelectedLang: (code: string) => void,
   isDay: string, 
   handleColorTheme: (code: string) => void,
 }
 
-const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({selectedLang, handleSetSelectedLang, isDay, handleColorTheme}): ReactElement => {
+const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({isDay, handleColorTheme}): ReactElement => {
   return (
     <Popover>
       {({ open }) => (
@@ -77,7 +75,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({selectedLang, handleSe
                   &&
                   (
                     <QuickPopupSwitchContainer>
-                      <SwitchLanguage selectedLang={selectedLang} handleSetSelectedLang={handleSetSelectedLang} />
+                      <SwitchLanguage />
                     </QuickPopupSwitchContainer>
                   )
                 }

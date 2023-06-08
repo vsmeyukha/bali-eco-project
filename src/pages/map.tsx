@@ -40,7 +40,14 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     props: {
       ...(await serverSideTranslations(
         typedLocale,
-        ['headerMenu', 'mapPage', 'chatGPT', 'addPostPopup'],
+        [
+          'headerMenu',
+          'mapPage',
+          'chatGPT',
+          'addPostPopup',
+          'bigPostPopup',
+          'footer'
+        ],
         null,
         ['en', 'ru', 'id']
       )),
@@ -156,8 +163,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
         handleBigPopupOpen={handleBigPopupOpen}
       />
       <div className="w-full h-[500px] bg-gray-500 flex flex-col justify-center items-center">
-        <div className="bg-red-500 w-[300px] h-[300px] mx-auto flex flex-col items-center hover:translate-x-full">
-        </div>
+        <div className="bg-red-500 w-[300px] h-[300px] mx-auto flex flex-col items-center hover:-translate-x-full" />
       </div>
       <Footer />
     </section>

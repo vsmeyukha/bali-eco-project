@@ -8,7 +8,7 @@ interface QuickPopupSwitchContainerProps {
   handleSetSelectedLang: (code: string) => void,
 }
 
-const SwitchLanguage: React.FC<QuickPopupSwitchContainerProps> = ({selectedLang, handleSetSelectedLang}): ReactElement => {
+const SwitchLanguage: React.FC = (): ReactElement => {
   const languages: Array<switchContent> = [
     { code: 'en', label: 'EN' },
     { code: 'ru', label: 'RU' },
@@ -19,16 +19,14 @@ const SwitchLanguage: React.FC<QuickPopupSwitchContainerProps> = ({selectedLang,
 
   const switchLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
+    console.log(i18n);
     console.log(i18n.language);
     console.log(typeof i18n.language);
     console.log(i18n.hasResourceBundle(lng, 'common'));
   }
 
-  // const [selected, setSelected] = useState(content[0].code);
-
   const handleSelected = (code: string): void => {
     switchLanguage(code);
-    handleSetSelectedLang(code);
   }
 
   return (
@@ -39,13 +37,13 @@ const SwitchLanguage: React.FC<QuickPopupSwitchContainerProps> = ({selectedLang,
             <QuickPopupSwitchButton
               code={lang.code}
               text={lang.label}
-              isSelected={selectedLang === lang.code}
+              isSelected={i18n.language === lang.code}
               onClick={handleSelected}
             />
             {
-              selectedLang !== lang.code
+              i18n.language !== lang.code
               &&
-              selectedLang !== arr[index + 1]?.code
+              i18n.language !== arr[index + 1]?.code
               &&
               index !== arr.length - 1
               &&

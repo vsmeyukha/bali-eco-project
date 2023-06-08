@@ -1,8 +1,5 @@
 import { ReactElement } from "react";
 import { StaticImageData } from "next/image";
-import { posts } from "@/utils/posts";
-import { getRandom } from "@/utils/utils";
-import { PostType } from "@/utils/types";
 import PostForFour from "@/components/MainPageLoggedIn/PostForFour";
 import extractArticleChunks from "@/helpers/extractArticleChunks";
 

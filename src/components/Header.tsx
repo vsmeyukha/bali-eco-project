@@ -71,8 +71,6 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
               <SignInButton openPopup={handleSignInPopupOpen} />
               :
               <QuickToolsPopup
-                selectedLang={selectedLang}
-                handleSetSelectedLang={handleSetSelectedLang}
                 isDay={isDay}
                 handleColorTheme={handleColorTheme}
               />
