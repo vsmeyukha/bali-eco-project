@@ -97,39 +97,6 @@ const aboutUsContents = [
   },
 ]
 
-// const navListEng: NavLink[] = [
-//   {
-//     title: 'Ocean pollution',
-//     link: '/pollution',
-//     id: getRandom(1000),
-//   },
-//   {
-//     title: 'Climate change',
-//     link: '/climateChange',
-//     id: getRandom(1000),
-//   },
-//   {
-//     title: 'Solution',
-//     link: '/solution',
-//     id: getRandom(1000),
-//   },
-//   {
-//     title: 'News',
-//     link: '/news',
-//     id: getRandom(1000),
-//   },
-//   {
-//     title: 'Resources',
-//     link: '/resources',
-//     id: getRandom(1000),
-//   },
-//   {
-//     title: 'About us',
-//     link: '/aboutUs',
-//     id: getRandom(1000),
-//   }
-// ];
-
 const credits: CredType = {
   'ru': {
     'Разработка': ' Виктор Смеюха',
@@ -177,31 +144,31 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
   {
     id: 1,
     icon: Tool,
-    text: 'Настройки',
+    titleKey: 'settings',
     href: '/profile',
   },
   {
     id: 2,
     icon: Clock,
-    text: 'История',
+    titleKey: 'history',
     href: '/',
   },
   {
     id: 3,
     icon: Globe,
-    text: 'Язык',
+    titleKey: 'language',
     href: '/',
   },
   {
     id: 4,
     icon: Laptop,
-    text: 'Темная тема',
+    titleKey: 'darkTheme',
     href: '/',
   },
   {
     id: 5,
     icon: Exit,
-    text: 'Выход',
+    titleKey: 'signOut',
     href: '/',
   },
 ];

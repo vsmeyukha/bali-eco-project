@@ -3,6 +3,8 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useTranslation } from 'next-i18next';
+
 import { navListForBurgerRu } from "@/utils/consts";
 import BurgerMenuIcon from '../../public/images/svgs/icons/burgerMenu.svg';
 import ProfileIcon from '../../public/images/svgs/icons/profile.svg';
@@ -21,6 +23,8 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement =>
     close();
     onSignInClick();
   }
+
+  const { t } = useTranslation('headerMenu');
 
   return (
     <Menu as="div" className="flex">
@@ -42,7 +46,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement =>
               <Menu.Item key={paragraph.id}>
                 <Link href={paragraph.link} className="flex flex-row items-center group">
                   <Icon className="text-[#00265F] group-hover:text-[#0D87FF] transition-colors duration-200" />
-                  <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] text-[#00265F] hover:text-[#0D87FF] transition-colors duration-200 group-hover:text-[#0D87FF]">{paragraph.title}</p>
+                  <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] text-[#00265F] hover:text-[#0D87FF] transition-colors duration-200 group-hover:text-[#0D87FF]">{t(paragraph.titleKey)}</p>
                 </Link>
               </Menu.Item>
             )
@@ -55,7 +59,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement =>
               ?
               <button onClick={() => handleSignInButtonClick(close)} className="text-[#00265F] flex flex-row pb-[25px] group">
                 <ProfileIcon className="fill-current w-[20px] h-[20px] group-hover:text-[#0D87FF] transition-colors duration-200" />
-                <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] group-hover:text-[#0D87FF] transition-colors duration-200">Войти</p>
+                  <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] group-hover:text-[#0D87FF] transition-colors duration-200">{ t('sigiIn')}</p>
               </button>
               :
               <Link href='/profile' className="text-[#00265F] flex flex-row items-center pb-[25px] group">

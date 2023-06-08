@@ -2,6 +2,7 @@ import { ReactElement, Fragment} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
+import { useTranslation } from 'next-i18next';
 
 import Manatee from '../../../public/images/backgrounds/manatee.png';
 import { quickToolsMenu } from "@/utils/consts";
@@ -18,7 +19,9 @@ interface QuickToolsPopupProps {
   handleColorTheme: (code: string) => void,
 }
 
-const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({isDay, handleColorTheme}): ReactElement => {
+const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorTheme }): ReactElement => {
+  const { t } = useTranslation('quickToolsPopup');
+
   return (
     <Popover>
       {({ open }) => (
@@ -51,47 +54,49 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({isDay, handleColorThem
                 flex-col
                 items-center"
             >
-            <Link href="/profile" className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
-              <Image
-                src={Manatee}
-                alt="manatee"
-                fill
-                className="object-cover object-center"
-              />
-            </Link>
-              <Link href="/profile" className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">Имя Фамилия</Link>
-        <ul className="w-full px-[36px] mt-[16px]">
-          {quickToolsMenu.map((paragraph: QuickToolsMenuType, index) => {
-            const Icon = paragraph.icon;
-            return (
-              <QuickToolsMenuItem
-                key={paragraph.id}
-                icon={Icon}
-                href={paragraph.href}
-                text={paragraph.text}
-                isDiv={index === 2 || index === 3}
-              >
-                {index === 2
-                  &&
-                  (
-                    <QuickPopupSwitchContainer>
-                      <SwitchLanguage />
-                    </QuickPopupSwitchContainer>
+              <Link href="/profile" className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
+                <Image
+                  src={Manatee}
+                  alt="manatee"
+                  fill
+                  className="object-cover object-center"
+                />
+              </Link>
+              <Link href="/profile" className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">
+                Имя Фамилия
+              </Link>
+              <ul className="w-full px-[36px] mt-[16px]">
+                {quickToolsMenu.map((paragraph: QuickToolsMenuType, index) => {
+                  const Icon = paragraph.icon;
+                  return (
+                    <QuickToolsMenuItem
+                      key={paragraph.id}
+                      icon={Icon}
+                      href={paragraph.href}
+                      titleKey={t(paragraph.titleKey)}
+                      isDiv={index === 2 || index === 3}
+                    >
+                      {index === 2
+                        &&
+                        (
+                          <QuickPopupSwitchContainer>
+                            <SwitchLanguage />
+                          </QuickPopupSwitchContainer>
+                        )
+                      }
+                      {index === 3
+                        &&
+                        (
+                        <QuickPopupSwitchContainer>
+                          <SwitchDayAndNight isDay={isDay} handleColorTheme={handleColorTheme} />
+                        </QuickPopupSwitchContainer>
+                        )
+                      }
+                    </QuickToolsMenuItem>
                   )
-                }
-                {index === 3
-                  &&
-                  (
-                  <QuickPopupSwitchContainer>
-                    <SwitchDayAndNight isDay={isDay} handleColorTheme={handleColorTheme} />
-                  </QuickPopupSwitchContainer>
-                  )
-                }
-              </QuickToolsMenuItem>
-            )
-          })}
-        </ul>
-      </Popover.Panel>
+                })}
+              </ul>
+            </Popover.Panel>
           </Transition>
         </div>
       )}

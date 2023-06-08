@@ -46,7 +46,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
           'chatGPT',
           'addPostPopup',
           'bigPostPopup',
-          'footer'
+          'footer',
+          'quickToolsPopup'
         ],
         null,
         ['en', 'ru', 'id']

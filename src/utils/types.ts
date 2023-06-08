@@ -36,7 +36,7 @@ export interface PostType {
 export interface QuickToolsMenuType {
   id?: number,
   icon:  React.FC<React.SVGProps<SVGSVGElement>>,
-  text: string,
+  titleKey: string,
   href: string,
   children?: ReactNode,
   isDiv?: boolean,

@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next';
+
 import { NavLink } from "@/utils/types";
 import { navListRu } from "@/utils/consts";
 
