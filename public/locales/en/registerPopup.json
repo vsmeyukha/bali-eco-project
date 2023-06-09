@@ -1,0 +1,13 @@
+{
+  "registration": "Registration",
+  "name": "Name",
+  "email": "E-mail",
+  "password": "Password",
+  "register": "Register",
+  "or": "or",
+  "registerWithApple": "Register with Apple",
+  "registerWithGoogle": "Register with Google",
+  "agreement": "By registering, you accept the terms of the agreement",
+  "alreadyRegistered": "Already registered?",
+  "signIn": "Sign In"
+}

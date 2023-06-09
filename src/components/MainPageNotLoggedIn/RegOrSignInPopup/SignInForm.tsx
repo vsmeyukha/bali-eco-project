@@ -1,4 +1,6 @@
 import React, { ReactElement, FormEvent } from "react";
+import { useTranslation } from 'next-i18next';
+
 import BigBlueButton from '../BigBlueButton';
 import { inputStyles } from "@/utils/styles";
 import { RegSignInPopup } from '../../../utils/types';
@@ -16,11 +18,13 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onSignInButtonClick, whichP
 
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
 
+  const { t } = useTranslation('signInPopup');
+
   return (
     <Form onSubmit={onSignInButtonClick}>
-      <Input label="E-mail" name="email"/>
-      <Input label="Пароль" name="password"/>
-      <BigBlueButton size={buttonSize} type="submit" text={whichPopup.buttonText} />
+      <Input label={t('email')} name="email"/>
+      <Input label={t('password')} name="password"/>
+      <BigBlueButton size={buttonSize} type="submit" text={t('signIn')} />
     </Form>
   );
 }

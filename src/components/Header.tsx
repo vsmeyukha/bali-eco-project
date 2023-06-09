@@ -1,13 +1,13 @@
 import { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+
 import Menu from './Menu';
 import Logo from "./Logo";
 import QuickToolsPopup from "./QuickToolsPopup/QuickToolsPopup";
 import SignInButton from "./MainPageNotLoggedIn/SignInButton";
 import useViewportWidth from "@/hooks/calculateWidth";
 import BurgerMenu from "./BurgerMenu";
-
-import { UseTranslation, useTranslation } from "next-i18next";
 
 interface HeaderProps {
   onPopupOpen?: () => void,

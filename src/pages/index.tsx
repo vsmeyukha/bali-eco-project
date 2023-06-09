@@ -12,7 +12,18 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const typedLocale = locale as string;
   return {
     props: {
-      ...(await serverSideTranslations(typedLocale, ['headerMenu'], null, ['en', 'ru', 'id'])),
+      ...(await serverSideTranslations(
+        typedLocale,
+        [
+          'headerMenu',
+          'mainPageNotLoggedIn',
+          'footer',
+          'registerPopup',
+          'signInPopup'
+        ],
+        null,
+        ['en', 'ru', 'id']
+      )),
     },
   }
 }

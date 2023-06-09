@@ -1,4 +1,6 @@
 import { ReactElement } from 'react';
+import { useTranslation } from 'next-i18next';
+
 import { projectName } from '@/utils/consts';
 import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
@@ -31,8 +33,22 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
 
   const buttonSize = viewportWidth >= 600 ? 'big' : 'small';
 
+  const { t } = useTranslation('mainPageNotLoggedIn');
+
   return (
-    <section className="1440px:pl-[152px] sm:pl-[65px] sm:pr-[96px] px-0 sm:relative flex flex-col items-center sm:items-start w-full">
+    <section
+      className="
+      1440px:pl-[152px]
+      sm:pl-[65px]
+      sm:pr-[96px]
+      px-0
+      sm:relative
+      flex
+      flex-col
+      items-center
+      sm:items-start
+      w-full"
+    >
       <h1
         className="
         text-white
@@ -57,12 +73,12 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
         <div className='flex flex-col sm:items-start items-center '>
           <HiddenDesc />
           <div className='flex flex-col items-center'>
-            <BigBlueButton size={buttonSize} type="button" onClick={handleRegPopupOpen} text="Зарегистрироваться" />
+            <BigBlueButton size={buttonSize} type="button" onClick={handleRegPopupOpen} text={t('register')} />
             {viewportWidth < 1280
               &&
               <div className=' flex flex-row mt-[15px] font-montserrat text-[14px] leading-[17px] text-white'>
-                <p className='font-normal'>Уже зарегистрированы?</p>
-                <button className='ml-[10px] font-bold text-[#0D87FF]' onClick={handleSignInPopupOpen}>Войти</button>
+                <p className='font-normal'>{ t('alreadyRegistered')}</p>
+                <button className='ml-[10px] font-bold text-[#0D87FF]' onClick={handleSignInPopupOpen}>{ t('signIn')}</button>
               </div>
             }
           </div>

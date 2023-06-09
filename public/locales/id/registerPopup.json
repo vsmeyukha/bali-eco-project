@@ -1,0 +1,13 @@
+{
+  "registration": "Pendaftaran",
+  "name": "Nama",
+  "email": "E-mail",
+  "password": "Kata Sandi",
+  "register": "Daftar",
+  "or": "atau",
+  "registerWithApple": "Daftar dengan Apple",
+  "registerWithGoogle": "Daftar dengan Google",
+  "agreement": "Dengan mendaftar, Anda menerima syarat dan ketentuan perjanjian",
+  "alreadyRegistered": "Sudah terdaftar?",
+  "signIn": "Masuk"
+}

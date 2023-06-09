@@ -132,7 +132,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
   return (
     <section className="w-full relative" onClick={handlePopupClose}>
       <Header />
-      <PublishPhoto openPopup={handleAddPostPopupOpen} />
+      {viewportWidth > 640 && <PublishPhoto openPopup={handleAddPostPopupOpen} />}
       <MapComponent handleBigPopupOpen={handleBigPopupOpen} />
       {
         viewportWidth < 1024
@@ -163,9 +163,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
         postImage={postImage}
         handleBigPopupOpen={handleBigPopupOpen}
       />
-      <div className="w-full h-[500px] bg-gray-500 flex flex-col justify-center items-center">
-        <div className="bg-red-500 w-[300px] h-[300px] mx-auto flex flex-col items-center hover:-translate-x-full" />
-      </div>
       <Footer />
     </section>
   )

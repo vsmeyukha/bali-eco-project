@@ -1,0 +1,13 @@
+{
+  "registration": "Регистрация",
+  "name": "Имя",
+  "email": "E-mail",
+  "password": "Пароль",
+  "register": "Зарегистрироваться",
+  "or": "или",
+  "registerWithApple": "Зарегистрироваться с Apple",
+  "registerWithGoogle": "Зарегистрироваться с Google",
+  "agreement": "Регистрируясь, вы принимаете условия соглашения",
+  "alreadyRegistered": "Уже зарегистрированы?",
+  "signIn": "Войти"
+}

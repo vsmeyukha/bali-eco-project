@@ -1,4 +1,6 @@
 import { ReactElement, FormEvent } from "react";
+import { useTranslation } from 'next-i18next';
+
 import BigBlueButton from '../BigBlueButton';
 import { inputStyles } from "@/utils/styles";
 import { RegSignInPopup } from '../../../utils/types';
@@ -8,20 +10,21 @@ import useViewportWidth from "@/hooks/calculateWidth";
 
 interface RegFormPropsType {
   onRegButtonClick: (e: FormEvent<HTMLFormElement>) => void,
-  whichPopup: RegSignInPopup,
 }
 
-const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick, whichPopup }: RegFormPropsType): ReactElement => {
+const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick }: RegFormPropsType): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
+
+  const { t } = useTranslation('registerPopup');
     
   return (
     <Form onSubmit={onRegButtonClick}>
-      <Input label="Имя" name="username" />
-      <Input label="E-mail" name="email" />
-      <Input label="Пароль" name="password" />
-      <BigBlueButton size={buttonSize} type="submit" text={whichPopup.buttonText} />
+      <Input label={t('name')} name="username" />
+      <Input label={t('email')} name="email" />
+      <Input label={t('password')} name="password" />
+      <BigBlueButton size={buttonSize} type="submit" text={t('register')} />
     </Form>
   );
 }

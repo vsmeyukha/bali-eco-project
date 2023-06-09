@@ -1,6 +1,8 @@
 import { ReactElement, useState, MouseEvent, useEffect, memo } from "react";
-import { projectDescription, projectDescriptionContinue } from "@/utils/consts";
 import { Transition } from "@headlessui/react";
+import { useTranslation } from 'next-i18next';
+
+import { projectDescription, projectDescriptionContinue } from "@/utils/consts";
 import DownArrow from "../../public/images/svgs/down-arrow.svg";
 import UpArrow from "../../public/images/svgs/up-arrow.svg";
 
@@ -10,6 +12,8 @@ export default function HiddenDesc(): ReactElement {
   const handleVisible = (): void => {
     setVisible((prevState) => !prevState);
   };
+
+  const { t } = useTranslation('mainPageNotLoggedIn');
 
   return (
     <div
@@ -26,7 +30,7 @@ export default function HiddenDesc(): ReactElement {
         mt-[20px]
       "
     >
-      <p className="pb-[16px]">{projectDescription}</p>
+      <p className="pb-[16px]">{t('projectDescription')}</p>
       <div
         className="relative flex flex-col items-center"
         style={{ minHeight: visible ? '300px' : '0px', transition: 'min-height 300ms ease' }}
@@ -42,7 +46,7 @@ export default function HiddenDesc(): ReactElement {
           className="flex flex-col items-center"
         >
           <div className="overflow-hidden pb-[16px]">
-            <p>{projectDescriptionContinue}</p>
+            <p>{t('projectDescriptionExtended')}</p>
           </div>
           <button type="button" onClick={handleVisible}>
             {visible && <UpArrow width="24" height="24" />}

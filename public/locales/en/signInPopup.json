@@ -1,0 +1,11 @@
+{
+  "enter": "Sign In",
+  "email": "E-mail",
+  "password": "Password",
+  "signIn": "Sign In",
+  "or": "or",
+  "signInWithApple": "Sign In with Apple",
+  "signInWithGoogle": "Sign In with Google",
+  "notRegisteredYet": "Not registered yet?",
+  "register": "Register"
+}

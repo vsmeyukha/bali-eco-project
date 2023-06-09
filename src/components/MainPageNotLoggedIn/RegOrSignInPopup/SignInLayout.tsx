@@ -7,9 +7,10 @@ import { RegSignInPopup } from '../../../utils/types';
 interface LayoutProps {
   onClose: () => void,
   whichPopup: RegSignInPopup,
+  isRegPopup: boolean,
 }
 
-const SignInLayout: React.FC<LayoutProps> = ({ onClose, whichPopup }: LayoutProps): ReactElement => {
+const SignInLayout: React.FC<LayoutProps> = ({ onClose, whichPopup, isRegPopup }: LayoutProps): ReactElement => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     onClose();
@@ -19,7 +20,7 @@ const SignInLayout: React.FC<LayoutProps> = ({ onClose, whichPopup }: LayoutProp
     <div className="w-full flex flex-col items-center">
       <SignInForm onSignInButtonClick={handleSubmit} whichPopup={whichPopup} />
       <OrBlock />
-      <RegOrSignViaSocialMedia regOrSign={whichPopup} />
+      <RegOrSignViaSocialMedia regOrSign={whichPopup} isRegPopup={isRegPopup} />
     </div>
   );
 }
