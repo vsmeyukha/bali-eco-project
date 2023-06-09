@@ -1,0 +1,14 @@
+{
+  "yourData": "Your data",
+  "changePhoto": "Change",
+  "deletePhoto": "Delete",
+  "nickname": "Your nickname. Other users will see it",
+  "name": "Name",
+  "surname": "Surname",
+  "email": "E-mail",
+  "save": "Save",
+  "settings": "Settings",
+  "darkMode": "Dark mode",
+  "signOut": "Sign out",
+  "history": "History"
+}

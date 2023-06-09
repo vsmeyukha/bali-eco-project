@@ -1,12 +1,11 @@
 import { ReactElement, useState, MouseEvent, useContext } from 'react';
 import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Head from 'next/head';
 import Header from '@/components/Header';
 import Main from '@/components/MainPageNotLoggedIn/Main';
 import Footer from '@/components/Footer/Footer';
-
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const typedLocale = locale as string;
