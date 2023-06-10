@@ -1,6 +1,7 @@
-import { ReactElement, useState, MouseEvent, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 import Head from 'next/head';
 import Header from '@/components/Header';
@@ -28,6 +29,15 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 export default function Home() {
+  const { i18n } = useTranslation();
+
+  useEffect(() => { 
+    const defaultLang = localStorage.getItem('language');
+    if (defaultLang) {
+      i18n.changeLanguage(defaultLang);
+    }
+  }, []);
+
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
   const handlePopupOpen = () => {

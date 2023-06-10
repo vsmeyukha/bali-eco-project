@@ -1,4 +1,4 @@
-import { ReactElement, useState, Fragment } from "react";
+import { ReactElement, Fragment } from "react";
 import { useTranslation } from 'next-i18next';
 
 import { Listbox, Transition } from "@headlessui/react";
@@ -15,17 +15,16 @@ const LanguageChoice: React.FC = (): ReactElement => {
 
   const { i18n } = useTranslation();
 
-  const [selectedLang, setSelectedLang] = useState(i18n.language);
-
-  const switchLanguages = async (langCode: string) => {
-    setSelectedLang(langCode);
+  const switchLanguages = async (langCode: string): Promise<void> => {
     await i18n.changeLanguage(langCode);
+    localStorage.setItem('language', langCode);
+    console.log(localStorage.getItem('language'));
   }
 
   return (
-    <Listbox value={selectedLang} onChange={switchLanguages}>
+    <Listbox value={i18n.language} onChange={switchLanguages}>
     <Listbox.Button className='flex flex-col items-end'>
-      <p className="text-right">{languages.find(language => language.code === selectedLang)?.label}</p>
+      <p className="text-right">{languages.find(language => language.code === i18n.language)?.label}</p>
       <ChevronDown className="mt-[8px]" />
     </Listbox.Button>
     <Transition

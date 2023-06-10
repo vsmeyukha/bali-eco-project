@@ -1,5 +1,7 @@
 import { ReactElement, useState, useRef, FormEvent, ChangeEvent, useEffect } from "react";
 import { GetStaticProps } from "next";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
@@ -17,7 +19,6 @@ import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
 import { usePopper } from "react-popper";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
   // ? прописываем типизацию объекта обработки инпутов (сама логика ниже, на 63 строке), экспортируем интерфейс, чтобы использовать его в типизации пропсов addPostPopup
   export interface handlingInputs {
@@ -57,6 +58,15 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 }
 
 const LoggedInMain: React.FC = (): ReactElement => {
+  const { i18n } = useTranslation();
+
+  useEffect(() => { 
+    const defaultLang = localStorage.getItem('language');
+    if (defaultLang) {
+      i18n.changeLanguage(defaultLang);
+    }
+  }, []);
+
   // ? считаем ширину экрана
   const viewportWidth = useViewportWidth();
 

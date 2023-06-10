@@ -1,9 +1,20 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import PopupProvider from '@/contexts/PopupProvider';
+import { useEffect } from 'react';
 import { appWithTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
+import PopupProvider from '@/contexts/PopupProvider';
 
 function App({ Component, pageProps }: AppProps) {
+  const { i18n } = useTranslation();
+
+  // useEffect(() => { 
+  //   const defaultLang = localStorage.getItem('language');
+  //   if (defaultLang) {
+  //     i18n.changeLanguage(defaultLang);
+  //   }
+  // }, []);
+
   return (
     <PopupProvider>
       <div className='
