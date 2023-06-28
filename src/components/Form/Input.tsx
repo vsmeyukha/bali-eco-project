@@ -6,7 +6,7 @@ export interface InputProps {
   label: string,
   name: string,
   value: string,
-  handleChange: (e: ChangeEvent<any>) => void,
+  handleChange?: (e: ChangeEvent<any>) => void,
 }
 
 const Input: React.FC<InputProps> = ({ label, name, value, handleChange }): ReactElement => {

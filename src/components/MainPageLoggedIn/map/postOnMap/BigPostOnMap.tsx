@@ -14,16 +14,19 @@ import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile
 import ShareArrow from '../../../../../public/images/svgs/icons/shareArrow.svg';
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 
+import { IMarker } from "@/pages/map";
+
 interface BigPostOnMapProps {
   isBigPopupOpen: boolean,
   title: string,
   comment: string,
-  geo: string,
   image: string | null,
   clearAllStates: () => void,
+  activeMarker: IMarker | null,
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
+  console.log(props.activeMarker);
   const viewportWidth = useViewportWidth();
 
   const getContentWidth = (viewportWidth: number) => {
@@ -46,10 +49,16 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
 
   const { t } = useTranslation('bigPostPopup');
 
+  const handleShow = () => {
+    if (props.activeMarker) {
+      return true;
+    } return false;
+  }
+
   return (
     <Transition
     as={Fragment}
-    show={props.isBigPopupOpen}
+    show={Boolean(props.activeMarker)}
     enter="transition-opacity duration-300"
     enterFrom="opacity-0"
     enterTo="opacity-100"
@@ -78,17 +87,17 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
       ref={ref}
     >
       <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
-          {props.image &&
+          
             <img
-              src={props.image}
+              src={props.activeMarker?.imageUrl as string}
               alt="Jungle"
               className="w-full object-center lg:object-contain object-cover rounded-[10px]"
             />
-          }
+          
       </div>
       <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
         <div className="flex flex-row justify-between">
-            <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{props.title}</h3>
+            <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{props.activeMarker?.title}</h3>
           <button>
             <CopyIcon />
           </button>
@@ -104,7 +113,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
           </Link>
           <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Имя Фамилия</p>
         </div>
-          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{props.comment}</p>
+          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{props.activeMarker?.comment}</p>
         <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
             <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">{ t('rateThePlace')}</p>
           <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>

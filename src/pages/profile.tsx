@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement } from "react";
+import { FormEvent, ReactElement, useEffect } from "react";
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
@@ -29,7 +29,14 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
 }
 
 const Profile: React.FC = (): ReactElement => {
-  const { t } = useTranslation('profile');
+  const { t, i18n } = useTranslation('profile');
+
+  useEffect(() => { 
+    const defaultLang = localStorage.getItem('language');
+    if (defaultLang) {
+      i18n.changeLanguage(defaultLang);
+    }
+  }, []);
 
   return (
     <>

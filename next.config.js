@@ -7,6 +7,9 @@ const { i18n } = require('./next-i18next.config')
 
 module.exports = {
   i18n,
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
