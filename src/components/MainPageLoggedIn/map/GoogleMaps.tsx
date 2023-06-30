@@ -262,6 +262,7 @@ const containerStyle = {
   width: '100%',
   height: '1000px',
   zIndex: 1,
+  cursor: 'default'
 }
 
 export interface Coordinates {
@@ -300,6 +301,8 @@ interface MapProps {
   setMarkers: Dispatch<SetStateAction<IMarker[]>>,
   activeMarker: IMarker | null,
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
+  newMarker: IMarker | null,
+  setNewMarker: Dispatch<SetStateAction<IMarker | null>>
 }
 
 const MapComponent: React.FC<MapProps> = (
@@ -310,7 +313,9 @@ const MapComponent: React.FC<MapProps> = (
     markers,
     setMarkers,
     activeMarker,
-    setActiveMarker
+    setActiveMarker,
+    newMarker,
+    setNewMarker,
   }
 ): ReactElement => {
   // ? создаем реф карты, пока пустой
@@ -353,7 +358,7 @@ const MapComponent: React.FC<MapProps> = (
   // }
 
   const [activePointerMarker, setActivePointerMarker] = useState<IMarker | null>(null);
-
+  
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (activePointerMarker) {
       setActivePointerMarker(null);
@@ -400,10 +405,12 @@ const MapComponent: React.FC<MapProps> = (
         comment: '',
         imageUrl: null,
       }
+
+      setNewMarker(newMarker);
   
-      setMarkers((prevMarkers: IMarker[]) => {
-        return [...prevMarkers, newMarker];
-      });
+      // setMarkers((prevMarkers: IMarker[]) => {
+      //   return [...prevMarkers, newMarker];
+      // });
   
       handleAddPostPopupOpen();
       console.log(markers);
@@ -441,8 +448,10 @@ const MapComponent: React.FC<MapProps> = (
   //   setMarkers(allSmallPopupsClosed);
   // }
 
+  const markersWithNewMarker = [...markers, newMarker];
+
   return (
-    <div className="relative h-[1000px] w-full sm:mt-[-20px] md:mt-0 mt-[-70px]">
+    <div className="relative h-[1000px] w-full sm:mt-[-20px] md:mt-0 mt-[-70px] hover:cursor-default">
       <LoadScript googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -452,10 +461,12 @@ const MapComponent: React.FC<MapProps> = (
           onLoad={handleMapLoad}
         >
           {/* Additional map components, like markers or overlays, can be added as children here */}
-          {markers.map((marker, index) => {
-            return (
-              <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(marker)} icon={markerIconSVG} />
-            );
+          {markersWithNewMarker.map((marker, index) => {
+            if (marker !== null) {
+              return (
+                <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(marker)} icon={markerIconSVG} />
+              );
+            }
           })}
         </GoogleMap>
       </LoadScript>

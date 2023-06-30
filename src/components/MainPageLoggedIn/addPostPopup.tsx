@@ -29,6 +29,8 @@ interface AddPostPopupProps {
   setMarkers: Dispatch<SetStateAction<IMarker[]>>
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
   markers: IMarker[],
+  newMarker: IMarker | null,
+  setNewMarker: Dispatch<SetStateAction<IMarker | null>>
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
@@ -43,14 +45,27 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     handleBigPopupOpen,
     markers,
     setMarkers,
-    setActiveMarker
+    setActiveMarker,
+    newMarker,
+    setNewMarker,
   }: AddPostPopupProps): ReactElement => {
   
   const lastMarker: IMarker = markers[markers.length - 1];
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setActiveMarker(lastMarker);
+
+    if (newMarker !== null) {
+      setActiveMarker(newMarker);
+
+      setMarkers((prevMarkers) => {
+        if (newMarker !== null) {
+          const newMarkers = [...prevMarkers, newMarker];
+          return newMarkers;
+        } return prevMarkers;
+      });
+    }
+
     onClose();
     handleBigPopupOpen();
   }
@@ -67,43 +82,54 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
 
-    if (file) {
+    if (file && newMarker) {
       const imageUrl = URL.createObjectURL(file);
+
+      setNewMarker({ ...newMarker, imageUrl });
       
-      setMarkers((prevMarkers: IMarker[]) => {
-        if (prevMarkers.length !== 0) {
-          const newMarkers = prevMarkers.slice(0, -1);
-          const lastMarker = prevMarkers[prevMarkers.length - 1];
-          return [...newMarkers, { ...lastMarker, imageUrl }];
-        } else {
-          return prevMarkers;
-        }
-      })
+      // setMarkers((prevMarkers: IMarker[]) => {
+      //   if (prevMarkers.length !== 0) {
+      //     const newMarkers = prevMarkers.slice(0, -1);
+      //     const lastMarker = prevMarkers[prevMarkers.length - 1];
+      //     return [...newMarkers, { ...lastMarker, imageUrl }];
+      //   } else {
+      //     return prevMarkers;
+      //   }
+      // })
     }
   };
 
 const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-  setMarkers((prevMarkers: IMarker[]) => {
-    if (prevMarkers.length !== 0) {
-      const newMarkers = prevMarkers.slice(0, -1);
-      const lastMarker = prevMarkers[prevMarkers.length - 1];
-      return [...newMarkers, { ...lastMarker, title: event.target.value }];
-    } else {
-      return prevMarkers;
-      }
-    })
+  if (newMarker) {
+    setNewMarker({ ...newMarker, title: event.target.value });
+  }
+
+  // setMarkers((prevMarkers: IMarker[]) => {
+  //   if (prevMarkers.length !== 0) {
+  //     const newMarkers = prevMarkers.slice(0, -1);
+  //     const lastMarker = prevMarkers[prevMarkers.length - 1];
+  //     return [...newMarkers, { ...lastMarker, title: event.target.value }];
+  //   } else {
+  //     return prevMarkers;
+  //     }
+  //   })
 }
   
-const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-  setMarkers((prevMarkers: IMarker[]) => {
-    if (prevMarkers.length !== 0) {
-      const newMarkers = prevMarkers.slice(0, -1);
-      const lastMarker = prevMarkers[prevMarkers.length - 1];
-      return [...newMarkers, { ...lastMarker, comment: event.target.value }];
-    } else {
-      return prevMarkers;
-      }
-    })
+  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (newMarker) {
+      setNewMarker({ ...newMarker, comment: event.target.value });
+    }
+
+    // setMarkers((prevMarkers: IMarker[]) => {
+    //   if (prevMarkers.length !== 0) {
+    //     const newMarkers = prevMarkers.slice(0, -1);
+    //     const lastMarker = prevMarkers[prevMarkers.length - 1];
+    //     return [...newMarkers, { ...lastMarker, comment: event.target.value }];
+    //   }
+    //   else {
+    //     return prevMarkers;
+    //   }
+    // })
   }
 
   // ? это вариант функции с exif-parser
@@ -133,25 +159,26 @@ const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void =
   //   }
   // };
 
-  const imageUrl = lastMarker?.imageUrl;
+  // ? если раскомментировать в таком виде, изображение не сохраняется, разобраться 
+  // const imageUrl = newMarker?.imageUrl;
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    return () => {
-      if (imageUrl) {
-        URL.revokeObjectURL(imageUrl);
-      }
-    };
-  }, [imageUrl]);
+  //   return () => {
+  //     if (imageUrl) {
+  //       URL.revokeObjectURL(imageUrl);
+  //     }
+  //   };
+  // }, [imageUrl]);
 
   const ifButtonisActive: boolean =
-    Boolean(lastMarker?.title)
+    Boolean(newMarker?.title)
     &&
-    Boolean(lastMarker?.comment)
+    Boolean(newMarker?.comment)
     &&
-    Boolean(lastMarker?.coordinates)
+    Boolean(newMarker?.coordinates)
     &&
-    Boolean(lastMarker?.imageUrl);
+    Boolean(newMarker?.imageUrl);
   
   const { t } = useTranslation('addPostPopup');
 
@@ -163,7 +190,7 @@ const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void =
         {t('addPhoto')}
       </Dialog.Title>
       <Form onSubmit={handleSubmit}>
-        {!lastMarker?.imageUrl
+        {!newMarker?.imageUrl
           ?
           <>
             <input
@@ -182,21 +209,21 @@ const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void =
             </button>
           </>
           :
-          <img src={lastMarker?.imageUrl ?? defaultImage.src} alt="abc" className="rounded-[10px]"/>
+          <img src={newMarker?.imageUrl ?? defaultImage.src} alt="abc" className="rounded-[10px]"/>
         }
         <Input
           label={t('title')}
           name="title"
-          value={lastMarker?.title}
+          value={newMarker !== null ? newMarker.title : ''}
           handleChange={handleTitleChange}
         />
         <TextAreaInput
           label={t('comment')}
           name="comment"
-          value={lastMarker?.comment}
+          value={newMarker !== null ? newMarker.comment : ''}
           handleChange={handleCommentChange}
         />
-        <p className="mt-[24px]">{markers.length !== 0 &&`Location: ${lastMarker.coordinates.lat}, ${lastMarker.coordinates.lng}`}</p>
+        <p className="mt-[24px]">{newMarker !== null && `Location: ${newMarker.coordinates.lat}, ${newMarker.coordinates.lng}`}</p>
         {/* <Input
           label={t('geo')}
           name="geo"

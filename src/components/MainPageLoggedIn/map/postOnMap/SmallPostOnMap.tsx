@@ -56,6 +56,7 @@ const SmallPostOnMap: React.FC<smallPostProps> = ({ onClick, activePointerMarker
           bg-white
           z-10
           absolute
+          hover:cursor-pointer
         `}
         style={{
           left: `${calculatedXPosition}px`,

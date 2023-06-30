@@ -90,6 +90,9 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? стейт активного маркера
   const [activeMarker, setActiveMarker] = useState<IMarker | null>(null);
 
+  // ? стейт нового маркера, который редактируется
+  const [newMarker, setNewMarker] = useState<IMarker | null>(null);
+
   // ? логика открытия и закрытия попапа большого поста
   const [isBigPopupOpen, setIsBigPopupOpen] = useState<boolean>(false);
 
@@ -116,10 +119,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const handleAddPostPopupClose = (): void => {
     // clearAllStates();
-    setMarkers((prevMarkers: IMarker[]) => {
-      const newArr = prevMarkers.slice(0, -1);
-      return newArr;
-    })
+    setNewMarker(null);
     setIsAddPostPopupOpen(false);
   }
 
@@ -176,6 +176,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
         setMarkers={setMarkers}
         activeMarker={activeMarker}
         setActiveMarker={setActiveMarker}
+        newMarker={newMarker}
+        setNewMarker={setNewMarker}
       />
       {
         viewportWidth < 1024
@@ -208,6 +210,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
         setMarkers={setMarkers}
         setActiveMarker={setActiveMarker}
         markers={markers}
+        newMarker={newMarker}
+        setNewMarker={setNewMarker}
       />
       <Footer />
     </section>
