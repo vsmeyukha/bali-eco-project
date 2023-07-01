@@ -159,7 +159,7 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
   //   }
   // };
 
-  // ? если раскомментировать в таком виде, изображение не сохраняется, разобраться 
+  // ? useEffect очищает URL хранилище каждый раз, когда изменяется imageUrl. когда мы сабмитим форму, в самом конце функции сабмита мы приводим newMarker к null, так что imageUrl изменяется. таким образом, ссылка уже сохранена в activeMarker и создан новый объект в массиве markers, также хранящий эту ссылку, однако эта ссылка ведет в пустоту. как временное решение можно просто не чистить эту штуку, посколько при перезагрузке страницы она все равно очищается браузером
   // const imageUrl = newMarker?.imageUrl;
 
   // useEffect(() => {
@@ -220,7 +220,8 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
         <TextAreaInput
           label={t('comment')}
           name="comment"
-          value={newMarker !== null ? newMarker.comment : ''}
+          // ? спросить, как лучше записать value - как коммент или как тайтл 
+          value={newMarker?.comment ?? ''}
           handleChange={handleCommentChange}
         />
         <p className="mt-[24px]">{newMarker !== null && `Location: ${newMarker.coordinates.lat}, ${newMarker.coordinates.lng}`}</p>
