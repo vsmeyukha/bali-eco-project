@@ -1,7 +1,5 @@
-import { useState, useRef, ReactElement, Dispatch, SetStateAction } from 'react';
+import { useRef, ReactElement, Dispatch, SetStateAction } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-
-import SmallPostOnMap from './postOnMap/SmallPostOnMap';
 
 import { IMarker } from '@/pages/map';
 
@@ -59,14 +57,9 @@ const MapComponent: React.FC<MapProps> = (
   const handleMapLoad = (mapInstance: GoogleMapsInstance): void => {
     mapRef.current = mapInstance;
   }
-
-  const [activePointerMarker, setActivePointerMarker] = useState<IMarker | null>(null);
   
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
-    if (activePointerMarker) {
-      setActivePointerMarker(null);
-    }
-    else if (Boolean(activeMarker)) {
+    if (Boolean(activeMarker)) {
       return;
     }
     else {
@@ -115,12 +108,7 @@ const MapComponent: React.FC<MapProps> = (
 
   // ? функция нажатия на маркер. когда мы нажимаем на маркер, открывается привязанный к нему пост. если до этого был открыт другой пост, он закрывается
   const handleMarkerClick = (marker: IMarker): void => {
-    setActivePointerMarker(marker);
-  }
-
-  const handleSmallPostClick = () => {
-    setActiveMarker(activePointerMarker);
-    setActivePointerMarker(null);
+    setActiveMarker(marker);
   }
 
   // ? рендеринг маркеров из стейта страницы markers - массива маркеров + новый маркер, который создается по клику на карту, если он есть. новый маркер на данном этапе не заносится в массив markers
@@ -146,7 +134,6 @@ const MapComponent: React.FC<MapProps> = (
           })}
         </GoogleMap>
       </LoadScript>
-      {Boolean(activePointerMarker) && <SmallPostOnMap activePointerMarker={activePointerMarker} onClick={handleSmallPostClick} />}
     </div>
   );
 }

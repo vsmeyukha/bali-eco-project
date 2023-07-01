@@ -42,12 +42,6 @@ export interface QuickToolsMenuType {
   isDiv?: boolean,
 }
 
-export interface SmallPostOnMapInfo {
-  id: number,
-  icon: React.FC<React.SVGProps<SVGSVGElement>>,
-  text: string,
-}
-
 export interface ToggleArticlesAndTipsType {
   en: Array<string>,
   ru: Array<string>,

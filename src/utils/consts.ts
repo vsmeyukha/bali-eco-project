@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-import { NavLink, NavLinkForBurger, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup, SmallPostOnMapInfo } from "./types";
+import { NavLink, NavLinkForBurger, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup } from "./types";
 
 import { getRandom } from "./utils";
 
@@ -173,29 +173,6 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
   },
 ];
 
-const smallPostOnMapInfo: Array<SmallPostOnMapInfo> = [
-  {
-    id: 1,
-    icon: GeoTag,
-    text: `Деревня Чангу, Северная Кута`,
-  },
-  {
-    id: 2,
-    icon: Quotation,
-    text: 'Крутая терраса',
-  },
-  {
-    id: 3,
-    icon: Dialog,
-    text: 'Комментарии (2)',
-  },
-  {
-    id: 4,
-    icon: Dirt,
-    text: 'Отметки "Грязно" (1)',
-  }
-]
-
 const volunteersImages: Array<StaticImageData> = [Lini, Turtle, BaliEcoStay, Biorock, Fish, Coral];
 
 const regPopup: RegSignInPopup = {
@@ -233,6 +210,5 @@ export {
   volunteersImages,
   regPopup,
   signInPopup,
-  smallPostOnMapInfo,
   aboutUsContents,
 };
