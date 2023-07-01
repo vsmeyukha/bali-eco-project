@@ -20,10 +20,6 @@ const SwitchLanguage: React.FC = (): ReactElement => {
   const switchLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
     localStorage.setItem('language', lng);
-    console.log(i18n);
-    console.log(i18n.language);
-    console.log(typeof i18n.language);
-    console.log(i18n.hasResourceBundle(lng, 'common'));
   }
 
   const handleSelected = (code: string): void => {

@@ -1,7 +1,6 @@
 import { FormEvent, ReactElement, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
-const exifParser = require('exif-parser');
 
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
@@ -13,22 +12,13 @@ import DirtButton from "./map/postOnMap/DirtButton";
 import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
 
-import { handlingInputs } from '../../pages/map';
-
 import { IMarker } from "../../pages/map";
 
 import defaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 
 interface AddPostPopupProps {
-  open: boolean,
-  onClose: () => void,
-  handlingInputs: handlingInputs,
-  setImageState: Dispatch<React.SetStateAction<string | null>>,
-  postImage: string | null,
-  handleBigPopupOpen: () => void,
   setMarkers: Dispatch<SetStateAction<IMarker[]>>
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
-  markers: IMarker[],
   newMarker: IMarker | null,
   setNewMarker: Dispatch<SetStateAction<IMarker | null>>
 }
@@ -37,20 +27,11 @@ const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opac
 
 const AddPostPopup: React.FC<AddPostPopupProps> = (
   {
-    open,
-    onClose,
-    handlingInputs,
-    setImageState,
-    postImage,
-    handleBigPopupOpen,
-    markers,
     setMarkers,
     setActiveMarker,
     newMarker,
     setNewMarker,
   }: AddPostPopupProps): ReactElement => {
-  
-  const lastMarker: IMarker = markers[markers.length - 1];
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -66,8 +47,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
       });
     }
 
-    onClose();
-    handleBigPopupOpen();
+    setNewMarker(null);
   }
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -84,18 +64,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
 
     if (file && newMarker) {
       const imageUrl = URL.createObjectURL(file);
-
       setNewMarker({ ...newMarker, imageUrl });
-      
-      // setMarkers((prevMarkers: IMarker[]) => {
-      //   if (prevMarkers.length !== 0) {
-      //     const newMarkers = prevMarkers.slice(0, -1);
-      //     const lastMarker = prevMarkers[prevMarkers.length - 1];
-      //     return [...newMarkers, { ...lastMarker, imageUrl }];
-      //   } else {
-      //     return prevMarkers;
-      //   }
-      // })
     }
   };
 
@@ -103,61 +72,13 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
   if (newMarker) {
     setNewMarker({ ...newMarker, title: event.target.value });
   }
-
-  // setMarkers((prevMarkers: IMarker[]) => {
-  //   if (prevMarkers.length !== 0) {
-  //     const newMarkers = prevMarkers.slice(0, -1);
-  //     const lastMarker = prevMarkers[prevMarkers.length - 1];
-  //     return [...newMarkers, { ...lastMarker, title: event.target.value }];
-  //   } else {
-  //     return prevMarkers;
-  //     }
-  //   })
 }
-  
+
   const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (newMarker) {
       setNewMarker({ ...newMarker, comment: event.target.value });
     }
-
-    // setMarkers((prevMarkers: IMarker[]) => {
-    //   if (prevMarkers.length !== 0) {
-    //     const newMarkers = prevMarkers.slice(0, -1);
-    //     const lastMarker = prevMarkers[prevMarkers.length - 1];
-    //     return [...newMarkers, { ...lastMarker, comment: event.target.value }];
-    //   }
-    //   else {
-    //     return prevMarkers;
-    //   }
-    // })
   }
-
-  // ? это вариант функции с exif-parser
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-  //   const file = event.target.files?.[0];
-
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = function (event) {
-  //       // ? событие onloadend триггерится reader, так что event.target синонимично reader
-  //       if (event.target && reader.readyState === FileReader.DONE) {
-  //         const arrayBuffer = new Uint8Array(event.target.result as ArrayBuffer);
-  //         const parser = exifParser.create(arrayBuffer.buffer);
-  //         const result = parser.parse();
-  //         console.log(result.tags);
-  //       }
-  //     }
-
-  //     reader.onerror = function () {
-  //       console.error("An error occurred while reading the file.");
-  //     };
-
-  //     reader.readAsArrayBuffer(file);
-
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setImageState(imageUrl);
-  //   }
-  // };
 
   // ? useEffect очищает URL хранилище каждый раз, когда изменяется imageUrl. когда мы сабмитим форму, в самом конце функции сабмита мы приводим newMarker к null, так что imageUrl изменяется. таким образом, ссылка уже сохранена в activeMarker и создан новый объект в массиве markers, также хранящий эту ссылку, однако эта ссылка ведет в пустоту. как временное решение можно просто не чистить эту штуку, посколько при перезагрузке страницы она все равно очищается браузером
   // const imageUrl = newMarker?.imageUrl;
@@ -183,7 +104,7 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
   const { t } = useTranslation('addPostPopup');
 
   return (
-    <SidePopup open={open} onClose={onClose}>
+    <SidePopup open={Boolean(newMarker)} onClose={() => setNewMarker(null)}>
       <Dialog.Title
         className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]"
       >
@@ -225,11 +146,6 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
           handleChange={handleCommentChange}
         />
         <p className="mt-[24px]">{newMarker !== null && `Location: ${newMarker.coordinates.lat}, ${newMarker.coordinates.lng}`}</p>
-        {/* <Input
-          label={t('geo')}
-          name="geo"
-          value={`${handlingInputs.values.postGeo.lat}, ${handlingInputs.values.postGeo.lng}`}
-        /> */}
         <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">{t('isItDirty')}</p>
         <div className="flex space-x-[16px] self-start mt-[16px]">
           <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
@@ -242,5 +158,3 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
 }
 
 export default AddPostPopup;
-
-

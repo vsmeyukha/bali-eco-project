@@ -120,7 +120,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
   const handleAddPostPopupClose = (): void => {
     // clearAllStates();
     setNewMarker(null);
-    setIsAddPostPopupOpen(false);
   }
 
   // ? работаем с инпутами формы добавления поста
@@ -169,11 +168,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <Header />
       {viewportWidth > 640 && <PublishPhoto openPopup={handleAddPostPopupOpen} />}
       <MapComponent
-        handleBigPopupOpen={handleBigPopupOpen}
-        setPostGeo={setPostGeo}
-        handleAddPostPopupOpen={handleAddPostPopupOpen}
         markers={markers}
-        setMarkers={setMarkers}
         activeMarker={activeMarker}
         setActiveMarker={setActiveMarker}
         newMarker={newMarker}
@@ -193,23 +188,11 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <Volunteers />
       <BigPostOnMap
         ref={popupRef}
-        isBigPopupOpen={isBigPopupOpen}
-        title={postTitle}
-        comment={postComment}
-        image={postImage}
-        clearAllStates={clearAllStates}
         activeMarker={activeMarker}
       />
       <AddPostPopup
-        open={isAddPostPopupOpen}
-        onClose={handleAddPostPopupClose}
-        handlingInputs={handlingInputs}
-        setImageState={setPostImage}
-        postImage={postImage}
-        handleBigPopupOpen={handleBigPopupOpen}
         setMarkers={setMarkers}
         setActiveMarker={setActiveMarker}
-        markers={markers}
         newMarker={newMarker}
         setNewMarker={setNewMarker}
       />

@@ -17,16 +17,10 @@ import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import { IMarker } from "@/pages/map";
 
 interface BigPostOnMapProps {
-  isBigPopupOpen: boolean,
-  title: string,
-  comment: string,
-  image: string | null,
-  clearAllStates: () => void,
   activeMarker: IMarker | null,
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
-  console.log(props.activeMarker);
   const viewportWidth = useViewportWidth();
 
   const getContentWidth = (viewportWidth: number) => {
@@ -48,12 +42,6 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
   }, []);
 
   const { t } = useTranslation('bigPostPopup');
-
-  const handleShow = () => {
-    if (props.activeMarker) {
-      return true;
-    } return false;
-  }
 
   return (
     <Transition

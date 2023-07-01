@@ -18,7 +18,6 @@ const LanguageChoice: React.FC = (): ReactElement => {
   const switchLanguages = async (langCode: string): Promise<void> => {
     await i18n.changeLanguage(langCode);
     localStorage.setItem('language', langCode);
-    console.log(localStorage.getItem('language'));
   }
 
   return (
