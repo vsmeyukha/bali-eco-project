@@ -1,5 +1,6 @@
 import { useRef, ReactElement, Dispatch, SetStateAction } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import shortid from 'shortid';
 
 import { IMarker } from '@/pages/map';
 
@@ -100,6 +101,7 @@ const MapComponent: React.FC<MapProps> = (
         title: '',
         comment: '',
         imageUrl: null,
+        id: shortid(),
       }
 
       setNewMarker(newMarker);

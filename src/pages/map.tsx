@@ -26,6 +26,7 @@ export interface IMarker {
   title: string,
   comment: string,
   imageUrl: string | null,
+  id: string,
   // comments: number,
   // isItDirtyMarks: number
 }
@@ -84,19 +85,10 @@ const LoggedInMain: React.FC = (): ReactElement => {
     }
   }
 
-  // ? логика открытия и закрытия бокового поста с формой для введения данных для добавления поста
-  const [isAddPostPopupOpen, setIsAddPostPopupOpen] = useState<boolean>(false);
-
-  const handleAddPostPopupOpen = (): void => {
-    if (!activeMarker) {
-      setIsAddPostPopupOpen(true);
-    }
-  }
-
   return (
     <section className="w-full relative" onClick={handlePopupClose}>
       <Header />
-      {viewportWidth > 640 && <PublishPhoto openPopup={handleAddPostPopupOpen} />}
+      {viewportWidth > 640 && <PublishPhoto />}
       <MapComponent
         markers={markers}
         activeMarker={activeMarker}
@@ -119,6 +111,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <BigPostOnMap
         ref={popupRef}
         activeMarker={activeMarker}
+        setMarkers={setMarkers}
+        setActiveMarker={setActiveMarker}
       />
       <AddPostPopup
         setMarkers={setMarkers}

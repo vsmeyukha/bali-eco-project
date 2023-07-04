@@ -1,4 +1,4 @@
-import { ForwardedRef, ReactElement, forwardRef, Fragment, useState, useEffect } from "react";
+import { ForwardedRef, ReactElement, forwardRef, Fragment, useState, useEffect, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
@@ -19,9 +19,11 @@ import { IMarker } from "@/pages/map";
 
 interface BigPostOnMapProps {
   activeMarker: IMarker | null,
+  setMarkers: Dispatch<SetStateAction<IMarker[]>>,
+  setActiveMarker: Dispatch<SetStateAction<IMarker | null>>
 }
 
-const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
+const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMarker, setMarkers, setActiveMarker }, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const getContentWidth = (viewportWidth: number) => {
@@ -44,10 +46,19 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
 
   const { t } = useTranslation('bigPostPopup');
 
+  const deletePost = (): void => {
+    setMarkers((prevMarkers) => {
+      const newMarkers = prevMarkers.filter(marker => marker.id !== activeMarker?.id);
+      return newMarkers;
+    });
+
+    setActiveMarker(null);
+  }
+
   return (
     <Transition
     as={Fragment}
-    show={Boolean(props.activeMarker)}
+    show={Boolean(activeMarker)}
     enter="transition-opacity duration-300"
     enterFrom="opacity-0"
     enterTo="opacity-100"
@@ -77,19 +88,19 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
     >
       <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
         <img
-          src={props.activeMarker?.imageUrl as string}
+          src={activeMarker?.imageUrl as string}
           alt="Jungle"
           className="w-full object-center lg:object-contain object-cover rounded-[10px]"
         />
       </div>
       <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
         <div className="flex flex-row justify-between">
-          <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{props.activeMarker?.title}</h3>
+          <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{activeMarker?.title}</h3>
           <div className="flex flex-row">
             <button>
               <CopyIcon />
             </button>
-            <button>
+            <button onClick={deletePost}>
               <TrashBin className="ml-[16px]" />
             </button>
           </div>
@@ -105,7 +116,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
           </Link>
           <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Имя Фамилия</p>
         </div>
-          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{props.activeMarker?.comment}</p>
+          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{activeMarker?.comment}</p>
         <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
             <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">{ t('rateThePlace')}</p>
           <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>

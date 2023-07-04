@@ -6,11 +6,7 @@ import useViewportWidth from '@/hooks/calculateWidth';
 
 import { useTranslation } from 'next-i18next';
 
-interface PublishPhotoProps {
-  openPopup: () => void,
-}
-
-const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement => {
+const PublishPhoto: React.FC = (): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const { t } = useTranslation('mapPage');
