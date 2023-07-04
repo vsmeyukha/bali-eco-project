@@ -1,6 +1,7 @@
 import { FormEvent, ReactElement, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
+import { z } from 'zod';
 
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
@@ -68,11 +69,31 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     }
   };
 
-const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-  if (newMarker) {
-    setNewMarker({ ...newMarker, title: event.target.value });
+  const titleValidation = z.coerce.string().min(5, { message: "Must be longer than 5 symbols" });
+  const commentValidation = z.coerce.string().min(10, { message: "Must be longer than 10 symbols" });
+
+  const titleValResult = titleValidation.safeParse(newMarker?.title);
+  const commentValResult = commentValidation.safeParse(newMarker?.comment);
+
+  let titleValidationMessage = '';
+  let commentValidationMessage = '';
+
+  if (!titleValResult.success) {
+    titleValidationMessage = titleValResult.error.issues[0].message;
   }
-}
+
+  if (!commentValResult.success) {
+    commentValidationMessage = commentValResult.error.issues[0].message;
+  }
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (newMarker) {
+      setNewMarker({ ...newMarker, title: event.target.value });
+      if (!titleValidation.safeParse(event.target.value).success) {
+        console.log(titleValidation.safeParse(newMarker?.title));
+      }
+    }
+  }
 
   const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (newMarker) {
@@ -93,9 +114,9 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
   // }, [imageUrl]);
 
   const ifButtonisActive: boolean =
-    Boolean(newMarker?.title)
+    titleValResult.success
     &&
-    Boolean(newMarker?.comment)
+    commentValResult.success
     &&
     Boolean(newMarker?.coordinates)
     &&
@@ -138,6 +159,9 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
           value={newMarker !== null ? newMarker.title : ''}
           handleChange={handleTitleChange}
         />
+        <span className="w-full text-left text-red-500 mt-[8px]">
+          {(!titleValResult.success && newMarker?.title !== '') && titleValidationMessage}
+        </span>
         <TextAreaInput
           label={t('comment')}
           name="comment"
@@ -145,7 +169,9 @@ const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => 
           value={newMarker?.comment ?? ''}
           handleChange={handleCommentChange}
         />
-        <p className="mt-[24px]">{newMarker !== null && `Location: ${newMarker.coordinates.lat}, ${newMarker.coordinates.lng}`}</p>
+        <span className="w-full text-left text-red-500 mt-[8px]">
+          {(!commentValResult.success && newMarker?.comment !== '') && commentValidationMessage}
+        </span>
         <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">{t('isItDirty')}</p>
         <div className="flex space-x-[16px] self-start mt-[16px]">
           <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />

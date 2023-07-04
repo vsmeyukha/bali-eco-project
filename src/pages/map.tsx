@@ -18,8 +18,6 @@ import useViewportWidth from "@/hooks/calculateWidth";
 import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
-import { usePopper } from "react-popper";
-
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
 // ? прописываем типизацию объекта обработки инпутов (сама логика ниже, на 63 строке), экспортируем интерфейс, чтобы использовать его в типизации пропсов addPostPopup
@@ -93,13 +91,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? стейт нового маркера, который редактируется
   const [newMarker, setNewMarker] = useState<IMarker | null>(null);
 
-  // ? логика открытия и закрытия попапа большого поста
-  const [isBigPopupOpen, setIsBigPopupOpen] = useState<boolean>(false);
-
-  const handleBigPopupOpen = (): void => {
-    setIsBigPopupOpen(true);
-  }
-
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   const handlePopupClose = (e: React.MouseEvent): void => {
@@ -115,52 +106,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
     if (!activeMarker) {
       setIsAddPostPopupOpen(true);
     }
-  }
-
-  const handleAddPostPopupClose = (): void => {
-    // clearAllStates();
-    setNewMarker(null);
-  }
-
-  // ? работаем с инпутами формы добавления поста
-  // ? создаем отдельный стейт для каждого инпута
-  const [postTitle, setPostTitle] = useState<string>('');
-  const [postComment, setPostComment] = useState<string>('');
-  const [postGeo, setPostGeo] = useState<Coordinates>({lat: 0, lng: 0});
-  const [postImage, setPostImage] = useState<string | null>(null)
-
-  // ? создаем функцию, которая возвращает нам функции-хэндлеры. она принимает определенный setState
-  const createInputHandler = (setX: (value: string) => void) => {
-    return function (e: ChangeEvent<HTMLInputElement>) {
-      setX(e.target.value);
-    }
-  }
-
-  // ? создаем хэндлеры с помощью функции для создания хэндлеров
-  const handlePostTitleInput = createInputHandler(setPostTitle);
-  const handlePostCommentInput = createInputHandler(setPostComment);
-  // const handlePostGeoInput = createInputHandler(setPostGeo);
-
-  function clearAllStates (): void {
-    setPostTitle('');
-    setPostComment('');
-    setPostGeo({lat: 0, lng: 0});
-    setPostImage(null);
-  }
-
-  // ? создаем объект. чтобы прокидывать его дальше в форму, чтобы был один проп, а не чертова гора пропсов
-
-  const handlingInputs: handlingInputs = {
-    values: {
-      postTitle,
-      postComment,
-      postGeo,
-      postImage,
-    },
-    handlers: {
-      handlePostTitleInput,
-      handlePostCommentInput,
-    },
   }
 
   return (

@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import BlueWave from '../../../public/images/backgrounds/bluewave.svg';
 import useViewportWidth from '@/hooks/calculateWidth';
 
-import { UseTranslation, useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 
 interface PublishPhotoProps {
   openPopup: () => void,
@@ -42,7 +42,8 @@ const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement =>
         z-20"
       >
         <h2 className="font-oceanic-bold text-[52px] leading-[62px] text-white max-w-[440px]">BaliGreenMap</h2>
-        {viewportWidth >= 1024 &&
+        <h2 className="font-oceanic-bold text-[52px] leading-[62px] text-white">Ткни на карту, мразь!</h2>
+        {/* {viewportWidth >= 1024 &&
           <button
             type="button"
             className="
@@ -63,7 +64,7 @@ const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement =>
           >
             {t('publishPhoto')}
           </button>
-        }
+        } */}
       </div>
     </>
   )
