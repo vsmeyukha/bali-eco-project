@@ -50,7 +50,7 @@ const AvatarBlock: React.FC = (): ReactElement => {
         ref={fileInputRef}
         onChange={handleFileChange}
       />
-      <AvatarButton icon={<Camera />} text={t('changePhoto')} onClick={handleFileUpload} />
+      <AvatarButton icon={<Camera />} text={avaUrl ? t('changePhoto') : t('addPhoto')} onClick={handleFileUpload} />
       <div className="w-[154px] h-[154px] bg-[#00265F] bg-opacity-10 relative rounded-full overflow-hidden mx-[133px] flex items-center justify-center">
         {/* <Image
           src={Manatee}

@@ -1,6 +1,7 @@
 {
   "yourData": "Data Anda",
   "changePhoto": "Ubah",
+  "addPhoto": "Tambah foto",
   "deletePhoto": "Hapus",
   "nickname": "Nama panggilan Anda. Pengguna lain akan melihatnya",
   "name": "Nama",
@@ -14,7 +15,7 @@
   "history": "Riwayat",
   "nicknameValidationMessage": "Nama panggilan harus lebih dari 3 simbol",
   "nameValidationMessage": "Nama harus lebih dari 5 simbol",
-  "SurnameValidationMessage": "Nama belakang harus lebih dari 3 simbol",
+  "surnameValidationMessage": "Nama belakang harus lebih dari 3 simbol",
   "emailValidationMessage": "Ini bukan email yang valid",
   "passwordValidationMessage": "Password harus lebih dari 8 simbol"
 }

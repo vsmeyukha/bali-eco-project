@@ -13,6 +13,7 @@ import SadSmile from '../../../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile.svg';
 import ShareArrow from '../../../../../public/images/svgs/icons/shareArrow.svg';
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
+import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
 
 import { IMarker } from "@/pages/map";
 
@@ -75,20 +76,23 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>((props, ref: 
       ref={ref}
     >
       <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
-          
-            <img
-              src={props.activeMarker?.imageUrl as string}
-              alt="Jungle"
-              className="w-full object-center lg:object-contain object-cover rounded-[10px]"
-            />
-          
+        <img
+          src={props.activeMarker?.imageUrl as string}
+          alt="Jungle"
+          className="w-full object-center lg:object-contain object-cover rounded-[10px]"
+        />
       </div>
       <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
         <div className="flex flex-row justify-between">
-            <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{props.activeMarker?.title}</h3>
-          <button>
-            <CopyIcon />
-          </button>
+          <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{props.activeMarker?.title}</h3>
+          <div className="flex flex-row">
+            <button>
+              <CopyIcon />
+            </button>
+            <button>
+              <TrashBin className="ml-[16px]" />
+            </button>
+          </div>
         </div>
         <div className="flex flex-row justify-start items-center mt-[12px]">
           <Link href="/profile" className="w-[30px] h-[30px] relative rounded-full overflow-hidden">

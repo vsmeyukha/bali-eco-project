@@ -1,6 +1,7 @@
 {
   "yourData": "Ваши данные",
   "changePhoto": "Изменить",
+  "addPhoto": "Добавить фото",
   "deletePhoto": "Удалить",
   "nickname": "Ваш никнейм. Его будут видеть другие пользователи",
   "name": "Имя",
@@ -14,7 +15,7 @@
   "history": "История",
   "nicknameValidationMessage": "Никнейм должен быть длиннее 3 символов",
   "nameValidationMessage": "Имя должно быть длиннее 5 символов",
-  "SurnameValidationMessage": "Фамилия должна быть длиннее 3 символов",
+  "surnameValidationMessage": "Фамилия должна быть длиннее 3 символов",
   "emailValidationMessage": "Это не действительный адрес электронной почты",
   "passwordValidationMessage": "Пароль должен быть длиннее 8 символов"
 }
