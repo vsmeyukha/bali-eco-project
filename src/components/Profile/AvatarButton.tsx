@@ -4,11 +4,12 @@ import RoundGreyButton from "./RoundGreyButton";
 interface AvatarButtonProps {
   icon: ReactNode,
   text: string,
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void,
 }
 
-const AvatarButton: React.FC<AvatarButtonProps> = ({icon, text}): ReactElement => {
+const AvatarButton: React.FC<AvatarButtonProps> = ({icon, text, onClick}): ReactElement => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" onClick={onClick}>
       <RoundGreyButton>
         {icon}
       </RoundGreyButton>
