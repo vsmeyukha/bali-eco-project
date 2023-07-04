@@ -41,49 +41,54 @@ const ProfileForm: React.FC = (): ReactElement => {
   const emailValResult = emailValidation.safeParse(profileForm.email);
   const passwordValResult = passwordValidation.safeParse(profileForm.password);
 
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileForm({ ...profileForm, nickname: e.target.value });
-  }
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileForm({ ...profileForm, name: e.target.value });
-  }
-
-  const handleSurnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileForm({ ...profileForm, surname: e.target.value });
-  }
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileForm({ ...profileForm, email: e.target.value });
-  }
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileForm({ ...profileForm, password: e.target.value });
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
   }
 
   return (
     <div className="ml-[28px] mb-[24px] mt-[59px]">
       <Form onSubmit={handleSubmit}>
-        <Input label={t('nickname')} name="nickname" value={profileForm.nickname} handleChange={handleNicknameChange} />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!nicknameValResult.success && profileForm.nickname !== '') && t('nicknameValidationMessage')}
-        </span>
-        <Input label={t('name')} name="name" value={profileForm.name} handleChange={handleNameChange} />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!nameValResult.success && profileForm.name !== '') && t('nameValidationMessage')}
-        </span>
-        <Input label={t('surname')} name="surname" value={profileForm.surname} handleChange={handleSurnameChange} />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!surnameValResult.success && profileForm.surname !== '') && t('surnameValidationMessage')}
-        </span>
-        <Input label={t('email')} name="email" value={profileForm.email} handleChange={handleEmailChange} />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!emailValResult.success && profileForm.email !== '') && t('emailValidationMessage')}
-        </span>
-        <Input label={t('password')} name="password" value={profileForm.password} handleChange={handlePasswordChange} />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!passwordValResult.success && profileForm.password !== '') && t('passwordValidationMessage')}
-        </span>
+        <Input
+          label={t('nickname')}
+          name="nickname"
+          value={profileForm.nickname}
+          handleChange={handleFormChange}
+          valSuccess={nicknameValResult.success}
+          valErrorMessage={t('nicknameValidationMessage')}
+        />
+        <Input
+          label={t('name')}
+          name="name"
+          value={profileForm.name}
+          handleChange={handleFormChange}
+          valSuccess={nameValResult.success}
+          valErrorMessage={t('nameValidationMessage')}
+        />
+        <Input
+          label={t('surname')}
+          name="surname"
+          value={profileForm.surname}
+          handleChange={handleFormChange}
+          valSuccess={surnameValResult.success}
+          valErrorMessage={t('surnameValidationMessage')}
+        />
+        <Input
+          label={t('email')}
+          name="email"
+          value={profileForm.email}
+          handleChange={handleFormChange}
+          valSuccess={emailValResult.success}
+          valErrorMessage={t('emailValidationMessage')}
+        />
+        <Input
+          label={t('password')}
+          name="password"
+          value={profileForm.password}
+          type="password"
+          handleChange={handleFormChange}
+          valSuccess={passwordValResult.success}
+          valErrorMessage={t('passwordValidationMessage')}
+        />
         <BigBlueButton size="large" type="submit" text={t('save')} />
       </Form>
     </div>

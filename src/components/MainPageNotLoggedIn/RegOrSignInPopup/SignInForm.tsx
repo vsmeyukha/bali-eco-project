@@ -37,27 +37,37 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onSignInButtonClick, whichP
   const emailValidation = emailValidationRule.safeParse(signInFormState.email);
   const passwordValidation = passwordValidationRule.safeParse(signInFormState.password);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSignInFormState({ ...signInFormState, email: e.target.value });
-  }
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSignInFormState({ ...signInFormState, password: e.target.value });
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSignInFormState({ ...signInFormState, [e.target.name]: e.target.value });
   }
 
   const isButtonActive: boolean = emailValidation.success && passwordValidation.success;
 
   return (
     <Form onSubmit={onSignInButtonClick}>
-      <Input label={t('email')} name="email" value={signInFormState.email} handleChange={handleEmailChange} />
-      <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!emailValidation.success && signInFormState.email !== '') && t('emailValidation')}
-      </span>
-      <Input label={t('password')} name="password" value={signInFormState.password} handleChange={handlePasswordChange} />
-      <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!passwordValidation.success && signInFormState.password !== '') && t('passwordValidation')}
-      </span>
-      <BigBlueButton size={buttonSize} type="submit" text={t('signIn')} disabled={!isButtonActive} />
+      <Input
+        label={t('email')}
+        name="email"
+        value={signInFormState.email}
+        handleChange={handleFormChange}
+        valSuccess={emailValidation.success}
+        valErrorMessage={t('emailValidation')}
+      />
+      <Input
+        label={t('password')}
+        name="password"
+        value={signInFormState.password}
+        type="password"
+        handleChange={handleFormChange}
+        valSuccess={passwordValidation.success}
+        valErrorMessage={t('passwordValidation')}
+      />
+      <BigBlueButton
+        size={buttonSize}
+        type="submit"
+        text={t('signIn')}
+        disabled={!isButtonActive}
+      />
     </Form>
   );
 }

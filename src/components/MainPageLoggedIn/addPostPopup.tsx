@@ -75,15 +75,9 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
   const titleValResult = titleValidation.safeParse(newMarker?.title);
   const commentValResult = commentValidation.safeParse(newMarker?.comment);
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (newMarker) {
-      setNewMarker({ ...newMarker, title: event.target.value });
-    }
-  }
-
-  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (newMarker) {
-      setNewMarker({ ...newMarker, comment: event.target.value });
+      setNewMarker({ ...newMarker, [e.target.name]: e.target.value });
     }
   }
 
@@ -143,21 +137,19 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           label={t('title')}
           name="title"
           value={newMarker !== null ? newMarker.title : ''}
-          handleChange={handleTitleChange}
+          handleChange={handleFormChange}
+          valSuccess={titleValResult.success}
+          valErrorMessage={t('titleValidation')}
         />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!titleValResult.success && newMarker?.title !== '') && t('titleValidation')}
-        </span>
         <TextAreaInput
           label={t('comment')}
           name="comment"
           // ? спросить, как лучше записать value - как коммент или как тайтл 
           value={newMarker?.comment ?? ''}
-          handleChange={handleCommentChange}
+          handleChange={handleFormChange}
+          valSuccess={commentValResult.success}
+          valErrorMessage={t('commentValidation')}
         />
-        <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!commentValResult.success && newMarker?.comment !== '') && t('commentValidation')}
-        </span>
         <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">{t('isItDirty')}</p>
         <div className="flex space-x-[16px] self-start mt-[16px]">
           <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
