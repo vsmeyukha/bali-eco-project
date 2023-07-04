@@ -31,22 +31,11 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onSignInButtonClick, whichP
     password: '',
   });
 
-  const emailValidationRule = z.string().email({ message: 'This is not a valid email' });
-  const passwordValidationRule = z.string().min(8, { message: 'Password has to be longer than 8 symbols' });
+  const emailValidationRule = z.string().email();
+  const passwordValidationRule = z.string().min(8);
 
   const emailValidation = emailValidationRule.safeParse(signInFormState.email);
   const passwordValidation = passwordValidationRule.safeParse(signInFormState.password);
-
-  let EmailErrorMessage = '';
-  let PasswordErrorMessage = '';
-
-  if (!emailValidation.success) {
-    EmailErrorMessage = emailValidation?.error?.issues[0].message;
-  }
-
-  if (!passwordValidation.success) {
-    PasswordErrorMessage = passwordValidation?.error?.issues[0].message;
-  }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignInFormState({ ...signInFormState, email: e.target.value });

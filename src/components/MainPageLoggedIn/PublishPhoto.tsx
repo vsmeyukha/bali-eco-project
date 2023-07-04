@@ -1,4 +1,6 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
+import { Transition } from '@headlessui/react';
+
 import BlueWave from '../../../public/images/backgrounds/bluewave.svg';
 import useViewportWidth from '@/hooks/calculateWidth';
 
@@ -12,6 +14,12 @@ const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement =>
   const viewportWidth = useViewportWidth();
 
   const { t } = useTranslation('mapPage');
+
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  setTimeout(() => {
+    setIsLoaded(true);
+  }, 1000);
 
   return (
     <>
@@ -42,7 +50,14 @@ const PublishPhoto: React.FC<PublishPhotoProps> = ({openPopup}): ReactElement =>
         z-20"
       >
         <h2 className="font-oceanic-bold text-[52px] leading-[62px] text-white max-w-[440px]">BaliGreenMap</h2>
-        <h2 className="font-oceanic-bold text-[52px] leading-[62px] text-white">Ткни на карту, мразь!</h2>
+        <Transition
+          show={isLoaded}
+          enter="transition-opacity ease-linear duration-2000"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+        >
+          <p className="font-montserrat font-light text-[20px] leading-[24px] text-white">Нажмите на карту, чтобы добавить фото</p>
+        </Transition>
         {/* {viewportWidth >= 1024 &&
           <button
             type="button"

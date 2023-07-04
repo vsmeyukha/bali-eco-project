@@ -20,21 +20,6 @@ import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
-// ? прописываем типизацию объекта обработки инпутов (сама логика ниже, на 63 строке), экспортируем интерфейс, чтобы использовать его в типизации пропсов addPostPopup
-export interface handlingInputs {
-  values: {
-    postTitle: string,
-    postComment: string,
-    postGeo: Coordinates,
-    postImage: string | null,
-  },
-  handlers: {
-    handlePostTitleInput: (e: ChangeEvent<HTMLInputElement>) => void,
-    handlePostCommentInput: (e: ChangeEvent<HTMLInputElement>) => void,
-    handlePostGeoInput?: (e: ChangeEvent<HTMLInputElement>) => void,
-  },
-}
-
 export interface IMarker {
   coordinates: Coordinates,
   coordsToPixels: CoordsConvertedToPixels,
