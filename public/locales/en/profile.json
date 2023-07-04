@@ -6,9 +6,15 @@
   "name": "Name",
   "surname": "Surname",
   "email": "E-mail",
+  "password": "Password",
   "save": "Save",
   "settings": "Settings",
   "darkMode": "Dark mode",
   "signOut": "Sign out",
-  "history": "History"
+  "history": "History",
+  "nicknameValidationMessage": "Nickname has to be longer than 3 symbols",
+  "nameValidationMessage": "Name has to be longer than 5 symbols",
+  "SurnameValidationMessage": "Surname has to be longer than 3 symbols",
+  "emailValidationMessage": "This is not a valid email",
+  "passwordValidationMessage": "Password has to be longer than 8 symbols"
 }

@@ -7,5 +7,7 @@
   "signInWithApple": "Sign In with Apple",
   "signInWithGoogle": "Sign In with Google",
   "notRegisteredYet": "Not registered yet?",
-  "register": "Register"
+  "register": "Register",
+  "emailValidation": "This is not a valid email",
+  "passwordValidation": "Password has to be longer than 8 symbols"
 }

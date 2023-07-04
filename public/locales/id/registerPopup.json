@@ -9,5 +9,8 @@
   "registerWithGoogle": "Daftar dengan Google",
   "agreement": "Dengan mendaftar, Anda menerima syarat dan ketentuan perjanjian",
   "alreadyRegistered": "Sudah terdaftar?",
-  "signIn": "Masuk"
+  "signIn": "Masuk",
+  "nameValidation": "Nama harus lebih dari 5 simbol",
+  "emailValidation": "Ini bukan email yang valid",
+  "passwordValidation": "Kata sandi harus lebih dari 8 simbol"
 }

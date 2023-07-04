@@ -7,5 +7,7 @@
   "signInWithApple": "Войти с Apple",
   "signInWithGoogle": "Войти с Google",
   "notRegisteredYet": "Еще не зарегистрированы?",
-  "register": "Зарегистрироваться"
+  "register": "Зарегистрироваться",
+  "emailValidation": "Это не действительный адрес электронной почты",
+  "passwordValidation": "Пароль должен быть длиннее 8 символов"
 }

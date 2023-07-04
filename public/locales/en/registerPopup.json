@@ -9,5 +9,8 @@
   "registerWithGoogle": "Register with Google",
   "agreement": "By registering, you accept the terms of the agreement",
   "alreadyRegistered": "Already registered?",
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "nameValidation": "Name has to be longer than 5 symbols",
+  "emailValidation": "This is not a valid email",
+  "passwordValidation": "Password has to be longer than 8 symbols"
 }

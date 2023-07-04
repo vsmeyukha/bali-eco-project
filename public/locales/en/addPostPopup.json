@@ -7,5 +7,7 @@
   "isItDirty": "Is it Dirty?",
   "itIsDirty": "Yes",
   "itIsNotDirty": "No",
-  "publish": "Post"
+  "publish": "Post",
+  "titleValidation": "Title must be longer than 5 symbols",
+  "commentValidation": "Comment must be longer than 5 symbols"
 }

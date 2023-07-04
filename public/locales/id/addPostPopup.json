@@ -7,5 +7,7 @@
   "isItDirty": "Apakah Ini Kotor?",
   "itIsDirty": "Ya",
   "itIsNotDirty": "Tidak",
-  "publish": "Terbitkan"
+  "publish": "Terbitkan",
+  "titleValidation": "Judul harus lebih dari 5 simbol",
+  "commentValidation": "Komentar harus lebih dari 5 simbol"
 }

@@ -7,5 +7,7 @@
   "signInWithApple": "Masuk dengan Apple",
   "signInWithGoogle": "Masuk dengan Google",
   "notRegisteredYet": "Belum terdaftar?",
-  "register": "Daftar"
+  "register": "Daftar",
+  "emailValidation": "Ini bukan email yang valid",
+  "passwordValidation": "Kata sandi harus lebih dari 8 simbol"
 }

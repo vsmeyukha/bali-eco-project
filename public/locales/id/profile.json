@@ -6,9 +6,15 @@
   "name": "Nama",
   "surname": "Nama belakang",
   "email": "E-mail",
+  "password": "Kata sandi",
   "save": "Simpan",
   "settings": "Pengaturan",
   "darkMode": "Mode gelap",
   "signOut": "Keluar",
-  "history": "Riwayat"
+  "history": "Riwayat",
+  "nicknameValidationMessage": "Nama panggilan harus lebih dari 3 simbol",
+  "nameValidationMessage": "Nama harus lebih dari 5 simbol",
+  "SurnameValidationMessage": "Nama belakang harus lebih dari 3 simbol",
+  "emailValidationMessage": "Ini bukan email yang valid",
+  "passwordValidationMessage": "Password harus lebih dari 8 simbol"
 }

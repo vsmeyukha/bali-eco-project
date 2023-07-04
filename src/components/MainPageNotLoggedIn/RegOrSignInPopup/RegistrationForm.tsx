@@ -32,29 +32,13 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick }: RegF
     password: '',
   });
 
-  const nameValidationRule = z.string().min(5, { message: 'Name has to be longer than 5 symbols' });
-  const emailValidationRule = z.string().email({ message: 'This is not a valid email' });
-  const passwordValidationRule = z.string().min(8, { message: 'Password has to be longer than 8 symbols' });
+  const nameValidationRule = z.string().min(5);
+  const emailValidationRule = z.string().email();
+  const passwordValidationRule = z.string().min(8);
 
   const nameValidation = nameValidationRule.safeParse(registrationState.name);
   const emailValidation = emailValidationRule.safeParse(registrationState.email);
   const passwordValidation = passwordValidationRule.safeParse(registrationState.password);
-
-  let nameErrorMessage = '';
-  let EmailErrorMessage = '';
-  let PasswordErrorMessage = '';
-
-  if (!nameValidation.success) {
-    nameErrorMessage = nameValidation?.error?.issues[0].message;
-  }
-
-  if (!emailValidation.success) {
-    EmailErrorMessage = emailValidation?.error?.issues[0].message;
-  }
-
-  if (!passwordValidation.success) {
-    PasswordErrorMessage = passwordValidation?.error?.issues[0].message;
-  }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegistrationState({ ...registrationState, name: e.target.value });
@@ -74,15 +58,15 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick }: RegF
     <Form onSubmit={onRegButtonClick}>
       <Input label={t('name')} name="username" value={registrationState.name} handleChange={handleNameChange} />
       <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!nameValidation.success && registrationState.name !== '') && nameErrorMessage}
+        {(!nameValidation.success && registrationState.name !== '') && t('nameValidation')}
       </span>
       <Input label={t('email')} name="email" value={registrationState.email} handleChange={handleEmailChange} />
       <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!emailValidation.success && registrationState.email !== '') && EmailErrorMessage}
+        {(!emailValidation.success && registrationState.email !== '') && t('emailValidation')}
       </span>
       <Input label={t('password')} name="password" value={registrationState.password} handleChange={handlePasswordChange} />
       <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!passwordValidation.success && registrationState.password !== '') && PasswordErrorMessage}
+        {(!passwordValidation.success && registrationState.password !== '') && t('passwordValidation')}
       </span>
       <BigBlueButton size={buttonSize} type="submit" text={t('register')} disabled={!isButtonActive} />
     </Form>

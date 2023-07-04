@@ -21,9 +21,9 @@ const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ regOr
         <p className="ml-[10px]">{
           isRegPopup
             ?
-            t('registerWithGoogle')
+            t('registerWithApple')
             :
-            t('signInPopup:signInWithGoogle')
+            t('signInPopup:signInWithApple')
         }</p>
       </button>
       <button className={buttonStyles}>

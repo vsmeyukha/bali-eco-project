@@ -6,9 +6,15 @@
   "name": "Имя",
   "surname": "Фамилия",
   "email": "E-mail",
+  "password": "Пароль",
   "save": "Сохранить",
   "settings": "Настройки",
   "darkMode": "Темная тема",
   "signOut": "Выйти",
-  "history": "История"
+  "history": "История",
+  "nicknameValidationMessage": "Никнейм должен быть длиннее 3 символов",
+  "nameValidationMessage": "Имя должно быть длиннее 5 символов",
+  "SurnameValidationMessage": "Фамилия должна быть длиннее 3 символов",
+  "emailValidationMessage": "Это не действительный адрес электронной почты",
+  "passwordValidationMessage": "Пароль должен быть длиннее 8 символов"
 }

@@ -62,11 +62,11 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onSignInButtonClick, whichP
     <Form onSubmit={onSignInButtonClick}>
       <Input label={t('email')} name="email" value={signInFormState.email} handleChange={handleEmailChange} />
       <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!emailValidation.success && signInFormState.email !== '') && EmailErrorMessage}
+        {(!emailValidation.success && signInFormState.email !== '') && t('emailValidation')}
       </span>
       <Input label={t('password')} name="password" value={signInFormState.password} handleChange={handlePasswordChange} />
       <span className="w-full text-left text-red-500 mt-[8px]">
-        {(!passwordValidation.success && signInFormState.password !== '') && PasswordErrorMessage}
+        {(!passwordValidation.success && signInFormState.password !== '') && t('passwordValidation')}
       </span>
       <BigBlueButton size={buttonSize} type="submit" text={t('signIn')} disabled={!isButtonActive} />
     </Form>

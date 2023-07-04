@@ -69,29 +69,15 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     }
   };
 
-  const titleValidation = z.coerce.string().min(5, { message: "Must be longer than 5 symbols" });
-  const commentValidation = z.coerce.string().min(10, { message: "Must be longer than 10 symbols" });
+  const titleValidation = z.coerce.string().min(5);
+  const commentValidation = z.coerce.string().min(10);
 
   const titleValResult = titleValidation.safeParse(newMarker?.title);
   const commentValResult = commentValidation.safeParse(newMarker?.comment);
 
-  let titleValidationMessage = '';
-  let commentValidationMessage = '';
-
-  if (!titleValResult.success) {
-    titleValidationMessage = titleValResult.error.issues[0].message;
-  }
-
-  if (!commentValResult.success) {
-    commentValidationMessage = commentValResult.error.issues[0].message;
-  }
-
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (newMarker) {
       setNewMarker({ ...newMarker, title: event.target.value });
-      if (!titleValidation.safeParse(event.target.value).success) {
-        console.log(titleValidation.safeParse(newMarker?.title));
-      }
     }
   }
 
@@ -160,7 +146,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           handleChange={handleTitleChange}
         />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!titleValResult.success && newMarker?.title !== '') && titleValidationMessage}
+          {(!titleValResult.success && newMarker?.title !== '') && t('titleValidation')}
         </span>
         <TextAreaInput
           label={t('comment')}
@@ -170,7 +156,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           handleChange={handleCommentChange}
         />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!commentValResult.success && newMarker?.comment !== '') && commentValidationMessage}
+          {(!commentValResult.success && newMarker?.comment !== '') && t('commentValidation')}
         </span>
         <p className="font-medium text-[18px] leading-[22px] mt-[32px] self-start">{t('isItDirty')}</p>
         <div className="flex space-x-[16px] self-start mt-[16px]">

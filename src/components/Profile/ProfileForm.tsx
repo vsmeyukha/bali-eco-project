@@ -29,45 +29,17 @@ const ProfileForm: React.FC = (): ReactElement => {
     password: ''
   });
 
-  const nicknameValidation = z.string().min(3, { message: 'Nickname has to be longer than 3 symbols' });
-  const nameValidation = z.string().min(5, { message: 'Name has to be longer than 5 symbols' });
-  const surnameValidation = z.string().min(3, { message: 'Surname has to be longer than 3 symbols' });
-  const emailValidation = z.string().email({message: 'This is not a valid email'});
-  const passwordValidation = z.string().min(8, { message: 'Password has to be longer than 8 symbols' });
+  const nicknameValidation = z.string().min(3);
+  const nameValidation = z.string().min(5);
+  const surnameValidation = z.string().min(3);
+  const emailValidation = z.string().email();
+  const passwordValidation = z.string().min(8);
 
   const nicknameValResult = nicknameValidation.safeParse(profileForm.nickname);
   const nameValResult = nameValidation.safeParse(profileForm.name);
   const surnameValResult = surnameValidation.safeParse(profileForm.surname);
   const emailValResult = emailValidation.safeParse(profileForm.email);
   const passwordValResult = passwordValidation.safeParse(profileForm.password);
-
-  let nicknameValidationMessage = '';
-  let nameValidationMessage = '';
-  let surnameValidationMessage = '';
-  let emailValidationMessage = '';
-  let passwordValidationMessage = '';
-
-  if (!nicknameValResult.success) {
-    nicknameValidationMessage = nicknameValResult.error.issues[0].message;
-  }
-
-  if (!nameValResult.success) {
-    nameValidationMessage = nameValResult.error.issues[0].message;
-  }
-
-  if (!surnameValResult.success) {
-    surnameValidationMessage = surnameValResult.error.issues[0].message;
-  }
-
-  if (!emailValResult.success) {
-    emailValidationMessage = emailValResult.error.issues[0].message;
-  }
-
-  if (!passwordValResult.success) {
-    passwordValidationMessage = passwordValResult.error.issues[0].message;
-  }
-
-
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfileForm({ ...profileForm, nickname: e.target.value });
@@ -94,23 +66,23 @@ const ProfileForm: React.FC = (): ReactElement => {
       <Form onSubmit={handleSubmit}>
         <Input label={t('nickname')} name="nickname" value={profileForm.nickname} handleChange={handleNicknameChange} />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!nicknameValResult.success && profileForm.nickname !== '') && nicknameValidationMessage}
+          {(!nicknameValResult.success && profileForm.nickname !== '') && t('nicknameValidationMessage')}
         </span>
         <Input label={t('name')} name="name" value={profileForm.name} handleChange={handleNameChange} />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!nameValResult.success && profileForm.name !== '') && nameValidationMessage}
+          {(!nameValResult.success && profileForm.name !== '') && t('nameValidationMessage')}
         </span>
         <Input label={t('surname')} name="surname" value={profileForm.surname} handleChange={handleSurnameChange} />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!surnameValResult.success && profileForm.surname !== '') && surnameValidationMessage}
+          {(!surnameValResult.success && profileForm.surname !== '') && t('surnameValidationMessage')}
         </span>
         <Input label={t('email')} name="email" value={profileForm.email} handleChange={handleEmailChange} />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!emailValResult.success && profileForm.email !== '') && emailValidationMessage}
+          {(!emailValResult.success && profileForm.email !== '') && t('emailValidationMessage')}
         </span>
         <Input label={t('password')} name="password" value={profileForm.password} handleChange={handlePasswordChange} />
         <span className="w-full text-left text-red-500 mt-[8px]">
-          {(!passwordValResult.success && profileForm.password !== '') && passwordValidationMessage}
+          {(!passwordValResult.success && profileForm.password !== '') && t('passwordValidationMessage')}
         </span>
         <BigBlueButton size="large" type="submit" text={t('save')} />
       </Form>
