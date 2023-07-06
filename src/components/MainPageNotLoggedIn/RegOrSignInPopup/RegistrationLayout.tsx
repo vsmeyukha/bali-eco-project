@@ -18,7 +18,7 @@ const RegistrationLayout: React.FC<LayoutProps> = ({ onClose, whichPopup, isRegP
 
   return (
     <div className="w-full flex flex-col items-center">
-      <RegistrationForm onRegButtonClick={handleSubmit} />
+      <RegistrationForm onClose={onClose} />
       <OrBlock />
       <RegOrSignViaSocialMedia regOrSign={whichPopup} isRegPopup={isRegPopup} />
     </div>

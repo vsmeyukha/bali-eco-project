@@ -2,6 +2,8 @@ import { ReactElement, FormEvent, useState } from "react";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
+import { signUp, logOut } from "@/firebase/auth";
+
 import BigBlueButton from '../BigBlueButton';
 import { inputStyles } from "@/utils/styles";
 import { RegSignInPopup } from '../../../utils/types';
@@ -10,7 +12,7 @@ import Input from "@/components/Form/Input";
 import useViewportWidth from "@/hooks/calculateWidth";
 
 interface RegFormPropsType {
-  onRegButtonClick: (e: FormEvent<HTMLFormElement>) => void,
+  onClose: () => void,
 }
 
 interface RegFormState {
@@ -19,7 +21,7 @@ interface RegFormState {
   password: string,
 }
 
-const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick }: RegFormPropsType): ReactElement => {
+const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsType): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
@@ -46,8 +48,14 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick }: RegF
 
   const isButtonActive: boolean = nameValidation.success && emailValidation.success && passwordValidation.success;
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onClose();
+    signUp(registrationState.email, registrationState.password);
+  }
+
   return (
-    <Form onSubmit={onRegButtonClick}>
+    <Form onSubmit={handleSubmit}>
       <Input
         label={t('name')}
         name="username"
@@ -79,6 +87,7 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onRegButtonClick }: RegF
         text={t('register')}
         disabled={!isButtonActive}
       />
+      <button type="button" onClick={logOut}>sign out</button>
     </Form>
   );
 }

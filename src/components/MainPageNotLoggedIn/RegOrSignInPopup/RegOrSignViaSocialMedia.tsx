@@ -6,6 +6,8 @@ import Google from '../../../../public/images/svgs/icons/google.svg';
 import { buttonStyles } from "@/utils/styles";
 import { RegSignInPopup } from '../../../utils/types'
 
+import { signUpWithGoogle } from '@/firebase/auth';
+
 interface RegOrSignViaSocialMediaProps {
   regOrSign: RegSignInPopup,
   isRegPopup: boolean,
@@ -26,7 +28,7 @@ const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ regOr
             t('signInPopup:signInWithApple')
         }</p>
       </button>
-      <button className={buttonStyles}>
+      <button className={buttonStyles} onClick={signUpWithGoogle} type="button">
         <Google style={{ fill: "#00265F" }} className="h-[21px] w-[21px]" />
         <p className="ml-[10px]">{
           isRegPopup

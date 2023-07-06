@@ -19,6 +19,7 @@
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "exif-parser": "^0.1.12",
+    "firebase": "^9.23.0",
     "i18next": "^22.5.0",
     "next": "13.2.4",
     "next-i18next": "^13.3.0",
