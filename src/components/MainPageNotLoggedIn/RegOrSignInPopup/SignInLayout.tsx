@@ -11,16 +11,11 @@ interface LayoutProps {
 }
 
 const SignInLayout: React.FC<LayoutProps> = ({ onClose, whichPopup, isRegPopup }: LayoutProps): ReactElement => {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    onClose();
-  }
-
   return (
     <div className="w-full flex flex-col items-center">
-      <SignInForm onSignInButtonClick={handleSubmit} whichPopup={whichPopup} />
+      <SignInForm whichPopup={whichPopup} onClose={onClose} />
       <OrBlock />
-      <RegOrSignViaSocialMedia regOrSign={whichPopup} isRegPopup={isRegPopup} />
+      <RegOrSignViaSocialMedia regOrSign={whichPopup} isRegPopup={isRegPopup} onClose={onClose} />
     </div>
   );
 }

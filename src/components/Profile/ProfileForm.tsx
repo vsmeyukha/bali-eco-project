@@ -14,6 +14,12 @@ interface profileFormState {
   password: string,
 }
 
+const nicknameValidation = z.string().min(3);
+const nameValidation = z.string().min(5);
+const surnameValidation = z.string().min(3);
+const emailValidation = z.string().email();
+const passwordValidation = z.string().min(8);
+
 const ProfileForm: React.FC = (): ReactElement => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,12 +34,6 @@ const ProfileForm: React.FC = (): ReactElement => {
     email: '',
     password: ''
   });
-
-  const nicknameValidation = z.string().min(3);
-  const nameValidation = z.string().min(5);
-  const surnameValidation = z.string().min(3);
-  const emailValidation = z.string().email();
-  const passwordValidation = z.string().min(8);
 
   const nicknameValResult = nicknameValidation.safeParse(profileForm.nickname);
   const nameValResult = nameValidation.safeParse(profileForm.name);

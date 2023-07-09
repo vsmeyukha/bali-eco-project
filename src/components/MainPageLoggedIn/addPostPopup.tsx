@@ -26,6 +26,9 @@ interface AddPostPopupProps {
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
 
+const titleValidation = z.coerce.string().min(5);
+const commentValidation = z.coerce.string().min(10);
+
 const AddPostPopup: React.FC<AddPostPopupProps> = (
   {
     setMarkers,
@@ -68,9 +71,6 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
       setNewMarker({ ...newMarker, imageUrl });
     }
   };
-
-  const titleValidation = z.coerce.string().min(5);
-  const commentValidation = z.coerce.string().min(10);
 
   const titleValResult = titleValidation.safeParse(newMarker?.title);
   const commentValResult = commentValidation.safeParse(newMarker?.comment);

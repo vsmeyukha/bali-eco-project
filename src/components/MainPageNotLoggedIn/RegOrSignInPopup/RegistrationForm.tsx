@@ -2,7 +2,7 @@ import { ReactElement, FormEvent, useState } from "react";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-import { signUp, logOut } from "@/firebase/auth";
+import { signUp } from "@/firebase/auth";
 
 import BigBlueButton from '../BigBlueButton';
 import { inputStyles } from "@/utils/styles";
@@ -21,6 +21,10 @@ interface RegFormState {
   password: string,
 }
 
+const nameValidationRule = z.string().min(5);
+const emailValidationRule = z.string().email();
+const passwordValidationRule = z.string().min(8);
+
 const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsType): ReactElement => {
   const viewportWidth = useViewportWidth();
 
@@ -34,10 +38,6 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
     password: '',
   });
 
-  const nameValidationRule = z.string().min(5);
-  const emailValidationRule = z.string().email();
-  const passwordValidationRule = z.string().min(8);
-
   const nameValidation = nameValidationRule.safeParse(registrationState.username);
   const emailValidation = emailValidationRule.safeParse(registrationState.email);
   const passwordValidation = passwordValidationRule.safeParse(registrationState.password);
@@ -48,10 +48,10 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
 
   const isButtonActive: boolean = nameValidation.success && emailValidation.success && passwordValidation.success;
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    await signUp(registrationState.email, registrationState.password);
     onClose();
-    signUp(registrationState.email, registrationState.password);
   }
 
   return (
@@ -87,7 +87,6 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
         text={t('register')}
         disabled={!isButtonActive}
       />
-      <button type="button" onClick={logOut}>sign out</button>
     </Form>
   );
 }

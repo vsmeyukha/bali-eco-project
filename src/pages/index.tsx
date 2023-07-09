@@ -38,6 +38,7 @@ export default function Home() {
     }
   }, []);
 
+  // ? переделать стейт на енам, где будет три значения - одно значение false для состояния закрытого попапа, и две строки - например, reg и signIn, на основании которых будет меняться лэйаут 
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
   const handlePopupOpen = () => {

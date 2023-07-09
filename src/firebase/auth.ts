@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   sendEmailVerification,
   GoogleAuthProvider,
   signInWithPopup,
@@ -26,6 +27,25 @@ export const signUp = async (email: string, password: string): Promise<void> => 
   }
 };
 
+// ? вход по емэйлу и паролю
+export const signIn = async (email: string, password: string): Promise<void> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log(user);
+    console.log(user === auth.currentUser);
+    console.log('signed in successfully');
+  } catch (error: any) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode, errorMessage);
+    console.log(error);
+    console.log(auth);
+
+    throw error;
+  }
+}
+
 // ? регистрация через гугл-аккаунт
 const googleProvider = new GoogleAuthProvider();
 
@@ -37,6 +57,8 @@ if (typeof window !== 'undefined') {
 export const signUpWithGoogle = async (): Promise<void> => {
   try {
     await signInWithPopup(auth, googleProvider);
+    console.log('signed in with google');
+    console.log(auth.currentUser);
   } catch (error: any) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -50,6 +72,7 @@ export const logOut = async () => {
     if (auth.currentUser) {
       await signOut(auth);
       console.log('signed out!');
+      console.log(auth.currentUser);
     }
   } catch (error: any) {
     console.log(error);
