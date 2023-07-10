@@ -3,6 +3,8 @@
   "email": "E-mail",
   "password": "Password",
   "signIn": "Sign In",
+  "signInInProcess": "Signing in...",
+  "signInSuccessful": "Success!",
   "or": "or",
   "signInWithApple": "Sign in with Apple",
   "signInWithGoogle": "Sign in with Google",

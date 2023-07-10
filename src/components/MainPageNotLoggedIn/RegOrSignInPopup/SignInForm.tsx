@@ -24,8 +24,6 @@ interface SignInFormState {
   password: string,
 }
 
-const unknownErrorMessage: string = 'Ошибка входа. ';
-
 const emailValidationRule = z.string().email();
 const passwordValidationRule = z.string().min(8);
 
@@ -36,6 +34,8 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ whichPopup, onClose }: Sign
 
   // ? получаем функцию перевода и объект, в котором хранится информация о языке
   const { t, i18n } = useTranslation(['signInPopup', 'authErrors']);
+
+  const unknownErrorMessage: string = t('unknownError');
 
   // ? стейт формы
   const [signInFormState, setSignInFormState] = useState<SignInFormState>({
@@ -93,12 +93,12 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ whichPopup, onClose }: Sign
   // todo дописать негативный сценарий
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try { 
-      setSubmitButtonText('Идет вход...');
+      setSubmitButtonText(t('signInInProcess') || 'Signing in...');
       e.preventDefault();
       await signIn(signInFormState.email, signInFormState.password);
       
       if (auth.currentUser) {
-        setSubmitButtonText('Вход выполнен!');
+        setSubmitButtonText(t('signInSuccessful') || 'Success!');
         setFirebaseErrorCode('');
         setTimeout(() => {
           router.push('/map');

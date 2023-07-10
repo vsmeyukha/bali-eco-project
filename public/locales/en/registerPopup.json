@@ -4,6 +4,8 @@
   "email": "E-mail",
   "password": "Password",
   "register": "Register",
+  "registrationInProcess": "Registration...",
+  "registrationSuccessful": "Success!",
   "or": "or",
   "registerWithApple": "Sign in with Apple",
   "registerWithGoogle": "Sign in with Google",

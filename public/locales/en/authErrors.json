@@ -4,5 +4,6 @@
   "invalidEmail": "Invalid email address. Try one more time",
   "emailAlreadyInUse": "User with this email is already registered. Try one more time",
   "networkRequestFailed": "Internet issues. Try one more time",
+  "unknownError": "Error! Try once again",
   "noError": ""
 }

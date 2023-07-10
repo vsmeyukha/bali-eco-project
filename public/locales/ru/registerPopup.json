@@ -4,6 +4,8 @@
   "email": "E-mail",
   "password": "Пароль",
   "register": "Зарегистрироваться",
+  "registrationInProcess": "Регистрация...",
+  "registrationSuccessful": "Регистрация завершена!",
   "or": "или",
   "registerWithApple": "Зарегистрироваться с Apple",
   "registerWithGoogle": "Зарегистрироваться с Google",

@@ -3,6 +3,8 @@
   "email": "E-mail",
   "password": "Пароль",
   "signIn": "Войти",
+  "signInInProcess": "Идет вход...",
+  "signInSuccessful": "Вход выполнен!",
   "or": "или",
   "signInWithApple": "Войти с Apple",
   "signInWithGoogle": "Войти с Google",

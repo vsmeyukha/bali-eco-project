@@ -4,6 +4,8 @@
   "email": "E-mail",
   "password": "Kata Sandi",
   "register": "Daftar",
+  "registrationInProcess": "Pendaftaran...",
+  "registrationSuccessful": "Pendaftaran berhasil!",
   "or": "atau",
   "registerWithApple": "Daftar dengan Apple",
   "registerWithGoogle": "Daftar dengan Google",

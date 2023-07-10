@@ -28,14 +28,14 @@ const nameValidationRule = z.string().min(5);
 const emailValidationRule = z.string().email();
 const passwordValidationRule = z.string().min(8);
 
-const unknownErrorMessage: string = 'Ошибка входа. ';
-
 const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsType): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
 
   const { t, i18n } = useTranslation(['registerPopup', 'authErrors']);
+
+  const unknownErrorMessage: string = t('unknownError');
 
   const [registrationState, setRegistrationState] = useState<RegFormState>({
     username: '',
@@ -79,11 +79,11 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
       e.preventDefault();
-      setSubmitButtonText('Идет регистрация...');
+      setSubmitButtonText(t('registrationInProcess') || 'Registration...');
       await signUp(registrationState.email, registrationState.password);
 
       if (auth.currentUser) {
-        setSubmitButtonText('Вход выполнен!');
+        setSubmitButtonText(t('registrationSuccessful') || 'Success!');
         setFirebaseErrorCode('');
         setTimeout(() => {
           router.push('/map');

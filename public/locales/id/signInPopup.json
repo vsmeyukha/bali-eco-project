@@ -3,6 +3,8 @@
   "email": "E-mail",
   "password": "Kata Sandi",
   "signIn": "Masuk",
+  "signInInProcess": "Masuk...",
+  "signInSuccessful": "Sukses!",
   "or": "atau",
   "signInWithApple": "Masuk dengan Apple",
   "signInWithGoogle": "Masuk dengan Google",
