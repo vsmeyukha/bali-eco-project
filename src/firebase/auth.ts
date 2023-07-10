@@ -24,6 +24,8 @@ export const signUp = async (email: string, password: string): Promise<void> => 
     const errorCode = error.code;
     const errorMessage = error.message;
     console.log(errorCode, errorMessage);
+
+    throw error;
   }
 };
 

@@ -1,6 +1,14 @@
 import { StaticImageData } from "next/image";
+import { z } from 'zod';
 
-import { NavLink, NavLinkForBurger, CredType, QuickToolsMenuType, ToggleArticlesAndTipsType, RegSignInPopup } from "./types";
+import {
+  NavLink,
+  NavLinkForBurger,
+  CredType,
+  QuickToolsMenuType,
+  ToggleArticlesAndTipsType,
+  RegSignInPopup
+} from "./types";
 
 import { getRandom } from "./utils";
 
@@ -193,6 +201,36 @@ const signInPopup: RegSignInPopup = {
   signIn: 'Зарегистрироваться',
 }
 
+// ? коды ошибок аутентификации
+const firebaseErrorCodes = z.enum([
+  "auth/user-not-found",
+  "auth/wrong-password",
+  "auth/invalid-email",
+  "auth/user-disabled",
+  "auth/too-many-requests",
+  "auth/email-already-in-use",
+  "auth/operation-not-allowed",
+  "auth/network-request-failed",
+  "auth/popup-closed-by-user",
+  ""
+]);
+
+// ? типизируем ошибку firebase, это enum нескольких отдаваемых файрбейсом ошибок
+export type firebaseErrorCode = z.infer<typeof firebaseErrorCodes>;
+
+// ? типизация мапинга ошибок - она частично включает в себя записи из firebaseErrorCodes, а также стринги или null
+type ErrorMessageMapping = Partial<Record<firebaseErrorCode, string | null>>;
+
+// ? мапим ошибки и наименования текстов в локалях
+const errorMessages: ErrorMessageMapping = {
+  "auth/user-not-found": "authErrors:userNotFound",
+  "auth/wrong-password": "authErrors:wrongPassword",
+  "auth/invalid-email": "authErrors:invalidEmail",
+  "auth/email-already-in-use": "authErrors:emailAlreadyInUse",
+  "auth/network-request-failed": "authErrors:networkRequestFailed",
+  "": null,
+}
+
 export {
   navListRu,
   navListForBurgerRu,
@@ -211,4 +249,6 @@ export {
   regPopup,
   signInPopup,
   aboutUsContents,
+  firebaseErrorCodes,
+  errorMessages,
 };

@@ -12,6 +12,7 @@ import useViewportWidth from "@/hooks/calculateWidth";
 
 import { signIn, logOut } from "@/firebase/auth";
 import { auth } from '../../../firebase/config';
+import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
 interface SignInFormPropsType {
   whichPopup: RegSignInPopup,
@@ -21,32 +22,6 @@ interface SignInFormPropsType {
 interface SignInFormState {
   email: string,
   password: string,
-}
-
-const firebaseErrorCodes = z.enum([
-  "auth/user-not-found",
-  "auth/wrong-password",
-  "auth/invalid-email",
-  "auth/user-disabled",
-  "auth/too-many-requests",
-  "auth/email-already-in-use",
-  "auth/operation-not-allowed",
-  "auth/network-request-failed",
-  "auth/popup-closed-by-user",
-  ""
-]);
-
-type firebaseErrorCode = z.infer<typeof firebaseErrorCodes>;
-
-type ErrorMessageMapping = Partial<Record<firebaseErrorCode, string | null>>;
-
-const errorMessages: ErrorMessageMapping = {
-  "auth/user-not-found": 'Пользователь с такой электронной почтой не зарегистрирован. ',
-  "auth/wrong-password": 'Неверный пароль. ',
-  "auth/invalid-email": 'Невалидный адрес электронной почты. ',
-  "auth/email-already-in-use": 'Пользователь с такой электронной почтой уже зарегистрирован. ',
-  "auth/network-request-failed": 'Проблемы с интернетом. ',
-  "": null,
 }
 
 const unknownErrorMessage: string = 'Ошибка входа. ';
@@ -60,7 +35,7 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ whichPopup, onClose }: Sign
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
 
   // ? получаем функцию перевода и объект, в котором хранится информация о языке
-  const { t, i18n } = useTranslation('signInPopup');
+  const { t, i18n } = useTranslation(['signInPopup', 'authErrors']);
 
   // ? стейт формы
   const [signInFormState, setSignInFormState] = useState<SignInFormState>({
@@ -160,7 +135,7 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ whichPopup, onClose }: Sign
         valErrorMessage={t('passwordValidation')}
       />
       <span className="w-full text-left text-red-500 mt-[40px]">
-        {firebaseErrorCode && `${errorMessage}Попробуйте еще раз.`}
+        {firebaseErrorCode && t(errorMessage)} 
       </span>
       <BigBlueButton
         size={buttonSize}

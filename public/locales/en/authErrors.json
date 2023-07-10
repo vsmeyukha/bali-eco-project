@@ -1,0 +1,8 @@
+{
+  "userNotFound": "User with this email is not registered. Try one more time",
+  "wrongPassword": "Incorrect password. Try one more time",
+  "invalidEmail": "Invalid email address. Try one more time",
+  "emailAlreadyInUse": "User with this email is already registered. Try one more time",
+  "networkRequestFailed": "Internet issues. Try one more time",
+  "noError": ""
+}

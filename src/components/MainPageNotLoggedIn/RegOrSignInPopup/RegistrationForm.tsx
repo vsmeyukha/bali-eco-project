@@ -1,8 +1,11 @@
-import { ReactElement, FormEvent, useState } from "react";
+import { ReactElement, FormEvent, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-import { signUp } from "@/firebase/auth";
+import { signUp, logOut } from "@/firebase/auth";
+import { auth } from '../../../firebase/config';
+import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
 import BigBlueButton from '../BigBlueButton';
 import { inputStyles } from "@/utils/styles";
@@ -25,12 +28,14 @@ const nameValidationRule = z.string().min(5);
 const emailValidationRule = z.string().email();
 const passwordValidationRule = z.string().min(8);
 
+const unknownErrorMessage: string = 'Ошибка входа. ';
+
 const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsType): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
 
-  const { t } = useTranslation('registerPopup');
+  const { t, i18n } = useTranslation(['registerPopup', 'authErrors']);
 
   const [registrationState, setRegistrationState] = useState<RegFormState>({
     username: '',
@@ -38,20 +43,62 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
     password: '',
   });
 
+  // ? стейт текста кнопки сабмита, который меняется в зависимости от стадии процесса регистрации
+  const [submitButtonText, setSubmitButtonText] = useState<string>(t('register') || 'Register');
+
+  const [firebaseErrorCode, setFirebaseErrorCode] = useState<firebaseErrorCode>("");
+
+  let errorMessage: string | null = null;
+
+  // todo ошибка тайпскриптовая, надо пофиксить 
+  if (errorMessages[firebaseErrorCode] !== undefined) {
+    errorMessage = errorMessages[firebaseErrorCode];
+  } else {
+    errorMessage = unknownErrorMessage;
+  }
+
+  // ? так как мы используем стейт для отображения разного текста на кнопке сабмита в зависимости от того, в какой стадии находится процесс входа, а стейт не перезаписывается, когда мы меняем язык, то возникает проблема, что при переключении языка все на странице меняется, но текст на кнопке остается на предыдущем языке. эту проблему мы решаем, используя useEffect, который слушает изменение языка, который хранится в свойстве i18n.language
+  useEffect(() => {
+    setSubmitButtonText(t('register') || 'Sign In');
+  }, [t, i18n.language]);
+
   const nameValidation = nameValidationRule.safeParse(registrationState.username);
   const emailValidation = emailValidationRule.safeParse(registrationState.email);
   const passwordValidation = passwordValidationRule.safeParse(registrationState.password);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegistrationState({ ...registrationState, [e.target.name]: e.target.value });
+    setFirebaseErrorCode('');
   }
 
   const isButtonActive: boolean = nameValidation.success && emailValidation.success && passwordValidation.success;
+    
+  // ? инициализируем некстовый роутер
+  const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await signUp(registrationState.email, registrationState.password);
-    onClose();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    try {
+      e.preventDefault();
+      setSubmitButtonText('Идет регистрация...');
+      await signUp(registrationState.email, registrationState.password);
+
+      if (auth.currentUser) {
+        setSubmitButtonText('Вход выполнен!');
+        setFirebaseErrorCode('');
+        setTimeout(() => {
+          router.push('/map');
+          onClose();
+        }, 500);
+      }
+    } catch (error: any) {
+      setFirebaseErrorCode(error.code);
+      setSubmitButtonText(t('register') || 'Register');
+      setRegistrationState({
+        username: '',
+        email: '',
+        password: '',
+      });
+    }
   }
 
   return (
@@ -81,12 +128,16 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
         valSuccess={passwordValidation.success}
         valErrorMessage={t('passwordValidation')}
       />
+      <span className="w-full text-left text-red-500 mt-[40px]">
+        {firebaseErrorCode && t(errorMessage)} 
+      </span>
       <BigBlueButton
         size={buttonSize}
         type="submit"
-        text={t('register')}
+        text={submitButtonText}
         disabled={!isButtonActive}
       />
+      <button type="button" onClick={logOut}>Sign Out</button>
     </Form>
   );
 }

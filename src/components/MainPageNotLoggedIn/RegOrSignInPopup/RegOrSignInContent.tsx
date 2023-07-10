@@ -49,7 +49,9 @@ const RegOrSignInContent: React.FC<RegOrSignInPopupProps> = ({
         :
         <SignInLayout onClose={onClose} whichPopup={whichPopup} isRegPopup={isRegPopup} />
       }
-      {isRegPopup && <p className="font-montserrat text-[10px] leading-[12px] text-[#00265F] text-opacity-40 mt-[40px] mb-[16px]">Регистрируясь, вы принимаете условия соглашения</p>}
+      {isRegPopup && <p className="font-montserrat text-[10px] leading-[12px] text-[#00265F] text-opacity-40 mt-[40px] mb-[16px]">
+        {t('agreement')}
+      </p>}
     </>
   );
 }

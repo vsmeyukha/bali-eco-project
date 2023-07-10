@@ -8,6 +8,6 @@
   "signInWithGoogle": "Sign in with Google",
   "notRegisteredYet": "Not registered yet?",
   "register": "Register",
-  "emailValidation": "This is not a valid email",
-  "passwordValidation": "Password has to be longer than 8 symbols"
+  "emailValidation": "This is not a valid email. Try one more time",
+  "passwordValidation": "Password has to be longer than 8 symbols. Try one more time"
 }

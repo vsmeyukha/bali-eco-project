@@ -1,0 +1,8 @@
+{
+  "userNotFound": "Pengguna dengan email ini tidak terdaftar. Coba lagi",
+  "wrongPassword": "Kata sandi salah. Coba lagi",
+  "invalidEmail": "Alamat email tidak valid. Coba lagi",
+  "emailAlreadyInUse": "Pengguna dengan email ini sudah terdaftar. Coba lagi",
+  "networkRequestFailed": "Masalah internet. Coba lagi",
+  "noError": ""
+}

@@ -4,7 +4,7 @@ import useViewportWidth from '@/hooks/calculateWidth';
 import ClimateCarousel from './ClimateCarousel';
 import extractArticleChunks from '@/helpers/extractArticleChunks';
 
-import { UseTranslation, useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 
 import { articles } from '@/data/climate-articles';
 

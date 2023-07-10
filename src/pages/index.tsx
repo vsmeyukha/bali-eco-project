@@ -19,7 +19,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
           'mainPageNotLoggedIn',
           'footer',
           'registerPopup',
-          'signInPopup'
+          'signInPopup',
+          'authErrors'
         ],
         null,
         ['en', 'ru', 'id']
