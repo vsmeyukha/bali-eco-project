@@ -11,7 +11,7 @@ import ProfileIcon from '../../public/images/svgs/icons/profile.svg';
 import Manatee from '../../public/images/backgrounds/manatee.png';
 
 interface BurgerMenuProps {
-  onSignInClick: () => void,
+  onSignInClick?: () => void,
 }
 
 const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement => {
@@ -21,7 +21,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement =>
 
   const handleSignInButtonClick = (close: () => void): void => {
     close();
-    onSignInClick();
+    onSignInClick && onSignInClick();
   }
 
   const { t } = useTranslation('headerMenu');
@@ -59,7 +59,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement =>
               ?
               <button onClick={() => handleSignInButtonClick(close)} className="text-[#00265F] flex flex-row pb-[25px] group">
                 <ProfileIcon className="fill-current w-[20px] h-[20px] group-hover:text-[#0D87FF] transition-colors duration-200" />
-                  <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] group-hover:text-[#0D87FF] transition-colors duration-200">{ t('sigiIn')}</p>
+                  <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] group-hover:text-[#0D87FF] transition-colors duration-200">{ t('signIn')}</p>
               </button>
               :
               <Link href='/profile' className="text-[#00265F] flex flex-row items-center pb-[25px] group">

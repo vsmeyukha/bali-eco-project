@@ -10,26 +10,23 @@ import useViewportWidth from "@/hooks/calculateWidth";
 import BurgerMenu from "./BurgerMenu";
 
 interface HeaderProps {
-  onPopupOpen?: () => void,
   openSignInPopup?: () => void,
 }
 
-export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): ReactElement {
+export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
   const router = useRouter();
   const currentPage = router.pathname;
 
   const viewportWidth = useViewportWidth();
 
   const backgroundDependingOnThePage =
-    currentPage === '/' ? 'bg-gradient-to-b from-green-800 via green-500 to-transparent' :
-      currentPage === '/resources' ? 'bg-[#4CAF50]' : 'bg-[#0D87FF]';
+    currentPage === '/'
+    ?
+    'bg-gradient-to-b from-green-800 via green-500 to-transparent'
+    :
+    currentPage === '/resources' ? 'bg-[#4CAF50]' : 'bg-[#0D87FF]';
 
   // ! градиент хэдера bg-gradient-to-b from-green-800 via green-500 to-transparent
-
-  const handleSignInPopupOpen = (): void => {
-    openSignInPopup?.();
-    onPopupOpen?.();
-  }
 
   const { i18n } = useTranslation();
 
@@ -68,7 +65,7 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
           {
             currentPage === '/'
               ?
-              <SignInButton openPopup={handleSignInPopupOpen} />
+              <SignInButton openPopup={openSignInPopup} />
               :
               <QuickToolsPopup
                 isDay={isDay}
@@ -77,7 +74,7 @@ export default function Header({onPopupOpen, openSignInPopup}: HeaderProps): Rea
           }
         </div>
         :
-        <BurgerMenu onSignInClick={handleSignInPopupOpen} />
+        <BurgerMenu onSignInClick={openSignInPopup} />
       }
     </header>
   )

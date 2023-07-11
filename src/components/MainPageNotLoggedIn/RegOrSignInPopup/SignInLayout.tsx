@@ -4,18 +4,19 @@ import OrBlock from "./OrBlock";
 import RegOrSignViaSocialMedia from "./RegOrSignViaSocialMedia";
 import { RegSignInPopup } from '../../../utils/types';
 
+import { popupStateType } from '@/pages';
+
 interface LayoutProps {
+  popup: popupStateType,
   onClose: () => void,
-  whichPopup: RegSignInPopup,
-  isRegPopup: boolean,
 }
 
-const SignInLayout: React.FC<LayoutProps> = ({ onClose, whichPopup, isRegPopup }: LayoutProps): ReactElement => {
+const SignInLayout: React.FC<LayoutProps> = ({ onClose, popup }: LayoutProps): ReactElement => {
   return (
     <div className="w-full flex flex-col items-center">
-      <SignInForm whichPopup={whichPopup} onClose={onClose} />
+      <SignInForm onClose={onClose} />
       <OrBlock />
-      <RegOrSignViaSocialMedia regOrSign={whichPopup} isRegPopup={isRegPopup} onClose={onClose} />
+      <RegOrSignViaSocialMedia popup={popup} onClose={onClose} />
     </div>
   );
 }

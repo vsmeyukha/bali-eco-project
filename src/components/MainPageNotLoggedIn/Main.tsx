@@ -1,6 +1,8 @@
 import { ReactElement } from 'react';
 import { useTranslation } from 'next-i18next';
 
+import { popupStateType } from '@/pages';
+
 import { projectName } from '@/utils/consts';
 import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
@@ -10,24 +12,26 @@ import useViewportWidth from '@/hooks/calculateWidth';
 import RegOrSignInPopup from './RegOrSignInPopup/RegOrSignInPopup';
 
 interface MainProps {
+  popup: popupStateType,
   isPopupOpen: boolean,
-  onPopupOpen: () => void,
+  // onPopupOpen: () => void,
   onPopupClose: () => void,
-  isRegPopup: boolean,
+  // isRegPopup: boolean,
   openRegPopup: () => void,
   openSignInPopup: () => void,
 }
 
-export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopup, openRegPopup, openSignInPopup}: MainProps): ReactElement {
-  const handleRegPopupOpen = (): void => {
-    openRegPopup();
-    onPopupOpen();
-  }
+export default function Main({ popup, isPopupOpen, onPopupClose, openRegPopup, openSignInPopup }: MainProps): ReactElement {
 
-  const handleSignInPopupOpen = (): void => {
-    openSignInPopup();
-    onPopupOpen();
-  }
+  // const handleRegPopupOpen = (): void => {
+  //   openRegPopup();
+  //   onPopupOpen();
+  // }
+
+  // const handleSignInPopupOpen = (): void => {
+  //   openSignInPopup();
+  //   onPopupOpen();
+  // }
 
   const viewportWidth = useViewportWidth();
 
@@ -73,12 +77,12 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
         <div className='flex flex-col sm:items-start items-center '>
           <HiddenDesc />
           <div className='flex flex-col items-center'>
-            <BigBlueButton size={buttonSize} type="button" onClick={handleRegPopupOpen} text={t('register')} />
+            <BigBlueButton size={buttonSize} type="button" onClick={openRegPopup} text={t('register')} />
             {viewportWidth < 1280
               &&
               <div className=' flex flex-row mt-[15px] font-montserrat text-[14px] leading-[17px] text-white'>
                 <p className='font-normal'>{ t('alreadyRegistered')}</p>
-                <button className='ml-[10px] font-bold text-[#0D87FF]' onClick={handleSignInPopupOpen}>{ t('signIn')}</button>
+                <button className='ml-[10px] font-bold text-[#0D87FF]' onClick={openSignInPopup}>{ t('signIn')}</button>
               </div>
             }
           </div>
@@ -87,9 +91,9 @@ export default function Main ({isPopupOpen, onPopupOpen, onPopupClose, isRegPopu
       </div>
       <Popup />
       <RegOrSignInPopup
+        popup={popup}
         open={isPopupOpen}
         onClose={onPopupClose}
-        isRegPopup={isRegPopup}
         openRegPopup={openRegPopup}
         openSignInPopup={openSignInPopup} />
     </section>

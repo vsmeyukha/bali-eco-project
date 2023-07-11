@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { useTranslation } from "next-i18next";
 
 interface SignInButtonProps {
-  openPopup: () => void,
+  openPopup?: () => void,
 }
 
 const SignInButton: React.FC<SignInButtonProps> = ({ openPopup }: SignInButtonProps): ReactElement => {

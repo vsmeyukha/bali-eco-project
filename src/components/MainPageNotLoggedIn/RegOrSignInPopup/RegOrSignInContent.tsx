@@ -2,6 +2,8 @@ import { ReactElement } from "react";
 import { Dialog } from "@headlessui/react";
 import { useTranslation } from 'next-i18next';
 
+import { popupStateType } from '@/pages';
+
 import SwitchAndLangsContainer from "./SwitchAndLangsContainer";
 import SwitchPopups from "./SwitchPopups";
 import LanguageChoice from "./LanguageChoice";
@@ -10,46 +12,49 @@ import SignInLayout from "./SignInLayout";
 import { regPopup, signInPopup } from "@/utils/consts";
 
 interface RegOrSignInPopupProps {
+  popup: popupStateType,
   onClose: () => void,
-  isRegPopup: boolean,
+  // isRegPopup: boolean,
   openRegPopup: () => void,
   openSignInPopup: () => void,
 }
 
 const RegOrSignInContent: React.FC<RegOrSignInPopupProps> = ({
+  popup,
   onClose,
-  isRegPopup,
   openRegPopup,
   openSignInPopup
 }: RegOrSignInPopupProps): ReactElement => {
 
-  const whichPopup = isRegPopup ? regPopup : signInPopup;
+  // const whichPopup = isRegPopup ? regPopup : signInPopup;
 
-  const handleSwitchPopups = isRegPopup ? openSignInPopup : openRegPopup;
+  // const handleSwitchPopups = isRegPopup ? openSignInPopup : openRegPopup;
+
+  const handleSwitchPopups = (): void => popup === 'regPopup' ? openSignInPopup() : openRegPopup();
 
   const { t } = useTranslation(['registerPopup', 'signInPopup']);
 
   return (
     <>
       <SwitchAndLangsContainer >
-        <SwitchPopups isRegPopup={isRegPopup} handleSwitchPopups={handleSwitchPopups} />
+        <SwitchPopups popup={popup} handleSwitchPopups={handleSwitchPopups} />
         <LanguageChoice />
       </SwitchAndLangsContainer>
       <Dialog.Title className="mt-[80px] font-oceanic-bold text-[40px] leading-[48px] text-[#00265F]">
-        {isRegPopup
+        {popup === 'regPopup'
           ?
           t('registration')
           :
           t('signInPopup:enter')
         }
       </Dialog.Title>
-      {isRegPopup
+      {popup === 'regPopup'
         ?
-        <RegistrationLayout onClose={onClose} whichPopup={whichPopup} isRegPopup={isRegPopup} />
+        <RegistrationLayout onClose={onClose} popup={popup} />
         :
-        <SignInLayout onClose={onClose} whichPopup={whichPopup} isRegPopup={isRegPopup} />
+        <SignInLayout onClose={onClose} popup={popup} />
       }
-      {isRegPopup && <p className="font-montserrat text-[10px] leading-[12px] text-[#00265F] text-opacity-40 mt-[40px] mb-[16px]">
+      {popup === 'regPopup' && <p className="font-montserrat text-[10px] leading-[12px] text-[#00265F] text-opacity-40 mt-[40px] mb-[16px]">
         {t('agreement')}
       </p>}
     </>

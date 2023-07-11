@@ -8,13 +8,14 @@ import { RegSignInPopup } from '../../../utils/types'
 
 import { signUpWithGoogle } from '@/firebase/auth';
 
+import { popupStateType } from '@/pages';
+
 interface RegOrSignViaSocialMediaProps {
-  regOrSign: RegSignInPopup,
-  isRegPopup: boolean,
+  popup: popupStateType,
   onClose: () => void,
 }
 
-const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ regOrSign, isRegPopup, onClose }): ReactElement => {
+const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ popup, onClose }): ReactElement => {
   const { t } = useTranslation(['registerPopup', 'signInPopup']);
 
   const handleGoogleSignIn = () => {
@@ -27,7 +28,7 @@ const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ regOr
       <button className={buttonStyles}>
         <Apple style={{ fill: "#00265F" }} className="h-[20px] w-[17px]" />
         <p className="ml-[10px]">{
-          isRegPopup
+          popup === 'regPopup'
             ?
             t('registerWithApple')
             :
@@ -37,7 +38,7 @@ const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ regOr
       <button className={buttonStyles} onClick={handleGoogleSignIn} type="button">
         <Google style={{ fill: "#00265F" }} className="h-[21px] w-[21px]" />
         <p className="ml-[10px]">{
-          isRegPopup
+          popup === 'regPopup'
             ?
             t('registerWithGoogle')
             :

@@ -15,7 +15,6 @@ import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
 interface SignInFormPropsType {
-  whichPopup: RegSignInPopup,
   onClose: () => void,
 }
 
@@ -27,7 +26,7 @@ interface SignInFormState {
 const emailValidationRule = z.string().email();
 const passwordValidationRule = z.string().min(8);
 
-const SignInForm: React.FC<SignInFormPropsType> = ({ whichPopup, onClose }: SignInFormPropsType): ReactElement => {
+const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsType): ReactElement => {
   // ? определяем ширину страницы и на этом основании определяем размер кнопки сабмита
   const viewportWidth = useViewportWidth();
   const buttonSize = viewportWidth >= 640 ? 'big' : 'small';
