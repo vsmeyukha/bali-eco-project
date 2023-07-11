@@ -14,6 +14,8 @@ import { switchContent } from '../../utils/types';
 import SwitchLanguage from "./SwitchLanguage";
 import SwitchDayAndNight from "./SwitchDayAndNight";
 
+import { logOut } from "@/firebase/auth";
+
 interface QuickToolsPopupProps {
   isDay: string, 
   handleColorTheme: (code: string) => void,
@@ -74,9 +76,11 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                       icon={Icon}
                       href={paragraph.href}
                       titleKey={t(paragraph.titleKey)}
-                      isDiv={index === 2 || index === 3}
+                      isSwitch={paragraph.id === 3 || paragraph.id === 4}
+                      isButton={paragraph.id === 5}
+                      onButtonClick={logOut}
                     >
-                      {index === 2
+                      {paragraph.id === 3
                         &&
                         (
                           <QuickPopupSwitchContainer>
@@ -84,7 +88,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                           </QuickPopupSwitchContainer>
                         )
                       }
-                      {index === 3
+                      {paragraph.id === 4
                         &&
                         (
                         <QuickPopupSwitchContainer>

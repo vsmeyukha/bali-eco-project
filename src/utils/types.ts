@@ -39,7 +39,9 @@ export interface QuickToolsMenuType {
   titleKey: string,
   href: string,
   children?: ReactNode,
-  isDiv?: boolean,
+  isSwitch?: boolean,
+  isButton?: boolean,
+  onButtonClick?: () => void,
 }
 
 export interface ToggleArticlesAndTipsType {

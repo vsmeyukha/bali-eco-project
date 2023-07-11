@@ -4,8 +4,6 @@ import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
 import BigBlueButton from '../BigBlueButton';
-import { inputStyles } from "@/utils/styles";
-import { RegSignInPopup } from '../../../utils/types';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
 import useViewportWidth from "@/hooks/calculateWidth";

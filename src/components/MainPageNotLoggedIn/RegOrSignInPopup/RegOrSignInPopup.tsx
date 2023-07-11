@@ -6,14 +6,12 @@ import { popupStateType } from '@/pages';
 
 interface RegOrSignInPopupProps {
   popup: popupStateType,
-  open: boolean,
   onClose: () => void,
-  // isRegPopup: boolean,
   openRegPopup: () => void,
   openSignInPopup: () => void,
 }
 
-const RegOrSignInPopup: React.FC<RegOrSignInPopupProps> = ({ popup, open, onClose, openRegPopup, openSignInPopup }: RegOrSignInPopupProps): ReactElement => {
+const RegOrSignInPopup: React.FC<RegOrSignInPopupProps> = ({ popup, onClose, openRegPopup, openSignInPopup }: RegOrSignInPopupProps): ReactElement => {
   return (
     <SidePopup open={Boolean(popup)} onClose={onClose}>
       <RegOrSignInContent

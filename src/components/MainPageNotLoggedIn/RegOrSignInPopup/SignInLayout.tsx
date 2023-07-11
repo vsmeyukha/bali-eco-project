@@ -1,8 +1,7 @@
-import { ReactElement, FormEvent } from "react";
+import { ReactElement } from "react";
 import SignInForm from "./SignInForm";
 import OrBlock from "./OrBlock";
 import RegOrSignViaSocialMedia from "./RegOrSignViaSocialMedia";
-import { RegSignInPopup } from '../../../utils/types';
 
 import { popupStateType } from '@/pages';
 

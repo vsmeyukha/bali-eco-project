@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next';
 import Apple from '../../../../public/images/svgs/icons/apple.svg';
 import Google from '../../../../public/images/svgs/icons/google.svg';
 import { buttonStyles } from "@/utils/styles";
-import { RegSignInPopup } from '../../../utils/types'
 
 import { signUpWithGoogle } from '@/firebase/auth';
 

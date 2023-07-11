@@ -9,12 +9,10 @@ import SwitchPopups from "./SwitchPopups";
 import LanguageChoice from "./LanguageChoice";
 import RegistrationLayout from "./RegistrationLayout";
 import SignInLayout from "./SignInLayout";
-import { regPopup, signInPopup } from "@/utils/consts";
 
 interface RegOrSignInPopupProps {
   popup: popupStateType,
   onClose: () => void,
-  // isRegPopup: boolean,
   openRegPopup: () => void,
   openSignInPopup: () => void,
 }
@@ -25,10 +23,6 @@ const RegOrSignInContent: React.FC<RegOrSignInPopupProps> = ({
   openRegPopup,
   openSignInPopup
 }: RegOrSignInPopupProps): ReactElement => {
-
-  // const whichPopup = isRegPopup ? regPopup : signInPopup;
-
-  // const handleSwitchPopups = isRegPopup ? openSignInPopup : openRegPopup;
 
   const handleSwitchPopups = (): void => popup === 'regPopup' ? openSignInPopup() : openRegPopup();
 

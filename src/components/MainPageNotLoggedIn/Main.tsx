@@ -7,31 +7,17 @@ import { projectName } from '@/utils/consts';
 import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
 import BigBlueButton from './BigBlueButton';
-import Popup from '../Popup';
 import useViewportWidth from '@/hooks/calculateWidth';
 import RegOrSignInPopup from './RegOrSignInPopup/RegOrSignInPopup';
 
 interface MainProps {
   popup: popupStateType,
-  isPopupOpen: boolean,
-  // onPopupOpen: () => void,
   onPopupClose: () => void,
-  // isRegPopup: boolean,
   openRegPopup: () => void,
   openSignInPopup: () => void,
 }
 
-export default function Main({ popup, isPopupOpen, onPopupClose, openRegPopup, openSignInPopup }: MainProps): ReactElement {
-
-  // const handleRegPopupOpen = (): void => {
-  //   openRegPopup();
-  //   onPopupOpen();
-  // }
-
-  // const handleSignInPopupOpen = (): void => {
-  //   openSignInPopup();
-  //   onPopupOpen();
-  // }
+export default function Main({ popup, onPopupClose, openRegPopup, openSignInPopup }: MainProps): ReactElement {
 
   const viewportWidth = useViewportWidth();
 
@@ -89,10 +75,8 @@ export default function Main({ popup, isPopupOpen, onPopupClose, openRegPopup, o
         </div>
         {viewportWidth >= 1280 && <BaliMap className="max-w-[533px] max-h-[330px]" />}
       </div>
-      <Popup />
       <RegOrSignInPopup
         popup={popup}
-        open={isPopupOpen}
         onClose={onPopupClose}
         openRegPopup={openRegPopup}
         openSignInPopup={openSignInPopup} />

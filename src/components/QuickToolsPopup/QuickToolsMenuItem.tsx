@@ -1,8 +1,19 @@
 import { ReactElement } from "react";
 import Link from "next/link";
+
 import { QuickToolsMenuType } from '../../utils/types';
 
-const QuickToolsMenuItem: React.FC<QuickToolsMenuType> = ({ icon: Icon, href, titleKey, children, isDiv = false }): ReactElement => {
+const QuickToolsMenuItem: React.FC<QuickToolsMenuType> = (
+  {
+    icon: Icon,
+    href,
+    titleKey,
+    children,
+    isSwitch = false,
+    isButton,
+    onButtonClick
+  }): ReactElement => {
+  
   const content =
     (<>
       <div className="flex flex-row justify-between items-center w-full">
@@ -16,15 +27,21 @@ const QuickToolsMenuItem: React.FC<QuickToolsMenuType> = ({ icon: Icon, href, ti
 
   return (
     <li className="mt-[24px] group">
-      {isDiv
+      {isSwitch
         ? 
         (<div className="flex items-center">
           {content}
         </div>)
         :
-        (<Link href={href} className="flex items-center">
-          {content}
-        </Link>)
+        isButton
+          ?
+          (<button type="button" onClick={onButtonClick}>
+            {content}
+          </button>)
+          :
+          (<Link href={href} className="flex items-center">
+            {content}
+          </Link>)
       }
     </li>
   );

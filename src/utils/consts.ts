@@ -155,12 +155,12 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
     titleKey: 'settings',
     href: '/profile',
   },
-  {
-    id: 2,
-    icon: Clock,
-    titleKey: 'history',
-    href: '/',
-  },
+  // {
+  //   id: 2,
+  //   icon: Clock,
+  //   titleKey: 'history',
+  //   href: '/',
+  // },
   {
     id: 3,
     icon: Globe,
