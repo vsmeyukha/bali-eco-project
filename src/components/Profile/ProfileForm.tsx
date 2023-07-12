@@ -6,6 +6,8 @@ import Form from "../Form/Form";
 import Input from "../Form/Input";
 import BigBlueButton from "../MainPageNotLoggedIn/BigBlueButton";
 
+import { auth } from '../../firebase/config';
+
 interface profileFormState {
   nickname: string,
   name: string,
@@ -31,7 +33,7 @@ const ProfileForm: React.FC = (): ReactElement => {
     nickname: '',
     name: '',
     surname: '',
-    email: '',
+    email: auth.currentUser?.email || '',
     password: ''
   });
 

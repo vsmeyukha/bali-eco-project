@@ -15,6 +15,7 @@ import SwitchLanguage from "./SwitchLanguage";
 import SwitchDayAndNight from "./SwitchDayAndNight";
 
 import { logOut } from "@/firebase/auth";
+import { auth } from '../../firebase/config';
 
 interface QuickToolsPopupProps {
   isDay: string, 
@@ -66,12 +67,11 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                 flex-col
                 items-center"
             >
-              <Link href="/profile" className="w-[100px] h-[100px] relative rounded-full overflow-hidden">
-                <Image
-                  src={Manatee}
+              <Link href="/profile" className="w-[90px] h-[90px] relative rounded-full overflow-hidden">
+                <img
+                  src={auth.currentUser?.photoURL || Manatee}
                   alt="manatee"
-                  fill
-                  className="object-cover object-center"
+                  className="object-cover object-center m-0 p-0"
                 />
               </Link>
               <Link href="/profile" className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">

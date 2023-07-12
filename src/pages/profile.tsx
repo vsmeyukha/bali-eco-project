@@ -8,6 +8,8 @@ import Footer from "@/components/Footer/Footer";
 import AvatarBlock from "@/components/Profile/AvatarBlock";
 import ProfileForm from "@/components/Profile/ProfileForm";
 
+import ProtectedRoute from "@/routes/ProtectedRoute";
+
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   const typedLocale = locale as string;
 
@@ -39,7 +41,7 @@ const Profile: React.FC = (): ReactElement => {
   }, []);
 
   return (
-    <>
+    <ProtectedRoute>
       <Header />
       <section className="bg-[#F5F5F5] 1440px:px-[152px] xl:px-[100px] lg:px-[50px] py-[60px]">
         <h3 className="font-oceanic-bold text-[20px] leading-[24px] text-[#00265F]">{ t('yourData')}</h3>
@@ -49,7 +51,7 @@ const Profile: React.FC = (): ReactElement => {
         </div>
       </section>
       <Footer />
-    </>
+    </ProtectedRoute>
   );
 }
 

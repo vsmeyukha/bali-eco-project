@@ -9,13 +9,17 @@ import Camera from '../../../public/images/svgs/icons/camera.svg';
 import TrashBin from '../../../public/images/svgs/icons/trashbin.svg';
 import Profile from '../../../public/images/svgs/icons/profile.svg';
 
+import { auth } from '../../firebase/config';
+
 
 const AvatarBlock: React.FC = (): ReactElement => {
   const { t } = useTranslation('profile');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [avaUrl, setAvaUrl] = useState<string | null>(null);
+  const [avaUrl, setAvaUrl] = useState<string | null>(auth.currentUser?.photoURL || null);
+  
+  console.log(auth.currentUser?.photoURL);
 
   const handleFileUpload = (event: React.MouseEvent<HTMLElement>): void => {
     event.preventDefault();
