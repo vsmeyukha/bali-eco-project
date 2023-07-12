@@ -25,6 +25,8 @@ import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLogge
 
 import { auth } from '../firebase/config';
 
+import Popup from "@/components/Popup";
+
 export interface IMarker {
   coordinates: Coordinates,
   coordsToPixels: CoordsConvertedToPixels,
@@ -96,6 +98,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? стейт нового маркера, который редактируется
   const [newMarker, setNewMarker] = useState<IMarker | null>(null);
 
+  const [notVerifiedPopupOpen, setNotVerifiedPopupOpen] = useState<boolean>(false);
+
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   const handlePopupClose = (e: React.MouseEvent): void => {
@@ -117,6 +121,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setActiveMarker={setActiveMarker}
           newMarker={newMarker}
           setNewMarker={setNewMarker}
+          setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
           />
         }
         {
@@ -143,6 +148,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           newMarker={newMarker}
           setNewMarker={setNewMarker}
         />
+        {notVerifiedPopupOpen && <Popup notVerifiedPopupOpen={notVerifiedPopupOpen} setNotVerifiedPopupOpen={setNotVerifiedPopupOpen} />}
         <Footer />
       </section>
     </ProtectedRoute>

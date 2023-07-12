@@ -4,6 +4,8 @@ import shortid from 'shortid';
 
 import { IMarker } from '@/pages/map';
 
+import { auth } from '../../../firebase/config';
+
 type GoogleMapsInstance = google.maps.Map;
 
 const containerStyle = {
@@ -38,7 +40,8 @@ interface MapProps {
   activeMarker: IMarker | null,
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
   newMarker: IMarker | null,
-  setNewMarker: Dispatch<SetStateAction<IMarker | null>>
+  setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
+  setNotVerifiedPopupOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const MapComponent: React.FC<MapProps> = (
@@ -48,6 +51,7 @@ const MapComponent: React.FC<MapProps> = (
     setActiveMarker,
     newMarker,
     setNewMarker,
+    setNotVerifiedPopupOpen,
   }
 ): ReactElement => {
 
@@ -60,51 +64,56 @@ const MapComponent: React.FC<MapProps> = (
   }
   
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
-    if (Boolean(activeMarker)) {
-      return;
+    if (auth.currentUser?.emailVerified === false) {
+      setNotVerifiedPopupOpen(true);
     }
     else {
-      const coordinates = {
-        lat: event.latLng?.lat() ?? 0,
-        lng: event.latLng?.lng() ?? 0,
+      if (Boolean(activeMarker)) {
+        return;
       }
-  
-      // ? переводим координаты маркера в пиксели
-      // ? вызываем метод getProjection инстанса карты, получаем проекцию, которая является объектом
-      // ? у этого объекта есть метод fromLatLngToPoint, который принимает объект LatLng с координатами по широте и долготе
-      // ? метод fromLatLngToPoint возвращает объект с координатами по оси х и оси у в пикселях
-      // ? возвращенный объект записываем в стейт чуть ниже
-      const popupPosition = mapRef.current?.getProjection()?.fromLatLngToPoint(coordinates);
-      // ? получаем масштаб карты
-      const bounds = mapRef.current?.getBounds();
-      const topLeftLatLng = bounds ? new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng()) : null;
-      const topLeftPixel = topLeftLatLng ? mapRef.current?.getProjection()?.fromLatLngToPoint(topLeftLatLng) : null;
+      else {
+        const coordinates = {
+          lat: event.latLng?.lat() ?? 0,
+          lng: event.latLng?.lng() ?? 0,
+        }
+    
+        // ? переводим координаты маркера в пиксели
+        // ? вызываем метод getProjection инстанса карты, получаем проекцию, которая является объектом
+        // ? у этого объекта есть метод fromLatLngToPoint, который принимает объект LatLng с координатами по широте и долготе
+        // ? метод fromLatLngToPoint возвращает объект с координатами по оси х и оси у в пикселях
+        // ? возвращенный объект записываем в стейт чуть ниже
+        const popupPosition = mapRef.current?.getProjection()?.fromLatLngToPoint(coordinates);
+        // ? получаем масштаб карты
+        const bounds = mapRef.current?.getBounds();
+        const topLeftLatLng = bounds ? new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng()) : null;
+        const topLeftPixel = topLeftLatLng ? mapRef.current?.getProjection()?.fromLatLngToPoint(topLeftLatLng) : null;
 
-      // ? проверяем, что в popupPosition не лежит null, иначе ts ругается
-      if (!popupPosition || !topLeftPixel) return;
-  
-      const zoom = mapRef.current?.getZoom();
-      const scale = Math.pow(2, zoom ?? 0);
-      const scaledPopupPosition = {
-        x: popupPosition.x * scale,
-        y: popupPosition.y * scale,
-      };
-  
-      const localPosition = {
-        x: Math.floor(scaledPopupPosition.x - topLeftPixel.x * scale),
-        y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
-      };
-  
-      const newMarker: IMarker = {
-        coordinates,
-        coordsToPixels: localPosition,
-        title: '',
-        comment: '',
-        imageUrl: null,
-        id: shortid(),
+        // ? проверяем, что в popupPosition не лежит null, иначе ts ругается
+        if (!popupPosition || !topLeftPixel) return;
+    
+        const zoom = mapRef.current?.getZoom();
+        const scale = Math.pow(2, zoom ?? 0);
+        const scaledPopupPosition = {
+          x: popupPosition.x * scale,
+          y: popupPosition.y * scale,
+        };
+    
+        const localPosition = {
+          x: Math.floor(scaledPopupPosition.x - topLeftPixel.x * scale),
+          y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
+        };
+    
+        const newMarker: IMarker = {
+          coordinates,
+          coordsToPixels: localPosition,
+          title: '',
+          comment: '',
+          imageUrl: null,
+          id: shortid(),
+        }
+
+        setNewMarker(newMarker);
       }
-
-      setNewMarker(newMarker);
     }
   }
 
