@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/routes/ProtectedRoute";
 
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
@@ -72,15 +72,17 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     if (!user) {
-  //       router.push('/');
-  //     }
-  //   });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  //   return () => unsubscribe();
-  // }, []);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // ? считаем ширину экрана
   const viewportWidth = useViewportWidth();
@@ -107,7 +109,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <section className="w-full relative" onClick={handlePopupClose}>
         <Header />
         {viewportWidth > 640 && <PublishPhoto />}
-        {auth.currentUser
+        {isAuthenticated
           && 
           <MapComponent
           markers={markers}
