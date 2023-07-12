@@ -1,6 +1,7 @@
 import { ReactElement, Fragment} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Popover, Transition } from "@headlessui/react";
 import { useTranslation } from 'next-i18next';
 
@@ -15,6 +16,7 @@ import SwitchLanguage from "./SwitchLanguage";
 import SwitchDayAndNight from "./SwitchDayAndNight";
 
 import { logOut } from "@/firebase/auth";
+import { auth } from '../../firebase/config';
 
 interface QuickToolsPopupProps {
   isDay: string, 
@@ -23,6 +25,21 @@ interface QuickToolsPopupProps {
 
 const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorTheme }): ReactElement => {
   const { t } = useTranslation('quickToolsPopup');
+
+  const router = useRouter();
+
+  const signOut = async () => {
+    try {
+      await logOut();
+      if (!auth.currentUser) {
+        router.push('/');
+      }
+    } catch (error: any) {
+      console.log(error);
+      console.log(error.code);
+      console.log(error.message);
+    }
+  }
 
   return (
     <Popover>
@@ -78,7 +95,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                       titleKey={t(paragraph.titleKey)}
                       isSwitch={paragraph.id === 3 || paragraph.id === 4}
                       isButton={paragraph.id === 5}
-                      onButtonClick={logOut}
+                      onButtonClick={signOut}
                     >
                       {paragraph.id === 3
                         &&

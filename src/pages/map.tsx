@@ -1,7 +1,10 @@
 import { ReactElement, useState, useRef, ChangeEvent, useEffect } from "react";
 import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
@@ -19,6 +22,8 @@ import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
+
+import { auth } from '../firebase/config';
 
 export interface IMarker {
   coordinates: Coordinates,
@@ -65,6 +70,18 @@ const LoggedInMain: React.FC = (): ReactElement => {
     }
   }, []);
 
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (!user) {
+  //       router.push('/');
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
   // ? считаем ширину экрана
   const viewportWidth = useViewportWidth();
 
@@ -86,42 +103,47 @@ const LoggedInMain: React.FC = (): ReactElement => {
   }
 
   return (
-    <section className="w-full relative" onClick={handlePopupClose}>
-      <Header />
-      {viewportWidth > 640 && <PublishPhoto />}
-      <MapComponent
-        markers={markers}
-        activeMarker={activeMarker}
-        setActiveMarker={setActiveMarker}
-        newMarker={newMarker}
-        setNewMarker={setNewMarker}
-      />
-      {
-        viewportWidth < 1024
-        &&
-        <PublishPhotoButton />
-      }
-      <ClimateAndEduContainer>
-        <ClimateChange />
-        <Education />
-      </ClimateAndEduContainer>
-      <AboutUs />
-      <Tips />
-      <Volunteers />
-      <BigPostOnMap
-        ref={popupRef}
-        activeMarker={activeMarker}
-        setMarkers={setMarkers}
-        setActiveMarker={setActiveMarker}
-      />
-      <AddPostPopup
-        setMarkers={setMarkers}
-        setActiveMarker={setActiveMarker}
-        newMarker={newMarker}
-        setNewMarker={setNewMarker}
-      />
-      <Footer />
-    </section>
+    <ProtectedRoute>
+      <section className="w-full relative" onClick={handlePopupClose}>
+        <Header />
+        {viewportWidth > 640 && <PublishPhoto />}
+        {auth.currentUser
+          && 
+          <MapComponent
+          markers={markers}
+          activeMarker={activeMarker}
+          setActiveMarker={setActiveMarker}
+          newMarker={newMarker}
+          setNewMarker={setNewMarker}
+          />
+        }
+        {
+          viewportWidth < 1024
+          &&
+          <PublishPhotoButton />
+        }
+        <ClimateAndEduContainer>
+          <ClimateChange />
+          <Education />
+        </ClimateAndEduContainer>
+        <AboutUs />
+        <Tips />
+        <Volunteers />
+        <BigPostOnMap
+          ref={popupRef}
+          activeMarker={activeMarker}
+          setMarkers={setMarkers}
+          setActiveMarker={setActiveMarker}
+        />
+        <AddPostPopup
+          setMarkers={setMarkers}
+          setActiveMarker={setActiveMarker}
+          newMarker={newMarker}
+          setNewMarker={setNewMarker}
+        />
+        <Footer />
+      </section>
+    </ProtectedRoute>
   )
 }
 
