@@ -10,15 +10,11 @@ import { auth } from '../../firebase/config';
 
 interface profileFormState {
   nickname: string,
-  name: string,
-  surname: string,
   email: string,
   password: string,
 }
 
 const nicknameValidation = z.string().min(3);
-const nameValidation = z.string().min(5);
-const surnameValidation = z.string().min(3);
 const emailValidation = z.string().email();
 const passwordValidation = z.string().min(8);
 
@@ -31,15 +27,11 @@ const ProfileForm: React.FC = (): ReactElement => {
 
   const [profileForm, setProfileForm] = useState<profileFormState>({
     nickname: '',
-    name: '',
-    surname: '',
     email: auth.currentUser?.email || '',
     password: ''
   });
 
   const nicknameValResult = nicknameValidation.safeParse(profileForm.nickname);
-  const nameValResult = nameValidation.safeParse(profileForm.name);
-  const surnameValResult = surnameValidation.safeParse(profileForm.surname);
   const emailValResult = emailValidation.safeParse(profileForm.email);
   const passwordValResult = passwordValidation.safeParse(profileForm.password);
 
@@ -57,22 +49,6 @@ const ProfileForm: React.FC = (): ReactElement => {
           handleChange={handleFormChange}
           valSuccess={nicknameValResult.success}
           valErrorMessage={t('nicknameValidationMessage')}
-        />
-        <Input
-          label={t('name')}
-          name="name"
-          value={profileForm.name}
-          handleChange={handleFormChange}
-          valSuccess={nameValResult.success}
-          valErrorMessage={t('nameValidationMessage')}
-        />
-        <Input
-          label={t('surname')}
-          name="surname"
-          value={profileForm.surname}
-          handleChange={handleFormChange}
-          valSuccess={surnameValResult.success}
-          valErrorMessage={t('surnameValidationMessage')}
         />
         <Input
           label={t('email')}

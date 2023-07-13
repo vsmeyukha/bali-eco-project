@@ -41,7 +41,12 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
       {({ open }) => (
         <div className="relative"> 
           <Popover.Button className="active:border-none active:outline-none focus:outline-none">
-            <Profile className={`text-white fill-current h-[28px] w-[28px] ${open ? 'opacity-25' : ''}`} />
+            {auth.currentUser?.photoURL
+              ?
+              <img className="h-[28px] w-[28px] rounded-full" src={auth.currentUser?.photoURL} alt='ava-img' /> 
+              :
+              <Profile className={`text-white fill-current h-[28px] w-[28px] ${open ? 'opacity-25' : ''}`} />
+            }
           </Popover.Button>
           <Transition
             as={Fragment}
@@ -61,7 +66,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                 z-300
                 bg-white
                 w-[430px]
-                h-[490px]
+                
                 rounded-[10px]
                 py-[32px]
                 flex

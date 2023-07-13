@@ -3,13 +3,11 @@ import { useRouter } from "next/router";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-import { signUp, logOut } from "@/firebase/auth";
+import { signUp } from "@/firebase/auth";
 import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
 import BigBlueButton from '../BigBlueButton';
-import { inputStyles } from "@/utils/styles";
-import { RegSignInPopup } from '../../../utils/types';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
 import useViewportWidth from "@/hooks/calculateWidth";
@@ -137,7 +135,6 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
         text={submitButtonText}
         disabled={!isButtonActive}
       />
-      <button type="button" onClick={logOut}>Sign Out</button>
     </Form>
   );
 }

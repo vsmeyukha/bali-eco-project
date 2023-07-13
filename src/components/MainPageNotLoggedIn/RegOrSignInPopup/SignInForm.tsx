@@ -8,7 +8,7 @@ import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
 import useViewportWidth from "@/hooks/calculateWidth";
 
-import { signIn, logOut } from "@/firebase/auth";
+import { signIn } from "@/firebase/auth";
 import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
@@ -140,7 +140,6 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsT
         text={submitButtonText}
         disabled={!isButtonActive}
       />
-      <button type="button" onClick={logOut}>Sign Out</button>
     </Form>
   );
 }
