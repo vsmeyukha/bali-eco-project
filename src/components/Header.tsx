@@ -65,10 +65,7 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
         ?
         <div className="flex flex-row items-center justify-center">
           <Menu />
-          {(!auth.currentUser && !is404) && <SignInButton openPopup={openSignInPopup} />}
-          { (auth.currentUser && !is404) && <QuickToolsPopup isDay={isDay} handleColorTheme={handleColorTheme} />}
-
-          {/* {
+          {
             !auth.currentUser
               ?
               <SignInButton openPopup={openSignInPopup} />
@@ -77,7 +74,7 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
                 isDay={isDay}
                 handleColorTheme={handleColorTheme}
               />
-          } */}
+          }
         </div>
         :
         <BurgerMenu onSignInClick={openSignInPopup} />

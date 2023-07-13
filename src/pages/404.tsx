@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
-import Header from "@/components/Header";
+import Header from "@/components/HeaderFor404";
 import Footer from "@/components/Footer/Footer";
 import ErrorPageLayout from "@/components/ErrorPageLayout";
 
