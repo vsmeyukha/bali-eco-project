@@ -18,6 +18,7 @@ module.exports = {
         'tips-blue-wave': "url('/images/backgrounds/TipsBlueWave.svg')",
         'tips-blue-wave-small': "url(/images/backgrounds/tipsWaveSmall.svg)",
         'tips-png': "url(/images/backgrounds/tipsPNG.png)",
+        '404-not-found': "url(/images/backgrounds/404NotFound.jpg)"
       },
       backgroundClip: {
         text: 'text',

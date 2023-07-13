@@ -9,6 +9,8 @@ import SignInButton from "./MainPageNotLoggedIn/SignInButton";
 import useViewportWidth from "@/hooks/calculateWidth";
 import BurgerMenu from "./BurgerMenu";
 
+import { auth } from '../firebase/config';
+
 interface HeaderProps {
   openSignInPopup?: () => void,
 }
@@ -16,6 +18,7 @@ interface HeaderProps {
 export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
   const router = useRouter();
   const currentPage = router.pathname;
+  const is404 = router.asPath !== router.route;
 
   const viewportWidth = useViewportWidth();
 
@@ -62,8 +65,11 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
         ?
         <div className="flex flex-row items-center justify-center">
           <Menu />
-          {
-            currentPage === '/'
+          {(!auth.currentUser && !is404) && <SignInButton openPopup={openSignInPopup} />}
+          { (auth.currentUser && !is404) && <QuickToolsPopup isDay={isDay} handleColorTheme={handleColorTheme} />}
+
+          {/* {
+            !auth.currentUser
               ?
               <SignInButton openPopup={openSignInPopup} />
               :
@@ -71,7 +77,7 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
                 isDay={isDay}
                 handleColorTheme={handleColorTheme}
               />
-          }
+          } */}
         </div>
         :
         <BurgerMenu onSignInClick={openSignInPopup} />

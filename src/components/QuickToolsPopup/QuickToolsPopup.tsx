@@ -5,6 +5,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { useTranslation } from 'next-i18next';
 
 import Manatee from '../../../public/images/backgrounds/manatee.png';
+const ManateeImage = require('../../../public/images/backgrounds/manatee.png');
 import { quickToolsMenu } from "@/utils/consts";
 import Profile from '../../../public/images/svgs/icons/profile.svg';
 import { QuickToolsMenuType } from '../../utils/types';
@@ -69,7 +70,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
             >
               <Link href="/profile" className="w-[90px] h-[90px] relative rounded-full overflow-hidden">
                 <img
-                  src={auth.currentUser?.photoURL || Manatee}
+                  src={auth.currentUser?.photoURL || ManateeImage}
                   alt="manatee"
                   className="object-cover object-center m-0 p-0"
                 />

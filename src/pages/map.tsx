@@ -110,7 +110,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   return (
     <ProtectedRoute>
-      <section className="w-full relative" onClick={handlePopupClose}>
+      <div className="w-full relative" onClick={handlePopupClose}>
         <Header />
         {viewportWidth > 640 && <PublishPhoto />}
         {isAuthenticated
@@ -150,7 +150,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
         />
         {notVerifiedPopupOpen && <Popup notVerifiedPopupOpen={notVerifiedPopupOpen} setNotVerifiedPopupOpen={setNotVerifiedPopupOpen} />}
         <Footer />
-      </section>
+      </div>
     </ProtectedRoute>
   )
 }
