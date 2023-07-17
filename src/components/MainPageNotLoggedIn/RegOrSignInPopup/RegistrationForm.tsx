@@ -78,7 +78,7 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
     try {
       e.preventDefault();
       setSubmitButtonText(t('registrationInProcess') || 'Registration...');
-      await signUp(registrationState.email, registrationState.password);
+      await signUp(registrationState.email, registrationState.password, registrationState.username);
 
       if (auth.currentUser) {
         setSubmitButtonText(t('registrationSuccessful') || 'Success!');

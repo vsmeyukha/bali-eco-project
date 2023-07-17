@@ -6,10 +6,13 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth';
-import { auth } from './config';
+
+import {doc, setDoc} from 'firebase/firestore/lite';
+
+import { auth, db } from './config';
 
 // ? классическая регистрация по почте и паролю
-export const signUp = async (email: string, password: string): Promise<void> => {
+export const signUp = async (email: string, password: string, username: string): Promise<void> => {
   try {
 
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -19,6 +22,12 @@ export const signUp = async (email: string, password: string): Promise<void> => 
     if (user) {
       await sendEmailVerification(user);
       console.log('verification email sent!');
+      await setDoc(doc(db, 'users', user.uid), {
+        username,
+        email,
+        createdAt: Date.now()
+      });
+      console.log('user created!');
     }
   } catch (error: any) {
     const errorCode = error.code;

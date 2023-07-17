@@ -1,7 +1,9 @@
-import { FormEvent, ReactElement, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import { FormEvent, ReactElement, useRef, Dispatch, SetStateAction, useState } from "react";
+import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
 import { z } from 'zod';
+import shortid from "shortid";
 
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
@@ -16,6 +18,9 @@ import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
 import { IMarker } from "../../pages/map";
 
 import defaultImage from '../../../public/images/backgrounds/Porsche.jpg';
+
+import { addPost } from "@/firebase/firestore";
+
 
 interface AddPostPopupProps {
   setMarkers: Dispatch<SetStateAction<IMarker[]>>
@@ -36,11 +41,15 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     newMarker,
     setNewMarker,
   }: AddPostPopupProps): ReactElement => {
+  
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (newMarker !== null) {
+    if (newMarker !== null && selectedFile !== null) {
+      await addPost(newMarker, selectedFile);
+
       setActiveMarker(newMarker);
 
       setMarkers((prevMarkers) => {
@@ -67,6 +76,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     const file = event.target.files?.[0];
 
     if (file && newMarker) {
+      setSelectedFile(file);
       const imageUrl = URL.createObjectURL(file);
       setNewMarker({ ...newMarker, imageUrl });
     }
