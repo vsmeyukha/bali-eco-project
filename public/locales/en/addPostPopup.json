@@ -11,5 +11,6 @@
   "loading": "Loading...",
   "success": "Success!",
   "titleValidation": "Title must be longer than 5 symbols",
-  "commentValidation": "Comment must be longer than 5 symbols"
+  "commentValidation": "Comment must be longer than 5 symbols",
+  "uploadPostError": "An error occured while uploading post. Please try again"
 }

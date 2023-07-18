@@ -11,5 +11,6 @@
   "loading": "Memuat...",
   "success": "Sukses!",
   "titleValidation": "Judul harus lebih dari 5 simbol",
-  "commentValidation": "Komentar harus lebih dari 5 simbol"
+  "commentValidation": "Komentar harus lebih dari 5 simbol",
+  "uploadPostError": "Terjadi kesalahan saat mengunggah postingan. Silakan coba lagi"
 }

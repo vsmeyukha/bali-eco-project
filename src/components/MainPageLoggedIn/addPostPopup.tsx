@@ -51,6 +51,8 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
 
   const [submitButtonText, setSubmitButtonText] = useState<string>(t('publish') || 'Post');
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   useEffect(() => {
     setSubmitButtonText(t('publish') || 'Post');
   }, [t, i18n.language, newMarker]);
@@ -79,12 +81,15 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           } return prevMarkers;
         });
 
+        setErrorMessage('');
+
         setTimeout(() => {
           setNewMarker(null);
         }, 300);
       }
     } catch (error: any) {
-
+      console.log(error.message);
+      setErrorMessage(t('uploadPostError') || 'Error while uploading post! Please try again.');
     }
   }
 
@@ -188,6 +193,9 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
           <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
         </div>
+        <span className="w-full text-left text-red-500 mt-[40px]">
+          {errorMessage} 
+        </span>
         <BigBlueButton size="large" type="submit" text={submitButtonText} disabled={!ifButtonisActive}>
           {isLoading && <Loader />}
         </BigBlueButton>
