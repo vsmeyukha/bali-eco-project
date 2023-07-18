@@ -57,7 +57,7 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
 
   // ? так как мы используем стейт для отображения разного текста на кнопке сабмита в зависимости от того, в какой стадии находится процесс входа, а стейт не перезаписывается, когда мы меняем язык, то возникает проблема, что при переключении языка все на странице меняется, но текст на кнопке остается на предыдущем языке. эту проблему мы решаем, используя useEffect, который слушает изменение языка, который хранится в свойстве i18n.language
   useEffect(() => {
-    setSubmitButtonText(t('register') || 'Sign In');
+    setSubmitButtonText(t('register') || 'Register');
   }, [t, i18n.language]);
 
   const nameValidation = nameValidationRule.safeParse(registrationState.username);

@@ -8,6 +8,8 @@
   "itIsDirty": "Yes",
   "itIsNotDirty": "No",
   "publish": "Post",
+  "loading": "Loading...",
+  "success": "Success!",
   "titleValidation": "Title must be longer than 5 symbols",
   "commentValidation": "Comment must be longer than 5 symbols"
 }

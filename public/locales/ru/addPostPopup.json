@@ -8,6 +8,8 @@
   "itIsDirty": "Да",
   "itIsNotDirty": "Нет",
   "publish": "Опубликовать",
+  "loading": "Загрузка...",
+  "success": "Пост загружен!",
   "titleValidation": "Заголовок должен быть длиннее 5 символов",
   "commentValidation": "Комментарий должен быть длиннее 5 символов"
 

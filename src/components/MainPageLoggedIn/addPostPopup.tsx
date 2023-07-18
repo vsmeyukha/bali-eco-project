@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement, useRef, Dispatch, SetStateAction, useState } from "react";
+import { FormEvent, ReactElement, useRef, Dispatch, SetStateAction, useState, useEffect } from "react";
 import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
@@ -14,6 +14,7 @@ import TextAreaInput from "../Form/TextAreaInput";
 import DirtButton from "./map/postOnMap/DirtButton";
 import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
+import Loader from "./Loader";
 
 import { IMarker } from "../../pages/map";
 
@@ -26,7 +27,7 @@ interface AddPostPopupProps {
   setMarkers: Dispatch<SetStateAction<IMarker[]>>
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
   newMarker: IMarker | null,
-  setNewMarker: Dispatch<SetStateAction<IMarker | null>>
+  setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
@@ -42,25 +43,49 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     setNewMarker,
   }: AddPostPopupProps): ReactElement => {
   
+  const { t, i18n } = useTranslation('addPostPopup');
+  
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [submitButtonText, setSubmitButtonText] = useState<string>(t('publish') || 'Post');
+
+  useEffect(() => {
+    setSubmitButtonText(t('publish') || 'Post');
+  }, [t, i18n.language, newMarker]);
+
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    if (newMarker !== null && selectedFile !== null) {
-      await addPost(newMarker, selectedFile);
+      if (newMarker !== null && selectedFile !== null) {
+        setSubmitButtonText(t('loading') || 'Loading');
 
-      setActiveMarker(newMarker);
+        setIsLoading(true);
 
-      setMarkers((prevMarkers) => {
-        if (newMarker !== null) {
-          const newMarkers = [...prevMarkers, newMarker];
-          return newMarkers;
-        } return prevMarkers;
-      });
+        await addPost(newMarker, selectedFile);
+
+        setSubmitButtonText(t('success') || 'Success!');
+
+        setIsLoading(false);
+  
+        setActiveMarker(newMarker);
+  
+        setMarkers((prevMarkers) => {
+          if (newMarker !== null) {
+            const newMarkers = [...prevMarkers, newMarker];
+            return newMarkers;
+          } return prevMarkers;
+        });
+
+        setTimeout(() => {
+          setNewMarker(null);
+        }, 300);
+      }
+    } catch (error: any) {
+
     }
-
-    setNewMarker(null);
   }
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -111,8 +136,6 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     Boolean(newMarker?.coordinates)
     &&
     Boolean(newMarker?.imageUrl);
-  
-  const { t } = useTranslation('addPostPopup');
 
   return (
     <SidePopup open={Boolean(newMarker)} onClose={() => setNewMarker(null)}>
@@ -165,7 +188,9 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
           <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
         </div>
-        <BigBlueButton size="large" type="submit" text={t('publish')} disabled={!ifButtonisActive} />
+        <BigBlueButton size="large" type="submit" text={submitButtonText} disabled={!ifButtonisActive}>
+          {isLoading && <Loader />}
+        </BigBlueButton>
       </Form>
     </SidePopup>
   );

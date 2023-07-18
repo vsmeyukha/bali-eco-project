@@ -20,6 +20,7 @@ import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnM
 import useViewportWidth from "@/hooks/calculateWidth";
 import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
+import Loader from "@/components/MainPageLoggedIn/Loader";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
@@ -74,8 +75,6 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const router = useRouter();
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -89,6 +88,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? считаем ширину экрана
   const viewportWidth = useViewportWidth();
 
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  
   // ? стейт маркеров
   const [markers, setMarkers] = useState<IMarker[]>([]);
 
@@ -148,7 +149,13 @@ const LoggedInMain: React.FC = (): ReactElement => {
           newMarker={newMarker}
           setNewMarker={setNewMarker}
         />
-        {notVerifiedPopupOpen && <Popup notVerifiedPopupOpen={notVerifiedPopupOpen} setNotVerifiedPopupOpen={setNotVerifiedPopupOpen} />}
+        {notVerifiedPopupOpen
+          &&
+          <Popup
+            notVerifiedPopupOpen={notVerifiedPopupOpen}
+            setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
+          />
+        }
         <Footer />
       </div>
     </ProtectedRoute>

@@ -26,7 +26,8 @@ module.exports = {
       alignSelf: ['start', 'end', 'center', 'baseline', 'stretch'],
       screens: {
         '1440px': '1440px',
-      }
+      },
+      animation: ['responsive', 'motion-safe', 'motion-reduce']
     },
     fontFamily: {
       'oceanic-bold': ['TRIAL_Oceanic-Bold'],
