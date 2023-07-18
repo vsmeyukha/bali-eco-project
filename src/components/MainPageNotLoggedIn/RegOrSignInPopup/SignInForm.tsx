@@ -3,9 +3,11 @@ import { useRouter } from "next/router";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-import BigBlueButton from '../BigBlueButton';
+import BigBlueButton from '../../BigBlueButton';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
+import SmallLoader from "@/components/SmallLoader";
+
 import useViewportWidth from "@/hooks/calculateWidth";
 
 import { signIn } from "@/firebase/auth";
@@ -44,6 +46,8 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsT
   const [submitButtonText, setSubmitButtonText] = useState<string>(t('signIn') || 'Sign In');
 
   const [firebaseErrorCode, setFirebaseErrorCode] = useState<firebaseErrorCode>("");
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   let errorMessage: string | null = null;
 
@@ -90,18 +94,23 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsT
   // todo дописать негативный сценарий
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try { 
-      setSubmitButtonText(t('signInInProcess') || 'Signing in...');
       e.preventDefault();
+
+      setSubmitButtonText(t('signInInProcess') || 'Signing in...');
+
+      setIsLoading(true);
+
       await signIn(signInFormState.email, signInFormState.password);
-      
-      if (auth.currentUser) {
-        setSubmitButtonText(t('signInSuccessful') || 'Success!');
-        setFirebaseErrorCode('');
-        setTimeout(() => {
-          router.push('/map');
-          onClose();
-        }, 500);
-      }
+
+      setSubmitButtonText(t('signInSuccessful') || 'Success!');
+
+      setIsLoading(false);
+
+      setFirebaseErrorCode('');
+
+      setTimeout(() => { 
+        onClose();
+      }, 500);
     } catch (error: any) {
       setFirebaseErrorCode(error.code);
       setSubmitButtonText(t('signIn') || 'Sign In');
@@ -134,12 +143,9 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsT
       <span className="w-full text-left text-red-500 mt-[40px]">
         {firebaseErrorCode && t(errorMessage)} 
       </span>
-      <BigBlueButton
-        size={buttonSize}
-        type="submit"
-        text={submitButtonText}
-        disabled={!isButtonActive}
-      />
+      <BigBlueButton size={buttonSize} type="submit" text={submitButtonText} disabled={!isButtonActive}>
+        {isLoading && <SmallLoader />}
+      </BigBlueButton>
     </Form>
   );
 }

@@ -2,6 +2,8 @@ import { ReactElement, ReactNode, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { auth } from "@/firebase/config";
 
+import BigLoader from "@/components/BigLoader";
+
 interface UnauthenticatedRouteProps {
   children: ReactNode,
 }
@@ -14,7 +16,9 @@ const UnauthenticatedRoute: React.FC<UnauthenticatedRouteProps> = ({ children })
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        router.push('/map');
+        setTimeout(() => { 
+          router.push('/map');
+        }, 500);
       }
       setIsLoading(false);
     });
@@ -24,7 +28,7 @@ const UnauthenticatedRoute: React.FC<UnauthenticatedRouteProps> = ({ children })
 
   if (isLoading) {
     return (
-      <div>Loading...</div>
+      <BigLoader />
     )
   }
   else {

@@ -20,7 +20,7 @@ import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnM
 import useViewportWidth from "@/hooks/calculateWidth";
 import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
-import Loader from "@/components/MainPageLoggedIn/Loader";
+import Loader from "@/components/SmallLoader";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
@@ -89,7 +89,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  
+
   // ? стейт маркеров
   const [markers, setMarkers] = useState<IMarker[]>([]);
 

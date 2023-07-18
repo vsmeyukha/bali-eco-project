@@ -2,6 +2,8 @@ import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth } from '../firebase/config';
 
+import BigLoader from "@/components/BigLoader";
+
 interface ProtectedRouteProps {
   children: ReactNode,
 }
@@ -25,7 +27,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }): ReactEleme
 
   if (isLoading) {
     return (
-      <div>Loading...</div>
+      <BigLoader />
     )
   }
   else {

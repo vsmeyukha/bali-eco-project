@@ -7,9 +7,11 @@ import { signUp } from "@/firebase/auth";
 import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
-import BigBlueButton from '../BigBlueButton';
+import BigBlueButton from '../../BigBlueButton';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
+import SmallLoader from "@/components/SmallLoader";
+
 import useViewportWidth from "@/hooks/calculateWidth";
 
 interface RegFormPropsType {
@@ -46,6 +48,8 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
 
   const [firebaseErrorCode, setFirebaseErrorCode] = useState<firebaseErrorCode>("");
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   let errorMessage: string | null = null;
 
   // todo ошибка тайпскриптовая, надо пофиксить 
@@ -77,20 +81,26 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     try {
       e.preventDefault();
+
       setSubmitButtonText(t('registrationInProcess') || 'Registration...');
+
+      setIsLoading(true);
+
       await signUp(registrationState.email, registrationState.password, registrationState.username);
 
-      if (auth.currentUser) {
-        setSubmitButtonText(t('registrationSuccessful') || 'Success!');
-        setFirebaseErrorCode('');
-        setTimeout(() => {
-          router.push('/map');
-          onClose();
-        }, 500);
-      }
+      setSubmitButtonText(t('registrationSuccessful') || 'Success!');
+
+      setIsLoading(false);
+
+      setFirebaseErrorCode('');
+
+      setTimeout(() => { 
+        onClose();
+      }, 500);
     } catch (error: any) {
       setFirebaseErrorCode(error.code);
       setSubmitButtonText(t('register') || 'Register');
+      setIsLoading(false);
       setRegistrationState({
         username: '',
         email: '',
@@ -129,12 +139,10 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
       <span className="w-full text-left text-red-500 mt-[40px]">
         {firebaseErrorCode && t(errorMessage)} 
       </span>
-      <BigBlueButton
-        size={buttonSize}
-        type="submit"
-        text={submitButtonText}
-        disabled={!isButtonActive}
-      />
+      {/* <BigBlueButton size={buttonSize} type="submit" text={submitButtonText} disabled={!isButtonActive}/> */}
+      <BigBlueButton size={buttonSize} type="submit" text={submitButtonText} disabled={!isButtonActive}>
+        {isLoading && <SmallLoader />}
+      </BigBlueButton>
     </Form>
   );
 }

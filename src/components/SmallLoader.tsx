@@ -1,12 +1,4 @@
-// const Loader: React.FC = () => {
-//   return (
-//     <div className="z-50 flex justify-center items-center h-screen">
-//       <div className="animate-spin rounded-full h-[100px] w-[100px] border-t-2 border-b-2 border-purple-500"></div>
-//     </div>
-//   );
-// };
-
-const Loader: React.FC = () => {
+const SmallLoader: React.FC = () => {
   return (
     <div
       className="
@@ -27,4 +19,4 @@ const Loader: React.FC = () => {
 };
 
 
-export default Loader;
+export default SmallLoader;

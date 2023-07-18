@@ -8,13 +8,13 @@ import shortid from "shortid";
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
 import Input from '../Form/Input';
-import BigBlueButton from "../MainPageNotLoggedIn/BigBlueButton";
+import BigBlueButton from "../BigBlueButton";
 import BigPlus from '../../../public/images/svgs/icons/bigPlus.svg';
 import TextAreaInput from "../Form/TextAreaInput";
 import DirtButton from "./map/postOnMap/DirtButton";
 import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
-import Loader from "./Loader";
+import Loader from "../SmallLoader";
 
 import { IMarker } from "../../pages/map";
 
