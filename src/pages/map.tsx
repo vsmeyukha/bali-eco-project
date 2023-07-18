@@ -1,4 +1,4 @@
-import { ReactElement, useState, useRef, ChangeEvent, useEffect } from "react";
+import { ReactElement, useState, useRef, useEffect } from "react";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -25,6 +25,7 @@ import Loader from "@/components/SmallLoader";
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
 import { auth } from '../firebase/config';
+import { getAllPosts } from "@/firebase/firestore";
 
 import Popup from "@/components/Popup";
 
@@ -100,6 +101,15 @@ const LoggedInMain: React.FC = (): ReactElement => {
   const [newMarker, setNewMarker] = useState<IMarker | null>(null);
 
   const [notVerifiedPopupOpen, setNotVerifiedPopupOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await getAllPosts();
+      setMarkers(posts);
+    }
+
+    fetchPosts();
+  }, []);
 
   const popupRef = useRef<HTMLDivElement | null>(null);
 
