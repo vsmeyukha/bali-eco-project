@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/markerclusterer": "^2.3.2",
     "@headlessui/react": "^1.7.13",
     "@popperjs/core": "^2.11.8",
     "@react-google-maps/api": "^2.18.1",

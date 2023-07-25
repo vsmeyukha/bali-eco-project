@@ -34,7 +34,7 @@ export interface IMarker {
   coordsToPixels: CoordsConvertedToPixels,
   title: string,
   comment: string,
-  imageUrl: string | null,
+  imageUrl: string | undefined,
   id: string,
   // comments: number,
   // isItDirtyMarks: number
@@ -72,7 +72,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
     if (defaultLang) {
       i18n.changeLanguage(defaultLang);
     }
-  }, []);
+  }, [i18n]);
 
   const router = useRouter();
 

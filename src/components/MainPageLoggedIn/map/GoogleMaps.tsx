@@ -1,10 +1,11 @@
 import { useRef, ReactElement, Dispatch, SetStateAction } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
 import shortid from 'shortid';
 
 import { IMarker } from '@/pages/map';
 
 import { auth } from '../../../firebase/config';
+import cluster from 'cluster';
 
 type GoogleMapsInstance = google.maps.Map;
 
@@ -62,6 +63,9 @@ const MapComponent: React.FC<MapProps> = (
   const handleMapLoad = (mapInstance: GoogleMapsInstance): void => {
     mapRef.current = mapInstance;
   }
+
+  const positions = markers.map(marker => marker.coordinates);
+  console.log(positions);
   
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (auth.currentUser?.emailVerified === false) {
@@ -108,7 +112,7 @@ const MapComponent: React.FC<MapProps> = (
           coordsToPixels: localPosition,
           title: '',
           comment: '',
-          imageUrl: null,
+          imageUrl: undefined,
           id: shortid(),
         }
 
@@ -136,15 +140,35 @@ const MapComponent: React.FC<MapProps> = (
           onLoad={handleMapLoad}
         >
           {/* Additional map components, like markers or overlays, can be added as children here */}
-          {markersWithNewMarker.map((marker, index) => {
+          {/* {markersWithNewMarker.map((marker, index) => {
             if (marker !== null) {
               return (
                 <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(marker)} icon={markerIconSVG} />
               );
             }
-          })}
+          })} */}
+          <MarkerClusterer>
+            {(clusterer) => (
+              <>
+                {markersWithNewMarker.map((marker, index) => {
+                  if (marker !== null) {
+                    return (
+                      <Marker
+                        key={index}
+                        position={marker.coordinates}
+                        onClick={() => handleMarkerClick(marker)}
+                        icon={markerIconSVG}
+                        clusterer={clusterer}
+                      />
+                    )
+                  }
+                  return null;
+                })}
+              </>
+            )}
+          </MarkerClusterer>
         </GoogleMap>
-      </LoadScript>
+      </LoadScript >
     </div>
   );
 }

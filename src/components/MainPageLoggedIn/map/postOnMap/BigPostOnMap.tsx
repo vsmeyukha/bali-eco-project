@@ -1,4 +1,14 @@
-import { ForwardedRef, ReactElement, forwardRef, Fragment, useState, useEffect, Dispatch, SetStateAction } from "react";
+import {
+  ForwardedRef,
+  ReactElement,
+  forwardRef,
+  Fragment,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction
+} from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
@@ -16,6 +26,8 @@ import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
 
 import { IMarker } from "@/pages/map";
+
+import { deletePost } from "@/firebase/firestore";
 
 interface BigPostOnMapProps {
   activeMarker: IMarker | null,
@@ -46,13 +58,19 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMark
 
   const { t } = useTranslation('bigPostPopup');
 
-  const deletePost = (): void => {
-    setMarkers((prevMarkers) => {
-      const newMarkers = prevMarkers.filter(marker => marker.id !== activeMarker?.id);
-      return newMarkers;
-    });
+  const deleteCurrentPost = async (): Promise<void> => {
+    try {
+      await deletePost(activeMarker);
 
-    setActiveMarker(null);
+      setMarkers((prevMarkers) => {
+        const newMarkers = prevMarkers.filter(marker => marker.id !== activeMarker?.id);
+        return newMarkers;
+      });
+  
+      setActiveMarker(null);
+    } catch (error: any) {
+      console.log(error);
+    } 
   }
 
   return (
@@ -88,7 +106,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMark
     >
       <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
         <img
-          src={activeMarker?.imageUrl as string}
+          src={activeMarker?.imageUrl || Jungle.src}
           alt="Jungle"
           className="w-full object-center lg:object-contain object-cover rounded-[10px]"
         />
@@ -100,7 +118,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMark
             <button>
               <CopyIcon />
             </button>
-            <button onClick={deletePost}>
+            <button onClick={deleteCurrentPost}>
               <TrashBin className="ml-[16px]" />
             </button>
           </div>

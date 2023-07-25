@@ -1,5 +1,5 @@
-import { addDoc, collection, doc, deleteDoc, getDocs, getDoc } from "firebase/firestore/lite";
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { addDoc, collection, doc, deleteDoc, getDocs, getDoc, CollectionReference } from "firebase/firestore/lite";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import shortid from "shortid";
 
 import { db, auth, storage } from "./config";
@@ -34,9 +34,9 @@ export const addPost = async (marker: IMarker, file: File) => {
 
 export const getAllPosts = async () => {
   try {
-    const allPosts = await getDocs(collection(db, 'posts'));
+    const allPosts = await getDocs(collection(db, 'posts') as CollectionReference<IMarker>);
 
-    const allPostsData = allPosts.docs.map((post) => {
+    const allPostsData: IMarker[] = allPosts.docs.map((post) => {
       return { ...post.data(), id: post.id };
     });
     return allPostsData;
@@ -47,6 +47,17 @@ export const getAllPosts = async () => {
   }
 }
 
-export const deletePost = async () => {
-
+export const deletePost = async (post: IMarker) => {
+  try {
+    const imageRef = ref(storage, post.imageUrl);
+    await deleteObject(imageRef);
+    try {
+      const postRef = doc(db, 'posts', post.id);
+      await deleteDoc(postRef);
+    } catch (error: any) {
+      throw error;
+    }
+  } catch (error: any) {
+    throw error;
+  }
 }
