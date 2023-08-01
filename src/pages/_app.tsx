@@ -8,13 +8,6 @@ import PopupProvider from '@/contexts/PopupProvider';
 function App({ Component, pageProps }: AppProps) {
   const { i18n } = useTranslation();
 
-  // useEffect(() => { 
-  //   const defaultLang = localStorage.getItem('language');
-  //   if (defaultLang) {
-  //     i18n.changeLanguage(defaultLang);
-  //   }
-  // }, []);
-
   return (
     <PopupProvider>
       <div className='

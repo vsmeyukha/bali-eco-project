@@ -24,10 +24,11 @@ import Loader from "@/components/SmallLoader";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
-import { auth } from '../firebase/config';
 import { getAllPosts } from "@/firebase/firestore";
 
 import Popup from "@/components/Popup";
+
+import { Marker } from '@react-google-maps/api';
 
 export interface IMarker {
   coordinates: Coordinates,
@@ -74,22 +75,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
     }
   }, [i18n]);
 
-  const router = useRouter();
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuthenticated(true);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   // ? считаем ширину экрана
   const viewportWidth = useViewportWidth();
-
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   // ? стейт маркеров
   const [markers, setMarkers] = useState<IMarker[]>([]);
@@ -102,6 +89,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const [notVerifiedPopupOpen, setNotVerifiedPopupOpen] = useState<boolean>(false);
 
+  const [isMarkerClicked, setIsMarkerClicked] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchPosts = async () => {
       const posts = await getAllPosts();
@@ -113,10 +102,19 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const popupRef = useRef<HTMLDivElement | null>(null);
 
+  const markerRef = useRef<Marker | null>(null);
+
   const handlePopupClose = (e: React.MouseEvent): void => {
+    if (isMarkerClicked) {
+      setIsMarkerClicked(false);
+    }
+
     if (Boolean(activeMarker) && popupRef.current && !popupRef.current.contains(e.target as Node)) {
       setActiveMarker(null);
+      setIsMarkerClicked(false);
     }
+
+    console.log('handlePopupClose');
   }
 
   return (
@@ -124,17 +122,17 @@ const LoggedInMain: React.FC = (): ReactElement => {
       <div className="w-full relative" onClick={handlePopupClose}>
         <Header />
         {viewportWidth > 640 && <PublishPhoto />}
-        {isAuthenticated
-          && 
-          <MapComponent
+        <MapComponent
           markers={markers}
           activeMarker={activeMarker}
           setActiveMarker={setActiveMarker}
           newMarker={newMarker}
           setNewMarker={setNewMarker}
           setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
-          />
-        }
+          markerRef={markerRef}
+          setIsMarkerClicked={setIsMarkerClicked}
+        />
+        
         {
           viewportWidth < 1024
           &&

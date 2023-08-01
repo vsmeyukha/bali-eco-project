@@ -1,11 +1,10 @@
-import { useRef, ReactElement, Dispatch, SetStateAction } from 'react';
+import { useRef, ReactElement, Dispatch, SetStateAction, RefObject, MouseEvent } from 'react';
 import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
 import shortid from 'shortid';
 
 import { IMarker } from '@/pages/map';
 
 import { auth } from '../../../firebase/config';
-import cluster from 'cluster';
 
 type GoogleMapsInstance = google.maps.Map;
 
@@ -25,8 +24,6 @@ export interface CoordsConvertedToPixels {
   y: number,
 }
 
-// ? на всяк пусть тут полежит тайпинг гугловый google.maps.Point
-
 const center: Coordinates = {
   lat: -8.4095,
   lng: 115.1889,
@@ -43,6 +40,8 @@ interface MapProps {
   newMarker: IMarker | null,
   setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
   setNotVerifiedPopupOpen: Dispatch<SetStateAction<boolean>>
+  markerRef: RefObject<Marker | null>,
+  setIsMarkerClicked: Dispatch<SetStateAction<boolean>>
 }
 
 const MapComponent: React.FC<MapProps> = (
@@ -53,6 +52,8 @@ const MapComponent: React.FC<MapProps> = (
     newMarker,
     setNewMarker,
     setNotVerifiedPopupOpen,
+    markerRef,
+    setIsMarkerClicked
   }
 ): ReactElement => {
 
@@ -64,16 +65,18 @@ const MapComponent: React.FC<MapProps> = (
     mapRef.current = mapInstance;
   }
 
-  const positions = markers.map(marker => marker.coordinates);
-  console.log(positions);
-  
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
+    console.log('handleMapClick');
+
     if (auth.currentUser?.emailVerified === false) {
+      if (Boolean(activeMarker)) {
+        // return;
+      }
       setNotVerifiedPopupOpen(true);
     }
     else {
       if (Boolean(activeMarker)) {
-        return;
+        // return;
       }
       else {
         const coordinates = {
@@ -122,8 +125,20 @@ const MapComponent: React.FC<MapProps> = (
   }
 
   // ? функция нажатия на маркер. когда мы нажимаем на маркер, открывается привязанный к нему пост. если до этого был открыт другой пост, он закрывается
-  const handleMarkerClick = (marker: IMarker): void => {
-    setActiveMarker(marker);
+  const handleMarkerClick = (event: google.maps.MapMouseEvent, marker: IMarker): void => {
+    setIsMarkerClicked(true);
+
+    if (Boolean(activeMarker)) {
+      event.stop();
+      setActiveMarker(null);
+      setTimeout(() => setActiveMarker(marker), 300);
+      console.log('handleMarkerClick if');
+    }
+    else {
+      setActiveMarker(marker);
+      console.log('handleMarkerClick else');
+    }
+    setNotVerifiedPopupOpen(false);
   }
 
   // ? рендеринг маркеров из стейта страницы markers - массива маркеров + новый маркер, который создается по клику на карту, если он есть. новый маркер на данном этапе не заносится в массив markers
@@ -139,14 +154,6 @@ const MapComponent: React.FC<MapProps> = (
           onClick={handleMapClick}
           onLoad={handleMapLoad}
         >
-          {/* Additional map components, like markers or overlays, can be added as children here */}
-          {/* {markersWithNewMarker.map((marker, index) => {
-            if (marker !== null) {
-              return (
-                <Marker key={index} position={marker.coordinates} onClick={() => handleMarkerClick(marker)} icon={markerIconSVG} />
-              );
-            }
-          })} */}
           <MarkerClusterer>
             {(clusterer) => (
               <>
@@ -156,7 +163,7 @@ const MapComponent: React.FC<MapProps> = (
                       <Marker
                         key={index}
                         position={marker.coordinates}
-                        onClick={() => handleMarkerClick(marker)}
+                        onClick={(event) => handleMarkerClick(event, marker)}
                         icon={markerIconSVG}
                         clusterer={clusterer}
                       />
