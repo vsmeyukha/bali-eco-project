@@ -10,7 +10,7 @@ import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 import BigBlueButton from '../../BigBlueButton';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
-import SmallLoader from "@/components/SmallLoader";
+import SmallLoader from "@/components/loaders/SmallLoader";
 
 import useViewportWidth from "@/hooks/calculateWidth";
 

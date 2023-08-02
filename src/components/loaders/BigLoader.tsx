@@ -1,4 +1,6 @@
-const BigLoader: React.FC = () => {
+import { ReactElement } from "react";
+
+const BigLoader: React.FC = (): ReactElement => {
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-200">
       <div

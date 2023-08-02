@@ -20,7 +20,7 @@ import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnM
 import useViewportWidth from "@/hooks/calculateWidth";
 import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
-import Loader from "@/components/SmallLoader";
+import Loader from "@/components/loaders/SmallLoader";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 

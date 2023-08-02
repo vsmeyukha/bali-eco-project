@@ -29,6 +29,8 @@ import { IMarker } from "@/pages/map";
 
 import { deletePost } from "@/firebase/firestore";
 
+import MediumLoader from "@/components/loaders/MediumLoader";
+
 interface BigPostOnMapProps {
   activeMarker: IMarker | null,
   setMarkers: Dispatch<SetStateAction<IMarker[]>>,
@@ -104,12 +106,18 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMark
         }}
       ref={ref}
     >
-      <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
-        <img
-          src={activeMarker?.imageUrl || Jungle.src}
-          alt="Jungle"
-          className="w-full object-center lg:object-contain object-cover rounded-[10px]"
-        />
+        <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
+          {
+            activeMarker?.imageUrl
+            ?
+            <img
+              src={activeMarker?.imageUrl}
+              alt="Jungle"
+              className="w-full object-center lg:object-contain object-cover rounded-[10px]"
+              />
+              :
+              <MediumLoader />
+          }
       </div>
       <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
         <div className="flex flex-row justify-between">

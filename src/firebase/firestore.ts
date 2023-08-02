@@ -47,17 +47,19 @@ export const getAllPosts = async () => {
   }
 }
 
-export const deletePost = async (post: IMarker) => {
-  try {
-    const imageRef = ref(storage, post.imageUrl);
-    await deleteObject(imageRef);
+export const deletePost = async (post: IMarker | null) => {
+  if (post) {
     try {
-      const postRef = doc(db, 'posts', post.id);
-      await deleteDoc(postRef);
+      const imageRef = ref(storage, post.imageUrl);
+      await deleteObject(imageRef);
+      try {
+          const postRef = doc(db, 'posts', post.id);
+          await deleteDoc(postRef);
+      } catch (error: any) {
+        throw error;
+      }
     } catch (error: any) {
       throw error;
     }
-  } catch (error: any) {
-    throw error;
   }
 }

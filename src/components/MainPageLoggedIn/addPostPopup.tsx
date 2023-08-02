@@ -14,7 +14,7 @@ import TextAreaInput from "../Form/TextAreaInput";
 import DirtButton from "./map/postOnMap/DirtButton";
 import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
-import Loader from "../SmallLoader";
+import Loader from "../loaders/SmallLoader";
 
 import { IMarker } from "../../pages/map";
 

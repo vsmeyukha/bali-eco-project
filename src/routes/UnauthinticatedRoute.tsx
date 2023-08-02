@@ -2,7 +2,7 @@ import { ReactElement, ReactNode, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { auth } from "@/firebase/config";
 
-import BigLoader from "@/components/BigLoader";
+import BigLoader from "@/components/loaders/BigLoader";
 
 interface UnauthenticatedRouteProps {
   children: ReactNode,
