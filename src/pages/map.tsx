@@ -91,6 +91,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const [isMarkerClicked, setIsMarkerClicked] = useState<boolean>(false);
 
+  const [isImageInPostLoaded, setIsImageInPostLoaded] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchPosts = async () => {
       const posts = await getAllPosts();
@@ -114,6 +116,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
       setIsMarkerClicked(false);
     }
 
+    setIsImageInPostLoaded(false);
     console.log('handlePopupClose');
   }
 
@@ -131,6 +134,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
           markerRef={markerRef}
           setIsMarkerClicked={setIsMarkerClicked}
+          setIsImageLoaded={setIsImageInPostLoaded}
         />
         
         {
@@ -150,6 +154,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
           activeMarker={activeMarker}
           setMarkers={setMarkers}
           setActiveMarker={setActiveMarker}
+          isImageLoaded={isImageInPostLoaded}
+          setIsImageLoaded={setIsImageInPostLoaded}
         />
         <AddPostPopup
           setMarkers={setMarkers}

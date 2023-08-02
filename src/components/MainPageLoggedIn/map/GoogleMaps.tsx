@@ -42,6 +42,7 @@ interface MapProps {
   setNotVerifiedPopupOpen: Dispatch<SetStateAction<boolean>>
   markerRef: RefObject<Marker | null>,
   setIsMarkerClicked: Dispatch<SetStateAction<boolean>>
+  setIsImageLoaded: Dispatch<SetStateAction<boolean>>
 }
 
 const MapComponent: React.FC<MapProps> = (
@@ -53,7 +54,8 @@ const MapComponent: React.FC<MapProps> = (
     setNewMarker,
     setNotVerifiedPopupOpen,
     markerRef,
-    setIsMarkerClicked
+    setIsMarkerClicked,
+    setIsImageLoaded
   }
 ): ReactElement => {
 
@@ -132,6 +134,7 @@ const MapComponent: React.FC<MapProps> = (
       event.stop();
       setActiveMarker(null);
       setTimeout(() => setActiveMarker(marker), 300);
+      setIsImageLoaded(false);
       console.log('handleMarkerClick if');
     }
     else {

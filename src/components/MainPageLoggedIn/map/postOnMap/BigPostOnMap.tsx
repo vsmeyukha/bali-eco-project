@@ -34,10 +34,22 @@ import MediumLoader from "@/components/loaders/MediumLoader";
 interface BigPostOnMapProps {
   activeMarker: IMarker | null,
   setMarkers: Dispatch<SetStateAction<IMarker[]>>,
-  setActiveMarker: Dispatch<SetStateAction<IMarker | null>>
+  setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
+  isImageLoaded: boolean,
+  setIsImageLoaded: Dispatch<SetStateAction<boolean>>
 }
 
-const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMarker, setMarkers, setActiveMarker }, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
+const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
+  (
+    {
+      activeMarker,
+      setMarkers,
+      setActiveMarker,
+      isImageLoaded,
+      setIsImageLoaded
+    },
+    ref: ForwardedRef<HTMLDivElement>
+  ): ReactElement => {
   const viewportWidth = useViewportWidth();
 
   const getContentWidth = (viewportWidth: number) => {
@@ -75,6 +87,11 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMark
     } 
   }
 
+  const handleImageLoadingSuccess = () => {
+    console.log('image loaded');
+    setIsImageLoaded(true);
+  }
+
   return (
     <Transition
     as={Fragment}
@@ -106,18 +123,14 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(({ activeMark
         }}
       ref={ref}
     >
-        <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center rounded-[10px] py-[20px]">
-          {
-            activeMarker?.imageUrl
-            ?
-            <img
-              src={activeMarker?.imageUrl}
-              alt="Jungle"
-              className="w-full object-center lg:object-contain object-cover rounded-[10px]"
-              />
-              :
-              <MediumLoader />
-          }
+      <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center justify-center rounded-[10px] py-[20px]">
+        <img
+          src={activeMarker?.imageUrl}
+          alt="Jungle"
+          className={`w-full object-center lg:object-contain object-cover rounded-[10px] ${!isImageLoaded && 'hidden'}`}
+          onLoad={handleImageLoadingSuccess}
+        />
+        {!isImageLoaded && <MediumLoader />}
       </div>
       <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
         <div className="flex flex-row justify-between">
