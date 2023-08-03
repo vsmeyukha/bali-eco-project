@@ -4,5 +4,6 @@
   "itIsDirty": "Yes",
   "itIsNotDirty": "No",
   "comments": "Comments",
-  "addAComment": "Add a comment..."
+  "addAComment": "Add a comment...",
+  "errorWhileLoadingPhoto": "Error while uploading a photo. Try opening the post again."
 }

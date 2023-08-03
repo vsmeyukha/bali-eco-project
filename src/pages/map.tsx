@@ -1,8 +1,8 @@
 import { ReactElement, useState, useRef, useEffect } from "react";
 import { GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { z } from 'zod';
 
 import ProtectedRoute from "@/routes/ProtectedRoute";
 
@@ -20,15 +20,12 @@ import BigPostOnMap from "@/components/MainPageLoggedIn/map/postOnMap/BigPostOnM
 import useViewportWidth from "@/hooks/calculateWidth";
 import PublishPhotoButton from "@/components/MainPageLoggedIn/PublishPhotoButton";
 import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
-import Loader from "@/components/loaders/SmallLoader";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
 import { getAllPosts } from "@/firebase/firestore";
 
 import Popup from "@/components/Popup";
-
-import { Marker } from '@react-google-maps/api';
 
 export interface IMarker {
   coordinates: Coordinates,
@@ -40,6 +37,9 @@ export interface IMarker {
   // comments: number,
   // isItDirtyMarks: number
 }
+
+const photoStatusCodes = z.enum(['success', 'loading', 'error']);
+export type photoStatus = z.infer<typeof photoStatusCodes>;
 
 // ? локализация. загружаем локали и файлы с переводами, которые потребуются на этой странице
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -87,11 +87,12 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? стейт нового маркера, который редактируется
   const [newMarker, setNewMarker] = useState<IMarker | null>(null);
 
+  // ? стейт, показывающий, верифицирована ли у пользователя почта
   const [notVerifiedPopupOpen, setNotVerifiedPopupOpen] = useState<boolean>(false);
 
   const [isMarkerClicked, setIsMarkerClicked] = useState<boolean>(false);
 
-  const [isImageInPostLoaded, setIsImageInPostLoaded] = useState<boolean>(false);
+  const [photoStatus, setPhotoStatus] = useState<photoStatus>('loading');
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -104,20 +105,14 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const popupRef = useRef<HTMLDivElement | null>(null);
 
-  const markerRef = useRef<Marker | null>(null);
-
   const handlePopupClose = (e: React.MouseEvent): void => {
-    if (isMarkerClicked) {
-      setIsMarkerClicked(false);
-    }
-
     if (Boolean(activeMarker) && popupRef.current && !popupRef.current.contains(e.target as Node)) {
       setActiveMarker(null);
-      setIsMarkerClicked(false);
+      setPhotoStatus('loading');
     }
 
-    setIsImageInPostLoaded(false);
     console.log('handlePopupClose');
+    setIsMarkerClicked(false);
   }
 
   return (
@@ -132,9 +127,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
           newMarker={newMarker}
           setNewMarker={setNewMarker}
           setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
-          markerRef={markerRef}
           setIsMarkerClicked={setIsMarkerClicked}
-          setIsImageLoaded={setIsImageInPostLoaded}
+          setPhotoStatus={setPhotoStatus}
         />
         
         {
@@ -154,8 +148,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
           activeMarker={activeMarker}
           setMarkers={setMarkers}
           setActiveMarker={setActiveMarker}
-          isImageLoaded={isImageInPostLoaded}
-          setIsImageLoaded={setIsImageInPostLoaded}
+          photoStatus={photoStatus}
+          setPhotoStatus={setPhotoStatus}
         />
         <AddPostPopup
           setMarkers={setMarkers}

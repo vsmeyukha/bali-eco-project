@@ -17,7 +17,6 @@ import { useTranslation } from "next-i18next";
 import DirtButton from "./DirtButton";
 import useViewportWidth from "@/hooks/calculateWidth";
 
-import Jungle from '../../../../../public/images/backgrounds/jungle.png';
 import Manatee from '../../../../../public/images/backgrounds/manatee.png';
 import SadSmile from '../../../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile.svg';
@@ -29,14 +28,16 @@ import { IMarker } from "@/pages/map";
 
 import { deletePost } from "@/firebase/firestore";
 
-import MediumLoader from "@/components/loaders/MediumLoader";
+import { photoStatus } from "@/pages/map";
+
+import ImageBlock from "./ImageBlock";
 
 interface BigPostOnMapProps {
   activeMarker: IMarker | null,
   setMarkers: Dispatch<SetStateAction<IMarker[]>>,
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
-  isImageLoaded: boolean,
-  setIsImageLoaded: Dispatch<SetStateAction<boolean>>
+  photoStatus: photoStatus,
+  setPhotoStatus: Dispatch<SetStateAction<photoStatus>>
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
@@ -45,8 +46,8 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
       activeMarker,
       setMarkers,
       setActiveMarker,
-      isImageLoaded,
-      setIsImageLoaded
+      photoStatus,
+      setPhotoStatus
     },
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
@@ -87,11 +88,6 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
     } 
   }
 
-  const handleImageLoadingSuccess = () => {
-    console.log('image loaded');
-    setIsImageLoaded(true);
-  }
-
   return (
     <Transition
     as={Fragment}
@@ -123,15 +119,11 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
         }}
       ref={ref}
     >
-      <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center justify-center rounded-[10px] py-[20px]">
-        <img
-          src={activeMarker?.imageUrl}
-          alt="Jungle"
-          className={`w-full object-center lg:object-contain object-cover rounded-[10px] ${!isImageLoaded && 'hidden'}`}
-          onLoad={handleImageLoadingSuccess}
-        />
-        {!isImageLoaded && <MediumLoader />}
-      </div>
+      <ImageBlock
+        photoStatus={photoStatus}
+        setPhotoStatus={setPhotoStatus}
+        activeMarker={activeMarker}
+      />
       <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
         <div className="flex flex-row justify-between">
           <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{activeMarker?.title}</h3>

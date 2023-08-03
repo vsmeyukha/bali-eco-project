@@ -4,5 +4,6 @@
   "itIsDirty": "Да",
   "itIsNotDirty": "Нет",
   "comments": "Комментарии",
-  "addAComment": "Добавьте комментарий..."
+  "addAComment": "Добавьте комментарий...",
+  "errorWhileLoadingPhoto": "Ошибка при загрузке фотографии. Попробуйте открыть пост еще раз."
 }

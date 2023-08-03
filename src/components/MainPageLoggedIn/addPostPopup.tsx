@@ -8,7 +8,7 @@ import shortid from "shortid";
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
 import Input from '../Form/Input';
-import BigBlueButton from "../BigBlueButton";
+import BigBlueButton from "../MainPageNotLoggedIn/BigBlueButton";
 import BigPlus from '../../../public/images/svgs/icons/bigPlus.svg';
 import TextAreaInput from "../Form/TextAreaInput";
 import DirtButton from "./map/postOnMap/DirtButton";

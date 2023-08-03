@@ -4,5 +4,6 @@
   "itIsDirty": "Ya",
   "itIsNotDirty": "Tidak",
   "comments": "Komentar",
-  "addAComment": "Tambahkan komentar..."
+  "addAComment": "Tambahkan komentar...",
+  "errorWhileLoadingPhoto": "Galat saat mengunggah foto. Coba buka postingan lagi."
 }

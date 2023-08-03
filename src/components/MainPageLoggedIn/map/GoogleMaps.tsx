@@ -6,6 +6,8 @@ import { IMarker } from '@/pages/map';
 
 import { auth } from '../../../firebase/config';
 
+import { photoStatus } from '@/pages/map';
+
 type GoogleMapsInstance = google.maps.Map;
 
 const containerStyle = {
@@ -39,10 +41,9 @@ interface MapProps {
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
   newMarker: IMarker | null,
   setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
-  setNotVerifiedPopupOpen: Dispatch<SetStateAction<boolean>>
-  markerRef: RefObject<Marker | null>,
-  setIsMarkerClicked: Dispatch<SetStateAction<boolean>>
-  setIsImageLoaded: Dispatch<SetStateAction<boolean>>
+  setNotVerifiedPopupOpen: Dispatch<SetStateAction<boolean>>,
+  setIsMarkerClicked: Dispatch<SetStateAction<boolean>>,
+  setPhotoStatus: Dispatch<SetStateAction<photoStatus>>
 }
 
 const MapComponent: React.FC<MapProps> = (
@@ -53,9 +54,8 @@ const MapComponent: React.FC<MapProps> = (
     newMarker,
     setNewMarker,
     setNotVerifiedPopupOpen,
-    markerRef,
     setIsMarkerClicked,
-    setIsImageLoaded
+    setPhotoStatus
   }
 ): ReactElement => {
 
@@ -129,19 +129,19 @@ const MapComponent: React.FC<MapProps> = (
   // ? функция нажатия на маркер. когда мы нажимаем на маркер, открывается привязанный к нему пост. если до этого был открыт другой пост, он закрывается
   const handleMarkerClick = (event: google.maps.MapMouseEvent, marker: IMarker): void => {
     setIsMarkerClicked(true);
+    setNotVerifiedPopupOpen(false);
 
     if (Boolean(activeMarker)) {
       event.stop();
       setActiveMarker(null);
       setTimeout(() => setActiveMarker(marker), 300);
-      setIsImageLoaded(false);
+      setPhotoStatus('loading');
       console.log('handleMarkerClick if');
     }
     else {
       setActiveMarker(marker);
       console.log('handleMarkerClick else');
     }
-    setNotVerifiedPopupOpen(false);
   }
 
   // ? рендеринг маркеров из стейта страницы markers - массива маркеров + новый маркер, который создается по клику на карту, если он есть. новый маркер на данном этапе не заносится в массив markers
