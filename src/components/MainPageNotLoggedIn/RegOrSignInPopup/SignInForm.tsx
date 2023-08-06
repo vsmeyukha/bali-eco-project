@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-import BigBlueButton from '../../BigBlueButton';
+import BigBlueButton from '../BigBlueButton';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
 import SmallLoader from "@/components/loaders/SmallLoader";

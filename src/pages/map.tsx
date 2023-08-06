@@ -23,19 +23,24 @@ import AddPostPopup from "@/components/MainPageLoggedIn/addPostPopup";
 
 import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLoggedIn/map/GoogleMaps";
 
-import { getAllPosts } from "@/firebase/firestore";
+import { getAllMarkers } from "@/firebase/firestore";
 
 import Popup from "@/components/Popup";
 
 export interface IMarker {
-  coordinates: Coordinates,
-  coordsToPixels: CoordsConvertedToPixels,
+  // coordinates: Coordinates,
+  // coordsToPixels: CoordsConvertedToPixels,
   title: string,
   comment: string,
   imageUrl: string | undefined,
-  id: string,
+  id?: string,
   // comments: number,
   // isItDirtyMarks: number
+}
+
+export interface Coords {
+  coordinates: Coordinates,
+  id?: string
 }
 
 const photoStatusCodes = z.enum(['success', 'loading', 'error']);
@@ -94,13 +99,18 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   const [photoStatus, setPhotoStatus] = useState<photoStatus>('loading');
 
+  const [coordinates, setCoordinates] = useState<Coords[]>([]);
+
+  const [newCoords, setNewCoords] = useState<Coords | null>(null);
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      const posts = await getAllPosts();
-      setMarkers(posts);
+    const fetchMarkers = async () => {
+      const markers = await getAllMarkers();
+      setCoordinates(markers);
+      console.log(markers);
     }
 
-    fetchPosts();
+    fetchMarkers();
   }, []);
 
   const popupRef = useRef<HTMLDivElement | null>(null);
@@ -129,6 +139,9 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
           setIsMarkerClicked={setIsMarkerClicked}
           setPhotoStatus={setPhotoStatus}
+          coordinates={coordinates}
+          newCoords={newCoords}
+          setNewCoords={setNewCoords}
         />
         
         {
@@ -156,6 +169,8 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setActiveMarker={setActiveMarker}
           newMarker={newMarker}
           setNewMarker={setNewMarker}
+          newCoords={newCoords}
+          setNewCoords={setNewCoords}
         />
         {notVerifiedPopupOpen
           &&

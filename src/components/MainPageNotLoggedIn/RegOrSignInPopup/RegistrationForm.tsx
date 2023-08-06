@@ -7,7 +7,7 @@ import { signUp } from "@/firebase/auth";
 import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
-import BigBlueButton from '../../BigBlueButton';
+import BigBlueButton from '../BigBlueButton';
 import Form from "@/components/Form/Form";
 import Input from "@/components/Form/Input";
 import SmallLoader from "@/components/loaders/SmallLoader";

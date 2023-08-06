@@ -16,18 +16,19 @@ import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
 import Loader from "../loaders/SmallLoader";
 
-import { IMarker } from "../../pages/map";
+import { IMarker, Coords } from "../../pages/map";
 
 import defaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 
 import { addPost } from "@/firebase/firestore";
-
 
 interface AddPostPopupProps {
   setMarkers: Dispatch<SetStateAction<IMarker[]>>
   setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
   newMarker: IMarker | null,
   setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
+  newCoords: Coords | null,
+  setNewCoords: Dispatch<SetStateAction<Coords | null>>
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
@@ -41,6 +42,8 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     setActiveMarker,
     newMarker,
     setNewMarker,
+    newCoords,
+    setNewCoords
   }: AddPostPopupProps): ReactElement => {
   
   const { t, i18n } = useTranslation('addPostPopup');
@@ -61,12 +64,12 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     try {
       e.preventDefault();
 
-      if (newMarker !== null && selectedFile !== null) {
+      if (newCoords !== null && newMarker !== null && selectedFile !== null) {
         setSubmitButtonText(t('loading') || 'Loading');
 
         setIsLoading(true);
 
-        await addPost(newMarker, selectedFile);
+        await addPost(newCoords, newMarker, selectedFile);
 
         setSubmitButtonText(t('success') || 'Success!');
 
@@ -138,12 +141,12 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     &&
     commentValResult.success
     &&
-    Boolean(newMarker?.coordinates)
+    Boolean(newCoords)
     &&
     Boolean(newMarker?.imageUrl);
 
   return (
-    <SidePopup open={Boolean(newMarker)} onClose={() => setNewMarker(null)}>
+    <SidePopup open={Boolean(newCoords)} onClose={() => setNewCoords(null)}>
       <Dialog.Title
         className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]"
       >

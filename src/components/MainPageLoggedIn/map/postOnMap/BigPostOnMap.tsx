@@ -75,6 +75,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
 
   const deleteCurrentPost = async (): Promise<void> => {
     try {
+      console.log(activeMarker);
       await deletePost(activeMarker);
 
       setMarkers((prevMarkers) => {

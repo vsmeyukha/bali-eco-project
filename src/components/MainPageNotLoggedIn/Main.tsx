@@ -6,7 +6,7 @@ import { popupStateType } from '@/pages';
 import { projectName } from '@/utils/consts';
 import HiddenDesc from '../hiddenDesc';
 import BaliMap from '../../../public/images/svgs/map.svg';
-import BigBlueButton from '../BigBlueButton';
+import BigBlueButton from './BigBlueButton';
 import useViewportWidth from '@/hooks/calculateWidth';
 import RegOrSignInPopup from './RegOrSignInPopup/RegOrSignInPopup';
 
