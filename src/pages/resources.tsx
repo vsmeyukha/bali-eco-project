@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer/Footer";
-import Popup from "@/components/Popup";
+import Popup from "@/components/informationPopups/InformationPopup";
 import { Tab } from '@headlessui/react';
 import { toggleArticlesAndTips } from "@/utils/consts";
 import { posts } from "@/utils/posts";

@@ -38,6 +38,7 @@ interface BigPostOnMapProps {
   photoStatus: photoStatus,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
   setCoordinates: Dispatch<SetStateAction<IMarker[]>>,
+  setIsDeletePostPopupOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
@@ -47,7 +48,8 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
       setActivePost,
       photoStatus,
       setPhotoStatus,
-      setCoordinates
+      setCoordinates,
+      setIsDeletePostPopupOpen
     },
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
@@ -132,7 +134,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
               <button>
                 <CopyIcon />
               </button>
-              <button onClick={deleteCurrentPost}>
+              <button onClick={() => setIsDeletePostPopupOpen(true)}>
                 <TrashBin className="ml-[16px]" />
               </button>
             </div>

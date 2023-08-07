@@ -25,7 +25,8 @@ import { Coordinates, CoordsConvertedToPixels } from "@/components/MainPageLogge
 
 import { getAllMarkers } from "@/firebase/firestore";
 
-import Popup from "@/components/Popup";
+import NotVerifiedUserPopup from "@/components/informationPopups/notVerifiedUserPopup/NotVerifiedUserPopup";
+import DeletePostPopup from "@/components/informationPopups/deletePostPopup/DeletePostPopup";
 
 export interface IPost {
   title: string,
@@ -92,10 +93,12 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? стейт нового маркера, который редактируется
   const [newPost, setNewPost] = useState<IPost | null>(null);
 
+  const [photoStatus, setPhotoStatus] = useState<photoStatus>('loading');
+
   // ? стейт, показывающий, верифицирована ли у пользователя почта
   const [isPopupForNotVerifiedUsersOpen, setIsPopupForNotVerifiedUsersOpen] = useState<boolean>(false);
 
-  const [photoStatus, setPhotoStatus] = useState<photoStatus>('loading');
+  const [isDeletePostPopupOpen, setIsDeletePostPopupOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -154,6 +157,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           photoStatus={photoStatus}
           setPhotoStatus={setPhotoStatus}
           setCoordinates={setCoordinates}
+          setIsDeletePostPopupOpen={setIsDeletePostPopupOpen}
         />
         <AddPostPopup
           setActivePost={setActivePost}
@@ -163,13 +167,17 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setNewMarker={setNewMarker}
           setCoordinates={setCoordinates}
         />
-        {isPopupForNotVerifiedUsersOpen
-          &&
-          <Popup
-            isPopupForNotVerifiedUsersOpen={isPopupForNotVerifiedUsersOpen}
-            setIsPopupForNotVerifiedUsersOpen={setIsPopupForNotVerifiedUsersOpen}
-          />
-        }
+        <NotVerifiedUserPopup
+          open={isPopupForNotVerifiedUsersOpen}
+          onClose={setIsPopupForNotVerifiedUsersOpen}
+        />
+        <DeletePostPopup
+          open={isDeletePostPopupOpen}
+          onClose={setIsDeletePostPopupOpen}
+          activePost={activePost}
+          setActivePost={setActivePost}
+          setCoordinates={setCoordinates}
+        />
         <Footer />
       </div>
     </ProtectedRoute>
