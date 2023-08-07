@@ -22,19 +22,19 @@ import SadSmile from '../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../public/images/svgs/icons/cheerfulsmile.svg';
 import Loader from "../loaders/SmallLoader";
 
-import { IMarker, Coords } from "../../pages/map";
+import { IPost, IMarker } from "../../pages/map";
 
 import defaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 
 import { addPost } from "@/firebase/firestore";
 
 interface AddPostPopupProps {
-  setActivePost: Dispatch<SetStateAction<IMarker | null>>,
-  newPost: IMarker | null,
-  setNewPost: Dispatch<SetStateAction<IMarker | null>>,
-  newMarker: Coords | null,
-  setNewCoords: Dispatch<SetStateAction<Coords | null>>,
-  setCoordinates: Dispatch<SetStateAction<Coords[]>>
+  setActivePost: Dispatch<SetStateAction<IPost | null>>,
+  newPost: IPost | null,
+  setNewPost: Dispatch<SetStateAction<IPost | null>>,
+  newMarker: IMarker | null,
+  setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
+  setCoordinates: Dispatch<SetStateAction<IMarker[]>>
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
@@ -48,7 +48,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     newPost,
     setNewPost,
     newMarker,
-    setNewCoords,
+    setNewMarker,
     setCoordinates
   }: AddPostPopupProps): ReactElement => {
   
@@ -92,7 +92,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           } return prevCoordinates;
         });
 
-        setNewCoords(null);
+        setNewMarker(null);
 
         setErrorMessage('');
       }
@@ -152,7 +152,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     Boolean(newPost?.imageUrl);
 
   return (
-    <SidePopup open={Boolean(newMarker)} onClose={() => setNewCoords(null)}>
+    <SidePopup open={Boolean(newMarker)} onClose={() => setNewMarker(null)}>
       <Dialog.Title
         className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]"
       >

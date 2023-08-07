@@ -24,7 +24,7 @@ import ShareArrow from '../../../../../public/images/svgs/icons/shareArrow.svg';
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
 
-import { IMarker, Coords } from "@/pages/map";
+import { IPost, IMarker } from "@/pages/map";
 
 import { deletePost } from "@/firebase/firestore";
 
@@ -33,11 +33,11 @@ import { photoStatus } from "@/pages/map";
 import ImageBlock from "./ImageBlock";
 
 interface BigPostOnMapProps {
-  activePost: IMarker | null,
-  setActivePost: Dispatch<SetStateAction<IMarker | null>>,
+  activePost: IPost | null,
+  setActivePost: Dispatch<SetStateAction<IPost | null>>,
   photoStatus: photoStatus,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
-  setCoordinates: Dispatch<SetStateAction<Coords[]>>,
+  setCoordinates: Dispatch<SetStateAction<IMarker[]>>,
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(

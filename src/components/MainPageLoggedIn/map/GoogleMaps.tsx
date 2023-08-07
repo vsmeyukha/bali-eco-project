@@ -1,11 +1,11 @@
-import { useRef, ReactElement, Dispatch, SetStateAction, RefObject, MouseEvent } from 'react';
+import { useRef, ReactElement, Dispatch, SetStateAction } from 'react';
 import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
 
-import { IMarker } from '@/pages/map';
+import { IPost } from '@/pages/map';
 
 import { auth } from '../../../firebase/config';
 
-import { photoStatus, Coords } from '@/pages/map';
+import { photoStatus, IMarker } from '@/pages/map';
 
 import { getCurrentPost } from '@/firebase/firestore'; 
 
@@ -37,15 +37,15 @@ const markerIconSVG = {
 }
 
 interface MapProps {
-  activePost: IMarker | null,
-  setActivePost: Dispatch<SetStateAction<IMarker | null>>,
-  newPost: IMarker | null,
-  setNewPost: Dispatch<SetStateAction<IMarker | null>>,
+  activePost: IPost | null,
+  setActivePost: Dispatch<SetStateAction<IPost | null>>,
+  newPost: IPost | null,
+  setNewPost: Dispatch<SetStateAction<IPost | null>>,
   setIsPopupForNotVerifiedUsersOpen: Dispatch<SetStateAction<boolean>>,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
-  markers: Coords[],
-  newMarker: Coords | null,
-  setNewCoords: Dispatch<SetStateAction<Coords | null>>,
+  markers: IMarker[],
+  newMarker: IMarker | null,
+  setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
 }
 
 const MapComponent: React.FC<MapProps> = (
@@ -57,7 +57,7 @@ const MapComponent: React.FC<MapProps> = (
     setPhotoStatus,
     markers,
     newMarker,
-    setNewCoords,
+    setNewMarker,
   }
 ): ReactElement => {
 
@@ -73,7 +73,6 @@ const MapComponent: React.FC<MapProps> = (
     console.log('handleMapClick');
 
     if (auth.currentUser?.emailVerified === false) {
-
       setIsPopupForNotVerifiedUsersOpen(true);
     }
     else {
@@ -108,21 +107,22 @@ const MapComponent: React.FC<MapProps> = (
           y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
         };
     
-        const newPost: IMarker = {
+        const newPost: IPost = {
           title: '',
           comment: '',
           imageUrl: undefined,
         }
 
-      setNewPost(newPost);
-      
-      setNewCoords({ coordinates });
+      if (!Boolean(activePost)) {
+        setNewMarker({ coordinates });
+        setNewPost(newPost);
+      }
     }
   }
 
   // ? функция нажатия на маркер. когда мы нажимаем на маркер, открывается привязанный к нему пост. если до этого был открыт другой пост, он закрывается
 
-  const showMarkerDetails = (currentPost: IMarker | undefined, marker: Coords, delay?: number) => {
+  const showMarkerDetails = (currentPost: IPost | undefined, marker: IMarker, delay?: number) => {
     if (!Boolean(currentPost)) {
       setActivePost(null);
     }
@@ -146,21 +146,20 @@ const MapComponent: React.FC<MapProps> = (
     }
   }
 
-  const handleMarkerClick = async (event: google.maps.MapMouseEvent, marker: Coords): Promise<void> => {
+  const handleMarkerClick = async (event: google.maps.MapMouseEvent, marker: IMarker): Promise<void> => {
     setIsPopupForNotVerifiedUsersOpen(false);
     setPhotoStatus('loading');
-    console.log('handleMarkerClick if');
     // ? 4 строчки выше - это то, что выполняется в любом случае
     // ? фетч ниже выполняется тоже в любом случае
 
     // todo щас открывается все только когда каррентпост зафетчится, поэтому есть лаг. стоит, видимо, показывать лоадер, пока он грузится
 
-    const currentPost: IMarker | undefined = await getCurrentPost(marker);
+    const currentPost: IPost | undefined = await getCurrentPost(marker);
 
     if (Boolean(activePost)) {
       event.stop();
-      setActivePost(null);
       showMarkerDetails(currentPost, marker, 300);
+      console.log('handleMarkerClick if');
     }
     else {
       showMarkerDetails(currentPost, marker);

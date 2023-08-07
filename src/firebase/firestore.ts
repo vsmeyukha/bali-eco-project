@@ -12,11 +12,11 @@ import {
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
 import { db, auth, storage } from "./config";
-import { IMarker, Coords } from "@/pages/map";
+import { IPost, IMarker } from "@/pages/map";
 
 // todo по ходу, в catch, если добавился маркер, но не добавился документ, нужно удалять маркер. 
 
-export const addPost = async (marker: Coords, post: IMarker, file: File) => {
+export const addPost = async (marker: IMarker, post: IPost, file: File) => {
   try {
     const markerRef = await addDoc(collection(db, 'markers'), {
       coordinates: marker.coordinates
@@ -71,9 +71,9 @@ export const addPost = async (marker: Coords, post: IMarker, file: File) => {
 
 export const getAllPosts = async () => {
   try {
-    const allPosts = await getDocs(collection(db, 'posts') as CollectionReference<IMarker>);
+    const allPosts = await getDocs(collection(db, 'posts') as CollectionReference<IPost>);
 
-    const allPostsData: IMarker[] = allPosts.docs.map((post) => {
+    const allPostsData: IPost[] = allPosts.docs.map((post) => {
       return { ...post.data(), id: post.id };
     });
     return allPostsData;
@@ -86,9 +86,9 @@ export const getAllPosts = async () => {
 
 export const getAllMarkers = async () => {
   try {
-    const allMarkers = await getDocs(collection(db, 'markers') as CollectionReference<Coords>);
+    const allMarkers = await getDocs(collection(db, 'markers') as CollectionReference<IMarker>);
 
-    const allMarkersData: Coords[] = allMarkers.docs.map((marker) => {
+    const allMarkersData: IMarker[] = allMarkers.docs.map((marker) => {
       return { ...marker.data(), id: marker.id };
     });
 
@@ -100,7 +100,7 @@ export const getAllMarkers = async () => {
   }
 }
 
-export const deletePost = async (post: IMarker | null) => {
+export const deletePost = async (post: IPost | null) => {
   if (post) {
     try {
       const markerRef = doc(db, 'markers', post.id);
@@ -125,12 +125,12 @@ export const deletePost = async (post: IMarker | null) => {
   }
 }
 
-export const getCurrentPost = async (marker: Coords) => {
+export const getCurrentPost = async (marker: IMarker) => {
   try {
     if (marker.id) {
       const docRef = doc(db, 'posts', marker.id);
       const postSnapshot = await getDoc(docRef);
-      const currentPost: IMarker | undefined = postSnapshot.data();
+      const currentPost: IPost | undefined = postSnapshot.data();
 
       if (currentPost !== undefined) {
         console.log(currentPost);

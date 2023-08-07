@@ -27,7 +27,7 @@ import { getAllMarkers } from "@/firebase/firestore";
 
 import Popup from "@/components/Popup";
 
-export interface IMarker {
+export interface IPost {
   title: string,
   comment: string,
   imageUrl: string | undefined,
@@ -35,7 +35,7 @@ export interface IMarker {
   // isItDirtyMarks: number
 }
 
-export interface Coords {
+export interface IMarker {
   coordinates: Coordinates,
   id?: string
 }
@@ -82,15 +82,15 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   // todo переименовать coordinates в markers, все что щас есть со словом marker - в post, newMarker - в newPost 
   // ? стейт маркеров
-  const [markers, setCoordinates] = useState<Coords[]>([]);
+  const [markers, setCoordinates] = useState<IMarker[]>([]);
 
-  const [newMarker, setNewCoords] = useState<Coords | null>(null);
+  const [newMarker, setNewMarker] = useState<IMarker | null>(null);
 
   // ? стейт активного маркера
-  const [activePost, setActivePost] = useState<IMarker | null>(null);
+  const [activePost, setActivePost] = useState<IPost | null>(null);
 
   // ? стейт нового маркера, который редактируется
-  const [newPost, setNewPost] = useState<IMarker | null>(null);
+  const [newPost, setNewPost] = useState<IPost | null>(null);
 
   // ? стейт, показывающий, верифицирована ли у пользователя почта
   const [isPopupForNotVerifiedUsersOpen, setIsPopupForNotVerifiedUsersOpen] = useState<boolean>(false);
@@ -132,7 +132,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setPhotoStatus={setPhotoStatus}
           markers={markers}
           newMarker={newMarker}
-          setNewCoords={setNewCoords}
+          setNewMarker={setNewMarker}
         />
         
         {
@@ -160,7 +160,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           newPost={newPost}
           setNewPost={setNewPost}
           newMarker={newMarker}
-          setNewCoords={setNewCoords}
+          setNewMarker={setNewMarker}
           setCoordinates={setCoordinates}
         />
         {isPopupForNotVerifiedUsersOpen

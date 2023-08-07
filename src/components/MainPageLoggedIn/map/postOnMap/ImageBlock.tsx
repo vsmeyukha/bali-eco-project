@@ -5,12 +5,12 @@ import MediumLoader from "@/components/loaders/MediumLoader";
 
 import ErrorTriangle from '../../../../../public/images/svgs/icons/errorTriangle.svg';
 
-import { photoStatus, IMarker } from "@/pages/map";
+import { photoStatus, IPost } from "@/pages/map";
 
 interface ImageBlockProps {
   photoStatus: photoStatus,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
-  activePost: IMarker | null
+  activePost: IPost | null
 }
 
 const ImageBlock: React.FC<ImageBlockProps> = ({ photoStatus, setPhotoStatus, activePost }): ReactElement => {
