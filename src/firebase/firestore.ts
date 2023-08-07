@@ -39,12 +39,13 @@ export const addPost = async (marker: Coords, post: IMarker, file: File) => {
           title: post.title,
           comment: post.comment,
           imageUrl: photoUrl,
-          comments: [],
           createdAt: Date.now()
         });
     
         console.log('document created!');
-        console.log(postRef);
+        console.log(doc(db, 'posts', markerId));
+
+        return markerId;
       } catch (error: any) {
         await deleteDoc(markerRef);
         console.log('marker deleted!');
@@ -127,7 +128,7 @@ export const deletePost = async (post: IMarker | null) => {
 export const getCurrentPost = async (marker: Coords) => {
   try {
     if (marker.id) {
-      const docRef = doc(db, 'posts', marker.id)
+      const docRef = doc(db, 'posts', marker.id);
       const postSnapshot = await getDoc(docRef);
       const currentPost: IMarker | undefined = postSnapshot.data();
 

@@ -1,9 +1,15 @@
-import { FormEvent, ReactElement, useRef, Dispatch, SetStateAction, useState, useEffect } from "react";
-import Image from "next/image";
+import {
+  FormEvent,
+  ReactElement,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  useState,
+  useEffect
+} from "react";
 import { Dialog } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
 import { z } from 'zod';
-import shortid from "shortid";
 
 import SidePopup from "../SidePopup";
 import Form from "../Form/Form";
@@ -23,12 +29,12 @@ import defaultImage from '../../../public/images/backgrounds/Porsche.jpg';
 import { addPost } from "@/firebase/firestore";
 
 interface AddPostPopupProps {
-  setMarkers: Dispatch<SetStateAction<IMarker[]>>
-  setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
-  newMarker: IMarker | null,
-  setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
-  newCoords: Coords | null,
-  setNewCoords: Dispatch<SetStateAction<Coords | null>>
+  setActivePost: Dispatch<SetStateAction<IMarker | null>>,
+  newPost: IMarker | null,
+  setNewPost: Dispatch<SetStateAction<IMarker | null>>,
+  newMarker: Coords | null,
+  setNewCoords: Dispatch<SetStateAction<Coords | null>>,
+  setCoordinates: Dispatch<SetStateAction<Coords[]>>
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
@@ -38,12 +44,12 @@ const commentValidation = z.coerce.string().min(10);
 
 const AddPostPopup: React.FC<AddPostPopupProps> = (
   {
-    setMarkers,
-    setActiveMarker,
+    setActivePost,
+    newPost,
+    setNewPost,
     newMarker,
-    setNewMarker,
-    newCoords,
-    setNewCoords
+    setNewCoords,
+    setCoordinates
   }: AddPostPopupProps): ReactElement => {
   
   const { t, i18n } = useTranslation('addPostPopup');
@@ -58,37 +64,37 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
 
   useEffect(() => {
     setSubmitButtonText(t('publish') || 'Post');
-  }, [t, i18n.language, newMarker]);
+  }, [t, i18n.language, newPost]);
 
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
 
-      if (newCoords !== null && newMarker !== null && selectedFile !== null) {
+      if (newMarker !== null && newPost !== null && selectedFile !== null) {
         setSubmitButtonText(t('loading') || 'Loading');
 
         setIsLoading(true);
 
-        await addPost(newCoords, newMarker, selectedFile);
+        const markerId = await addPost(newMarker, newPost, selectedFile);
 
         setSubmitButtonText(t('success') || 'Success!');
 
         setIsLoading(false);
+
+        setSelectedFile(null);
   
-        setActiveMarker(newMarker);
-  
-        setMarkers((prevMarkers) => {
+        setActivePost(newPost);
+
+        setCoordinates((prevCoordinates) => {
           if (newMarker !== null) {
-            const newMarkers = [...prevMarkers, newMarker];
-            return newMarkers;
-          } return prevMarkers;
+            const newCoordinates = [...prevCoordinates, {...newMarker, id: markerId}];
+            return newCoordinates;
+          } return prevCoordinates;
         });
 
-        setErrorMessage('');
+        setNewCoords(null);
 
-        setTimeout(() => {
-          setNewMarker(null);
-        }, 300);
+        setErrorMessage('');
       }
     } catch (error: any) {
       console.log(error.message);
@@ -108,24 +114,24 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
 
-    if (file && newMarker) {
+    if (file && newPost) {
       setSelectedFile(file);
       const imageUrl = URL.createObjectURL(file);
-      setNewMarker({ ...newMarker, imageUrl });
+      setNewPost({ ...newPost, imageUrl });
     }
   };
 
-  const titleValResult = titleValidation.safeParse(newMarker?.title);
-  const commentValResult = commentValidation.safeParse(newMarker?.comment);
+  const titleValResult = titleValidation.safeParse(newPost?.title);
+  const commentValResult = commentValidation.safeParse(newPost?.comment);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (newMarker) {
-      setNewMarker({ ...newMarker, [e.target.name]: e.target.value });
+    if (newPost) {
+      setNewPost({ ...newPost, [e.target.name]: e.target.value });
     }
   }
 
-  // ? useEffect очищает URL хранилище каждый раз, когда изменяется imageUrl. когда мы сабмитим форму, в самом конце функции сабмита мы приводим newMarker к null, так что imageUrl изменяется. таким образом, ссылка уже сохранена в activeMarker и создан новый объект в массиве markers, также хранящий эту ссылку, однако эта ссылка ведет в пустоту. как временное решение можно просто не чистить эту штуку, посколько при перезагрузке страницы она все равно очищается браузером
-  // const imageUrl = newMarker?.imageUrl;
+  // ? useEffect очищает URL хранилище каждый раз, когда изменяется imageUrl. когда мы сабмитим форму, в самом конце функции сабмита мы приводим newPost к null, так что imageUrl изменяется. таким образом, ссылка уже сохранена в activePost и создан новый объект в массиве markers, также хранящий эту ссылку, однако эта ссылка ведет в пустоту. как временное решение можно просто не чистить эту штуку, посколько при перезагрузке страницы она все равно очищается браузером
+  // const imageUrl = newPost?.imageUrl;
 
   // useEffect(() => {
     
@@ -141,19 +147,19 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     &&
     commentValResult.success
     &&
-    Boolean(newCoords)
+    Boolean(newMarker)
     &&
-    Boolean(newMarker?.imageUrl);
+    Boolean(newPost?.imageUrl);
 
   return (
-    <SidePopup open={Boolean(newCoords)} onClose={() => setNewCoords(null)}>
+    <SidePopup open={Boolean(newMarker)} onClose={() => setNewCoords(null)}>
       <Dialog.Title
         className="font-oceanic-bold text-[40px] leading-[48px] text-[#00265F] mb-[24px]"
       >
         {t('addPhoto')}
       </Dialog.Title>
       <Form onSubmit={handleSubmit}>
-        {!newMarker?.imageUrl
+        {!newPost?.imageUrl
           ?
           <>
             <input
@@ -172,12 +178,12 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
             </button>
           </>
           :
-          <img src={newMarker?.imageUrl ?? defaultImage.src} alt="abc" className="rounded-[10px]"/>
+          <img src={newPost?.imageUrl ?? defaultImage.src} alt="abc" className="rounded-[10px]"/>
         }
         <Input
           label={t('title')}
           name="title"
-          value={newMarker !== null ? newMarker.title : ''}
+          value={newPost !== null ? newPost.title : ''}
           handleChange={handleFormChange}
           valSuccess={titleValResult.success}
           valErrorMessage={t('titleValidation')}
@@ -186,7 +192,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
           label={t('comment')}
           name="comment"
           // ? спросить, как лучше записать value - как коммент или как тайтл 
-          value={newMarker?.comment ?? ''}
+          value={newPost?.comment ?? ''}
           handleChange={handleFormChange}
           valSuccess={commentValResult.success}
           valErrorMessage={t('commentValidation')}

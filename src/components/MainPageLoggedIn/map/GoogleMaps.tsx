@@ -1,6 +1,5 @@
 import { useRef, ReactElement, Dispatch, SetStateAction, RefObject, MouseEvent } from 'react';
 import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
-import shortid from 'shortid';
 
 import { IMarker } from '@/pages/map';
 
@@ -38,32 +37,27 @@ const markerIconSVG = {
 }
 
 interface MapProps {
-  markers: IMarker[],
-  activeMarker: IMarker | null,
-  setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
-  newMarker: IMarker | null,
-  setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
-  setNotVerifiedPopupOpen: Dispatch<SetStateAction<boolean>>,
-  setIsMarkerClicked: Dispatch<SetStateAction<boolean>>,
+  activePost: IMarker | null,
+  setActivePost: Dispatch<SetStateAction<IMarker | null>>,
+  newPost: IMarker | null,
+  setNewPost: Dispatch<SetStateAction<IMarker | null>>,
+  setIsPopupForNotVerifiedUsersOpen: Dispatch<SetStateAction<boolean>>,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
-  coordinates: Coords[],
-  newCoords: Coords | null,
-  setNewCoords: Dispatch<SetStateAction<Coords | null>>
+  markers: Coords[],
+  newMarker: Coords | null,
+  setNewCoords: Dispatch<SetStateAction<Coords | null>>,
 }
 
 const MapComponent: React.FC<MapProps> = (
   {
-    markers,
-    activeMarker,
-    setActiveMarker,
-    newMarker,
-    setNewMarker,
-    setNotVerifiedPopupOpen,
-    setIsMarkerClicked,
+    activePost,
+    setActivePost,
+    setNewPost,
+    setIsPopupForNotVerifiedUsersOpen,
     setPhotoStatus,
-    coordinates,
-    newCoords,
-    setNewCoords
+    markers,
+    newMarker,
+    setNewCoords,
   }
 ): ReactElement => {
 
@@ -75,71 +69,12 @@ const MapComponent: React.FC<MapProps> = (
     mapRef.current = mapInstance;
   }
 
-  // const handleMapClick = (event: google.maps.MapMouseEvent) => {
-  //   console.log('handleMapClick');
-
-  //   if (auth.currentUser?.emailVerified === false) {
-  //     if (Boolean(activeMarker)) {
-  //       // return;
-  //     }
-  //     setNotVerifiedPopupOpen(true);
-  //   }
-  //   else {
-  //     if (Boolean(activeMarker)) {
-  //       // return;
-  //     }
-  //     else {
-  //       const coordinates = {
-  //         lat: event.latLng?.lat() ?? 0,
-  //         lng: event.latLng?.lng() ?? 0,
-  //       }
-    
-  //       // ? переводим координаты маркера в пиксели
-  //       // ? вызываем метод getProjection инстанса карты, получаем проекцию, которая является объектом
-  //       // ? у этого объекта есть метод fromLatLngToPoint, который принимает объект LatLng с координатами по широте и долготе
-  //       // ? метод fromLatLngToPoint возвращает объект с координатами по оси х и оси у в пикселях
-  //       // ? возвращенный объект записываем в стейт чуть ниже
-  //       const popupPosition = mapRef.current?.getProjection()?.fromLatLngToPoint(coordinates);
-  //       // ? получаем масштаб карты
-  //       const bounds = mapRef.current?.getBounds();
-  //       const topLeftLatLng = bounds ? new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng()) : null;
-  //       const topLeftPixel = topLeftLatLng ? mapRef.current?.getProjection()?.fromLatLngToPoint(topLeftLatLng) : null;
-
-  //       // ? проверяем, что в popupPosition не лежит null, иначе ts ругается
-  //       if (!popupPosition || !topLeftPixel) return;
-    
-  //       const zoom = mapRef.current?.getZoom();
-  //       const scale = Math.pow(2, zoom ?? 0);
-  //       const scaledPopupPosition = {
-  //         x: popupPosition.x * scale,
-  //         y: popupPosition.y * scale,
-  //       };
-    
-  //       const localPosition = {
-  //         x: Math.floor(scaledPopupPosition.x - topLeftPixel.x * scale),
-  //         y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
-  //       };
-    
-  //       const newMarker: IMarker = {
-  //         coordinates,
-  //         coordsToPixels: localPosition,
-  //         title: '',
-  //         comment: '',
-  //         imageUrl: undefined,
-  //         id: shortid(),
-  //       }
-
-  //       setNewMarker(newMarker);
-  //     }
-  //   }
-  // }
-
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     console.log('handleMapClick');
 
     if (auth.currentUser?.emailVerified === false) {
 
-      setNotVerifiedPopupOpen(true);
+      setIsPopupForNotVerifiedUsersOpen(true);
     }
     else {
         const coordinates = {
@@ -173,70 +108,69 @@ const MapComponent: React.FC<MapProps> = (
           y: Math.floor(scaledPopupPosition.y - topLeftPixel.y * scale),
         };
     
-        const newMarker: IMarker = {
+        const newPost: IMarker = {
           title: '',
           comment: '',
           imageUrl: undefined,
-          id: shortid(),
         }
 
-      setNewMarker(newMarker);
+      setNewPost(newPost);
       
       setNewCoords({ coordinates });
     }
   }
 
   // ? функция нажатия на маркер. когда мы нажимаем на маркер, открывается привязанный к нему пост. если до этого был открыт другой пост, он закрывается
-  // const handleMarkerClick = (event: google.maps.MapMouseEvent, marker: IMarker): void => {
-  //   setIsMarkerClicked(true);
-  //   setNotVerifiedPopupOpen(false);
 
-  //   if (Boolean(activeMarker)) {
-  //     event.stop();
-  //     setActiveMarker(null);
-  //     setTimeout(() => setActiveMarker(marker), 300);
-  //     setPhotoStatus('loading');
-  //     console.log('handleMarkerClick if');
-  //   }
-  //   else {
-  //     setActiveMarker(marker);
-  //     console.log('handleMarkerClick else');
-  //   }
-  // }
-
-  const handleMarkerClick = async (event: google.maps.MapMouseEvent, marker: Coords): Promise<void> => {
-    setIsMarkerClicked(true);
-    setNotVerifiedPopupOpen(false);
-
-    const currentPost = await getCurrentPost(marker);
-
-    if (Boolean(activeMarker)) {
-      event.stop();
-      setActiveMarker(null);
-      if (currentPost) {
-        setTimeout(() => setActiveMarker({...currentPost, id: marker.id}), 300);
-      }
-      else {
-        setActiveMarker(null);
-      }
-      setPhotoStatus('loading');
-      console.log('handleMarkerClick if');
+  const showMarkerDetails = (currentPost: IMarker | undefined, marker: Coords, delay?: number) => {
+    if (!Boolean(currentPost)) {
+      setActivePost(null);
     }
     else {
-      if (currentPost) {
-        setActiveMarker({...currentPost, id: marker.id});
+      if (delay) {
+        setTimeout(() => setActivePost({
+          title: currentPost?.title || '',
+          comment: currentPost?.comment || '',
+          imageUrl: currentPost?.imageUrl || '',
+          id: marker.id
+        }), delay);
       }
       else {
-        setActiveMarker(null);
+        setActivePost({
+          title: currentPost?.title || '',
+          comment: currentPost?.comment || '',
+          imageUrl: currentPost?.imageUrl || '',
+          id: marker.id
+        });
       }
+    }
+  }
+
+  const handleMarkerClick = async (event: google.maps.MapMouseEvent, marker: Coords): Promise<void> => {
+    setIsPopupForNotVerifiedUsersOpen(false);
+    setPhotoStatus('loading');
+    console.log('handleMarkerClick if');
+    // ? 4 строчки выше - это то, что выполняется в любом случае
+    // ? фетч ниже выполняется тоже в любом случае
+
+    // todo щас открывается все только когда каррентпост зафетчится, поэтому есть лаг. стоит, видимо, показывать лоадер, пока он грузится
+
+    const currentPost: IMarker | undefined = await getCurrentPost(marker);
+
+    if (Boolean(activePost)) {
+      event.stop();
+      setActivePost(null);
+      showMarkerDetails(currentPost, marker, 300);
+    }
+    else {
+      showMarkerDetails(currentPost, marker);
       console.log('handleMarkerClick else');
     }
   }
 
-  // ? рендеринг маркеров из стейта страницы markers - массива маркеров + новый маркер, который создается по клику на карту, если он есть. новый маркер на данном этапе не заносится в массив markers
-  const markersWithNewMarker = [...markers, newMarker];
+  // ? рендеринг маркеров из стейта страницы coordinates - массива маркеров + новый маркер, который создается по клику на карту, если он есть. новый маркер на данном этапе не заносится в массив coordinates
 
-  const coordsWithNewCoords = [...coordinates, newCoords];
+  const coordsWithNewCoords = [...markers, newMarker];
 
   return (
     <div className="relative h-[1000px] w-full sm:mt-[-20px] md:mt-0 mt-[-70px] hover:cursor-default">
@@ -251,20 +185,6 @@ const MapComponent: React.FC<MapProps> = (
           <MarkerClusterer>
             {(clusterer) => (
               <>
-                {/* {markersWithNewMarker.map((marker, index) => {
-                  if (marker !== null) {
-                    return (
-                      <Marker
-                        key={index}
-                        position={marker.coordinates}
-                        onClick={(event) => handleMarkerClick(event, marker)}
-                        icon={markerIconSVG}
-                        clusterer={clusterer}
-                      />
-                    )
-                  }
-                  return null;
-                })} */}
                 {coordsWithNewCoords.map((marker, index) => {
                   if (marker !== null) {
                     return (

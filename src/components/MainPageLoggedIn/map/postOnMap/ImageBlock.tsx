@@ -10,10 +10,10 @@ import { photoStatus, IMarker } from "@/pages/map";
 interface ImageBlockProps {
   photoStatus: photoStatus,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
-  activeMarker: IMarker | null
+  activePost: IMarker | null
 }
 
-const ImageBlock: React.FC<ImageBlockProps> = ({ photoStatus, setPhotoStatus, activeMarker }): ReactElement => {
+const ImageBlock: React.FC<ImageBlockProps> = ({ photoStatus, setPhotoStatus, activePost }): ReactElement => {
   const { t } = useTranslation('bigPostPopup');
 
   const handleImageLoadingSuccess = (): void => {
@@ -29,7 +29,7 @@ const ImageBlock: React.FC<ImageBlockProps> = ({ photoStatus, setPhotoStatus, ac
   return (
     <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center justify-center rounded-[10px] py-[20px]">
       <img
-        src={activeMarker?.imageUrl}
+        src={activePost?.imageUrl}
         alt="Jungle"
         className={
           `w-full 

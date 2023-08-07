@@ -24,7 +24,7 @@ import ShareArrow from '../../../../../public/images/svgs/icons/shareArrow.svg';
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
 
-import { IMarker } from "@/pages/map";
+import { IMarker, Coords } from "@/pages/map";
 
 import { deletePost } from "@/firebase/firestore";
 
@@ -33,21 +33,21 @@ import { photoStatus } from "@/pages/map";
 import ImageBlock from "./ImageBlock";
 
 interface BigPostOnMapProps {
-  activeMarker: IMarker | null,
-  setMarkers: Dispatch<SetStateAction<IMarker[]>>,
-  setActiveMarker: Dispatch<SetStateAction<IMarker | null>>,
+  activePost: IMarker | null,
+  setActivePost: Dispatch<SetStateAction<IMarker | null>>,
   photoStatus: photoStatus,
-  setPhotoStatus: Dispatch<SetStateAction<photoStatus>>
+  setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
+  setCoordinates: Dispatch<SetStateAction<Coords[]>>,
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
   (
     {
-      activeMarker,
-      setMarkers,
-      setActiveMarker,
+      activePost,
+      setActivePost,
       photoStatus,
-      setPhotoStatus
+      setPhotoStatus,
+      setCoordinates
     },
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
@@ -75,15 +75,15 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
 
   const deleteCurrentPost = async (): Promise<void> => {
     try {
-      console.log(activeMarker);
-      await deletePost(activeMarker);
+      console.log(activePost);
+      await deletePost(activePost);
 
-      setMarkers((prevMarkers) => {
-        const newMarkers = prevMarkers.filter(marker => marker.id !== activeMarker?.id);
-        return newMarkers;
+      setCoordinates((prevCoordinates) => {
+        const newCoordinates = prevCoordinates.filter(marker => marker.id !== activePost?.id);
+        return newCoordinates;
       });
-  
-      setActiveMarker(null);
+
+      setActivePost(null);
     } catch (error: any) {
       console.log(error);
     } 
@@ -92,89 +92,89 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
   return (
     <Transition
     as={Fragment}
-    show={Boolean(activeMarker)}
+    show={Boolean(activePost)}
     enter="transition-opacity duration-300"
     enterFrom="opacity-0"
     enterTo="opacity-100"
     leave="transition-opacity duration-300"
     leaveFrom="opacity-100"
     leaveTo="opacity-0"
-  >
-    <div className="
-      fixed
-      left-1/2
-      transform
-      -translate-x-1/2
-      mx-auto
-      lg:grid
-      lg:grid-cols-2
-      flexflex-col
-      bg-white
-      rounded-[10px]
-      z-50
-      overflow-auto"
-        style={{
-          top: `${heightForPositioning}px`,
-          width: popupWidth,
-          maxHeight: '80vh',
-        }}
-      ref={ref}
     >
-      <ImageBlock
-        photoStatus={photoStatus}
-        setPhotoStatus={setPhotoStatus}
-        activeMarker={activeMarker}
-      />
-      <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
-        <div className="flex flex-row justify-between">
-          <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{activeMarker?.title}</h3>
-          <div className="flex flex-row">
-            <button>
-              <CopyIcon />
-            </button>
-            <button onClick={deleteCurrentPost}>
-              <TrashBin className="ml-[16px]" />
-            </button>
+      <div className="
+        fixed
+        left-1/2
+        transform
+        -translate-x-1/2
+        mx-auto
+        lg:grid
+        lg:grid-cols-2
+        flexflex-col
+        bg-white
+        rounded-[10px]
+        z-50
+        overflow-auto"
+          style={{
+            top: `${heightForPositioning}px`,
+            width: popupWidth,
+            maxHeight: '80vh',
+          }}
+        ref={ref}
+      >
+        <ImageBlock
+          photoStatus={photoStatus}
+          setPhotoStatus={setPhotoStatus}
+          activePost={activePost}
+        />
+        <div className="pl-[24px] pr-[42px] pt-[32px] text-[#00265F] flex flex-col">
+          <div className="flex flex-row justify-between">
+            <h3 className="text-[18px] leading-[22px] font-montserrat-bold">{activePost?.title}</h3>
+            <div className="flex flex-row">
+              <button>
+                <CopyIcon />
+              </button>
+              <button onClick={deleteCurrentPost}>
+                <TrashBin className="ml-[16px]" />
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-row justify-start items-center mt-[12px]">
+            <Link href="/profile" className="w-[30px] h-[30px] relative rounded-full overflow-hidden">
+              <Image
+                src={Manatee}
+                alt="manatee"
+                fill
+                className="rounded-full object-cover object-center"
+              />
+            </Link>
+            <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Имя Фамилия</p>
+          </div>
+            <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{activePost?.comment}</p>
+          <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
+              <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">{ t('rateThePlace')}</p>
+            <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>
+              <p className="font-montserrat text-[14px] leading-[17px] ml-[12px] mt-[8px]">{ t('isItDirty')}</p>
+            <div className="flex flex-row justify-center w-full mt-[6px] mb-[15px] space-x-[14px]">
+              <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
+              <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
+            </div>
+          </div>
+            <h4 className="font-montserrat font-semibold text-[14px] leading-[17px] my-[16px]">{`${t('comments')} (2)`}</h4>
+          <h3 className="font-montserrat font-semibold text-[16px] leading-[19.5px]">Имя Фамилия</h3>
+          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">Место отличное! Красиво, уютно, птички поют, Можно покормить обезьянок. Советую всем)</p>
+          <div className="flex flex-row justify-start items-center mb-[24px]">
+            <Link href="/profile" className="w-[30px] h-[30px] relative rounded-full overflow-hidden">
+              <Image
+                src={Manatee}
+                alt="manatee"
+                fill
+                className="rounded-full object-cover object-center"
+              />
+            </Link>
+              <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">{ t('addAComment') }</p>
           </div>
         </div>
-        <div className="flex flex-row justify-start items-center mt-[12px]">
-          <Link href="/profile" className="w-[30px] h-[30px] relative rounded-full overflow-hidden">
-            <Image
-              src={Manatee}
-              alt="manatee"
-              fill
-              className="rounded-full object-cover object-center"
-            />
-          </Link>
-          <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Имя Фамилия</p>
-        </div>
-          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{activeMarker?.comment}</p>
-        <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
-            <p className="font-montserrat-bold text-[14px] leading-[17px] ml-[12px] mt-[12px]">{ t('rateThePlace')}</p>
-          <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>
-            <p className="font-montserrat text-[14px] leading-[17px] ml-[12px] mt-[8px]">{ t('isItDirty')}</p>
-          <div className="flex flex-row justify-center w-full mt-[6px] mb-[15px] space-x-[14px]">
-            <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
-            <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
-          </div>
-        </div>
-          <h4 className="font-montserrat font-semibold text-[14px] leading-[17px] my-[16px]">{`${t('comments')} (2)`}</h4>
-        <h3 className="font-montserrat font-semibold text-[16px] leading-[19.5px]">Имя Фамилия</h3>
-        <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">Место отличное! Красиво, уютно, птички поют, Можно покормить обезьянок. Советую всем)</p>
-        <div className="flex flex-row justify-start items-center mb-[24px]">
-          <Link href="/profile" className="w-[30px] h-[30px] relative rounded-full overflow-hidden">
-            <Image
-              src={Manatee}
-              alt="manatee"
-              fill
-              className="rounded-full object-cover object-center"
-            />
-          </Link>
-            <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">{ t('addAComment') }</p>
-        </div>
       </div>
-      </div>
-      </ Transition>
+    </ Transition>
   )
 });
 

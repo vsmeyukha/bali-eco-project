@@ -28,13 +28,10 @@ import { getAllMarkers } from "@/firebase/firestore";
 import Popup from "@/components/Popup";
 
 export interface IMarker {
-  // coordinates: Coordinates,
-  // coordsToPixels: CoordsConvertedToPixels,
   title: string,
   comment: string,
   imageUrl: string | undefined,
   id?: string,
-  // comments: number,
   // isItDirtyMarks: number
 }
 
@@ -83,25 +80,22 @@ const LoggedInMain: React.FC = (): ReactElement => {
   // ? считаем ширину экрана
   const viewportWidth = useViewportWidth();
 
+  // todo переименовать coordinates в markers, все что щас есть со словом marker - в post, newMarker - в newPost 
   // ? стейт маркеров
-  const [markers, setMarkers] = useState<IMarker[]>([]);
+  const [markers, setCoordinates] = useState<Coords[]>([]);
+
+  const [newMarker, setNewCoords] = useState<Coords | null>(null);
 
   // ? стейт активного маркера
-  const [activeMarker, setActiveMarker] = useState<IMarker | null>(null);
+  const [activePost, setActivePost] = useState<IMarker | null>(null);
 
   // ? стейт нового маркера, который редактируется
-  const [newMarker, setNewMarker] = useState<IMarker | null>(null);
+  const [newPost, setNewPost] = useState<IMarker | null>(null);
 
   // ? стейт, показывающий, верифицирована ли у пользователя почта
-  const [notVerifiedPopupOpen, setNotVerifiedPopupOpen] = useState<boolean>(false);
-
-  const [isMarkerClicked, setIsMarkerClicked] = useState<boolean>(false);
+  const [isPopupForNotVerifiedUsersOpen, setIsPopupForNotVerifiedUsersOpen] = useState<boolean>(false);
 
   const [photoStatus, setPhotoStatus] = useState<photoStatus>('loading');
-
-  const [coordinates, setCoordinates] = useState<Coords[]>([]);
-
-  const [newCoords, setNewCoords] = useState<Coords | null>(null);
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -116,13 +110,12 @@ const LoggedInMain: React.FC = (): ReactElement => {
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   const handlePopupClose = (e: React.MouseEvent): void => {
-    if (Boolean(activeMarker) && popupRef.current && !popupRef.current.contains(e.target as Node)) {
-      setActiveMarker(null);
+    if (Boolean(activePost) && popupRef.current && !popupRef.current.contains(e.target as Node)) {
+      setActivePost(null);
       setPhotoStatus('loading');
     }
 
     console.log('handlePopupClose');
-    setIsMarkerClicked(false);
   }
 
   return (
@@ -131,16 +124,14 @@ const LoggedInMain: React.FC = (): ReactElement => {
         <Header />
         {viewportWidth > 640 && <PublishPhoto />}
         <MapComponent
-          markers={markers}
-          activeMarker={activeMarker}
-          setActiveMarker={setActiveMarker}
-          newMarker={newMarker}
-          setNewMarker={setNewMarker}
-          setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
-          setIsMarkerClicked={setIsMarkerClicked}
+          activePost={activePost}
+          setActivePost={setActivePost}
+          newPost={newPost}
+          setNewPost={setNewPost}
+          setIsPopupForNotVerifiedUsersOpen={setIsPopupForNotVerifiedUsersOpen}
           setPhotoStatus={setPhotoStatus}
-          coordinates={coordinates}
-          newCoords={newCoords}
+          markers={markers}
+          newMarker={newMarker}
           setNewCoords={setNewCoords}
         />
         
@@ -158,25 +149,25 @@ const LoggedInMain: React.FC = (): ReactElement => {
         <Volunteers />
         <BigPostOnMap
           ref={popupRef}
-          activeMarker={activeMarker}
-          setMarkers={setMarkers}
-          setActiveMarker={setActiveMarker}
+          activePost={activePost}
+          setActivePost={setActivePost}
           photoStatus={photoStatus}
           setPhotoStatus={setPhotoStatus}
+          setCoordinates={setCoordinates}
         />
         <AddPostPopup
-          setMarkers={setMarkers}
-          setActiveMarker={setActiveMarker}
+          setActivePost={setActivePost}
+          newPost={newPost}
+          setNewPost={setNewPost}
           newMarker={newMarker}
-          setNewMarker={setNewMarker}
-          newCoords={newCoords}
           setNewCoords={setNewCoords}
+          setCoordinates={setCoordinates}
         />
-        {notVerifiedPopupOpen
+        {isPopupForNotVerifiedUsersOpen
           &&
           <Popup
-            notVerifiedPopupOpen={notVerifiedPopupOpen}
-            setNotVerifiedPopupOpen={setNotVerifiedPopupOpen}
+            isPopupForNotVerifiedUsersOpen={isPopupForNotVerifiedUsersOpen}
+            setIsPopupForNotVerifiedUsersOpen={setIsPopupForNotVerifiedUsersOpen}
           />
         }
         <Footer />
