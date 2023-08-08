@@ -35,6 +35,7 @@ import factsIcon from '../../public/images/svgs/icons/factsIcon.svg';
 import volunteersIcon from '../../public/images/svgs/icons/volunteersIcon.svg';
 import aboutUsIcon from '../../public/images/svgs/icons/aboutUsIcon.svg';
 
+import { RegTranslationKeys, SignInTranslationKeys } from "@/helpers/handleSubmit";
 
 const navListRu: NavLink[] = [
   {
@@ -231,6 +232,24 @@ const errorMessages: ErrorMessageMapping = {
   "": null,
 }
 
+const RegTranslationKeys: RegTranslationKeys = {
+  inProcess: 'registrationInProcess',
+  success: 'registrationSuccessful',
+  inProcessFallback: 'Registration...',
+  successFallback: 'Success!',
+  default: 'Register',
+  defaultFallback: 'Register'
+}
+
+const SignInTranslationKeys: SignInTranslationKeys = {
+  inProcess: 'signInInProcess',
+  success: 'signInSuccessful',
+  inProcessFallback: 'Signing in...',
+  successFallback: 'Success!',
+  default: 'SignIn',
+  defaultFallback: 'Sign In'
+};
+
 export {
   navListRu,
   navListForBurgerRu,
@@ -251,4 +270,6 @@ export {
   aboutUsContents,
   firebaseErrorCodes,
   errorMessages,
+  RegTranslationKeys,
+  SignInTranslationKeys
 };

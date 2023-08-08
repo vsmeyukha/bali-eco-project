@@ -1,5 +1,4 @@
-import { ReactElement, FormEvent, useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { ReactElement, FormEvent, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
@@ -14,14 +13,19 @@ import SmallLoader from "@/components/loaders/SmallLoader";
 
 import useViewportWidth from "@/hooks/calculateWidth";
 
+import handleSubmitConstructor from "@/helpers/handleSubmit";
+import { StateType } from "@/helpers/handleSubmit";
+
+import { RegTranslationKeys } from "../../../utils/consts";
+
 interface RegFormPropsType {
   onClose: () => void,
 }
 
 interface RegFormState {
-  username: string,
   email: string,
   password: string,
+  username: string,
 }
 
 const nameValidationRule = z.string().min(5);
@@ -38,9 +42,9 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
   const unknownErrorMessage: string = t('unknownError');
 
   const [registrationState, setRegistrationState] = useState<RegFormState>({
-    username: '',
     email: '',
     password: '',
+    username: '',
   });
 
   // ? стейт текста кнопки сабмита, который меняется в зависимости от стадии процесса регистрации
@@ -74,43 +78,22 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
   }
 
   const isButtonActive: boolean = nameValidation.success && emailValidation.success && passwordValidation.success;
-    
-  // ? инициализируем некстовый роутер
-  const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    try {
-      e.preventDefault();
-
-      setSubmitButtonText(t('registrationInProcess') || 'Registration...');
-
-      setIsLoading(true);
-
-      await signUp(registrationState.email, registrationState.password, registrationState.username);
-
-      setSubmitButtonText(t('registrationSuccessful') || 'Success!');
-
-      setIsLoading(false);
-
-      setFirebaseErrorCode('');
-
-      setTimeout(() => { 
-        onClose();
-      }, 500);
-    } catch (error: any) {
-      setFirebaseErrorCode(error.code);
-      setSubmitButtonText(t('register') || 'Register');
-      setIsLoading(false);
-      setRegistrationState({
-        username: '',
-        email: '',
-        password: '',
-      });
-    }
-  }
+  const handleSubmitRegistration = handleSubmitConstructor();
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={(e) => handleSubmitRegistration({
+      e,
+      setSubmitButtonText,
+      t,
+      translationKeys: RegTranslationKeys,
+      setIsLoading,
+      signUpOrSignIn: signUp,
+      state: registrationState,
+      setFirebaseErrorCode,
+      onClose,
+      setState: setRegistrationState as Dispatch<SetStateAction<StateType>>
+    })}>
       <Input
         label={t('name')}
         name="username"

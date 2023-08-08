@@ -14,6 +14,10 @@ import { signIn } from "@/firebase/auth";
 import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
+import handleSubmitConstructor from "@/helpers/handleSubmit";
+
+import { SignInTranslationKeys } from "../../../utils/consts";
+
 interface SignInFormPropsType {
   onClose: () => void,
 }
@@ -121,8 +125,21 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsT
     }
   }
 
+  const handleSubmitRegistration = handleSubmitConstructor();
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={(e) => handleSubmitRegistration({
+      e,
+      setSubmitButtonText,
+      t,
+      translationKeys: SignInTranslationKeys,
+      setIsLoading,
+      signUpOrSignIn: signIn,
+      state: signInFormState,
+      setFirebaseErrorCode,
+      onClose,
+      setState: setSignInFormState
+    })}>
       <Input
         label={t('email')}
         name="email"

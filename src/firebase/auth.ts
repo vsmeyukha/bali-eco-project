@@ -12,14 +12,14 @@ import {doc, setDoc} from 'firebase/firestore/lite';
 import { auth, db } from './config';
 
 // ? классическая регистрация по почте и паролю
-export const signUp = async (email: string, password: string, username: string): Promise<void> => {
+export const signUp = async (email: string, password: string, username?: string): Promise<void> => {
   try {
 
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     console.log(user);
 
-    if (user) {
+    if (user && username) {
       await sendEmailVerification(user);
       console.log('verification email sent!');
       await setDoc(doc(db, 'users', user.uid), {
