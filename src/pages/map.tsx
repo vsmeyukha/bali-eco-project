@@ -61,7 +61,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
           'bigPostPopup',
           'footer',
           'quickToolsPopup',
-          'notVerifiedEmailPopup'
+          'notVerifiedEmailPopup',
+          'deletePostPopup'
         ],
         null,
         ['en', 'ru', 'id']
