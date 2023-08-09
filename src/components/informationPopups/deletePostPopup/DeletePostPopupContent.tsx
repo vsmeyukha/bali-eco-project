@@ -1,6 +1,8 @@
 import { ReactElement, Dispatch, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
 
+import DirtButton from "@/components/MainPageLoggedIn/map/postOnMap/DirtButton";
+
 import Cross from "../../../../public/images/svgs/cross.svg";
 
 import { deletePost } from "@/firebase/firestore";
@@ -14,7 +16,15 @@ interface DeletePostPopupContentProps {
   setCoordinates: Dispatch<SetStateAction<IMarker[]>>
 }
 
-const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = ({ onClose, activePost, setActivePost, setCoordinates }): ReactElement => {
+const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
+  {
+    onClose,
+    activePost,
+    setActivePost,
+    setCoordinates
+  }
+): ReactElement => {
+
   const deleteCurrentPost = async (): Promise<void> => {
     try {
       console.log(activePost);
@@ -35,19 +45,21 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = ({ onClose
   return (
     <>
       <button className="flex flex-row-reverse">
-        <Cross onClick={() => onClose(false)} className="outline-none hover:scale-110 transition-transform duration-200"/>
+        <Cross
+          onClick={() => onClose(false)} className="outline-none hover:scale-110 transition-transform duration-200 text-[#0D87FF]" />
       </button>
-      <Dialog.Title className="font-montserrat-bold text-[#4CAF50] text-[32px]">Вы точно хотите удалить пост?</Dialog.Title>
-      <Dialog.Description className="font-montserrat">Это действиеи нельзя отменить</Dialog.Description>
-      <div className="w-full px-[12px] flex flex-row justify-center items-center">
-        <button
+      <Dialog.Title className="font-montserrat-bold text-[#0D87FF] text-[20px] leading-[24px] text-center">Удалить пост?</Dialog.Title>
+      <div className="w-full px-[12px] mt-[36px] mb-[30px] flex flex-row justify-center items-center space-x-[21px]">
+        <DirtButton text="Да" textColor="text-[#0D87FF]" fontWeight="font-semibold" />
+        <DirtButton text="Нет" textColor="text-[#0D87FF]" fontWeight="font-semibold" />
+        {/* <button
           className="bg-[#4CAF50] text-white font-montserrat text-[32px]"
           onClick={deleteCurrentPost}
         >Да</button>
         <button
           className="bg-[#4CAF50] text-white font-montserrat text-[32px] ml-[12px]"
           onClick={() => onClose(false)}
-        >Нет</button>
+        >Нет</button> */}
       </div>
     </>
   )

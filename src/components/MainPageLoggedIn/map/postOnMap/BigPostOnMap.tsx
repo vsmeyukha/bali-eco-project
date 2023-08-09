@@ -113,7 +113,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
         flexflex-col
         bg-white
         rounded-[10px]
-        z-50
+        z-40
         overflow-auto"
           style={{
             top: `${heightForPositioning}px`,

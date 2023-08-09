@@ -1,11 +1,13 @@
 import { ReactElement, ReactNode } from 'react';
 
 interface DirtButton {
-  smile: ReactNode,
+  smile?: ReactNode,
   text: string,
+  textColor?: string,
+  fontWeight?: string
 }
 
-const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
+const DirtButton: React.FC<DirtButton> = ({smile, text, textColor, fontWeight}): ReactElement => {
   return (
     <button
       type="button"
@@ -20,7 +22,7 @@ const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
       border-[#00265F]
       flex
       flex-col
-      justify-between
+      justify-center
       items-center
       pt-[11px]
       hover:transform
@@ -29,7 +31,7 @@ const DirtButton: React.FC<DirtButton> = ({smile, text}): ReactElement => {
       "
     >
       {smile}
-      <p className='mb-[4px]'>{text}</p>
+      <p className={`mb-[4px] ${textColor} ${fontWeight}`}>{text}</p>
     </button>
   );
 }

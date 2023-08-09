@@ -4,8 +4,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-// import ProtectedRoute from "@/routes/ProtectedRoute";
-
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
 import MapComponent from "@/components/MainPageLoggedIn/map/GoogleMaps";
