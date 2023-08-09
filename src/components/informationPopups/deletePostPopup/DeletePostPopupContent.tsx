@@ -50,16 +50,8 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
       </button>
       <Dialog.Title className="font-montserrat-bold text-[#0D87FF] text-[20px] leading-[24px] text-center">Удалить пост?</Dialog.Title>
       <div className="w-full px-[12px] mt-[36px] mb-[30px] flex flex-row justify-center items-center space-x-[21px]">
-        <DirtButton text="Да" textColor="text-[#0D87FF]" fontWeight="font-semibold" />
-        <DirtButton text="Нет" textColor="text-[#0D87FF]" fontWeight="font-semibold" />
-        {/* <button
-          className="bg-[#4CAF50] text-white font-montserrat text-[32px]"
-          onClick={deleteCurrentPost}
-        >Да</button>
-        <button
-          className="bg-[#4CAF50] text-white font-montserrat text-[32px] ml-[12px]"
-          onClick={() => onClose(false)}
-        >Нет</button> */}
+        <DirtButton text="Да" textColor="text-[#0D87FF]" fontWeight="font-semibold" onClick={deleteCurrentPost} />
+        <DirtButton text="Нет" textColor="text-[#0D87FF]" fontWeight="font-semibold" onClick={() => onClose(false)} />
       </div>
     </>
   )

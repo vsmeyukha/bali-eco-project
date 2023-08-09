@@ -4,10 +4,11 @@ interface DirtButton {
   smile?: ReactNode,
   text: string,
   textColor?: string,
-  fontWeight?: string
+  fontWeight?: string,
+  onClick: () => void
 }
 
-const DirtButton: React.FC<DirtButton> = ({smile, text, textColor, fontWeight}): ReactElement => {
+const DirtButton: React.FC<DirtButton> = ({smile, text, textColor, fontWeight, onClick}): ReactElement => {
   return (
     <button
       type="button"
@@ -27,8 +28,9 @@ const DirtButton: React.FC<DirtButton> = ({smile, text, textColor, fontWeight}):
       pt-[11px]
       hover:transform
       hover:scale-125
-      duration-200
-      "
+      duration-200"
+
+      onClick={onClick}
     >
       {smile}
       <p className={`mb-[4px] ${textColor} ${fontWeight}`}>{text}</p>
