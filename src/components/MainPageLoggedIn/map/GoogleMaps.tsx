@@ -1,5 +1,5 @@
 import { useRef, ReactElement, Dispatch, SetStateAction } from 'react';
-import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
+import { GoogleMap, Marker, MarkerClusterer, LoadScriptNext } from '@react-google-maps/api';
 
 import { IPost } from '@/pages/map';
 
@@ -173,7 +173,7 @@ const MapComponent: React.FC<MapProps> = (
 
   return (
     <div className="relative h-[1000px] w-full sm:mt-[-20px] md:mt-0 mt-[-70px] hover:cursor-default">
-      <LoadScript googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
+      <LoadScriptNext googleMapsApiKey="AIzaSyD4_JfTWssNSFo6OASVhSpaKJ-0od5TkKQ">
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
@@ -202,7 +202,7 @@ const MapComponent: React.FC<MapProps> = (
             )}
           </MarkerClusterer>
         </GoogleMap>
-      </LoadScript >
+      </LoadScriptNext >
     </div>
   );
 }

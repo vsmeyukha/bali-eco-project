@@ -9,7 +9,8 @@ import Header from '@/components/Header';
 import Main from '@/components/MainPageNotLoggedIn/Main';
 import Footer from '@/components/Footer/Footer';
 
-import UnauthenticatedRoute from '@/routes/UnauthinticatedRoute';
+// import UnauthenticatedRoute from '@/routes/UnauthinticatedRoute';
+import createRoute from '@/routes/Route';
 
 const popupState = z.enum(['', 'regPopup', 'signInPopup']);
 export type popupStateType = z.infer<typeof popupState>;
@@ -34,6 +35,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     },
   }
 }
+
+const UnauthenticatedRoute = createRoute("unauthenticated");
+
 
 export default function Home() {
   const { i18n } = useTranslation();

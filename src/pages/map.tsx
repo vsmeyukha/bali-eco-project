@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
-import ProtectedRoute from "@/routes/ProtectedRoute";
+// import ProtectedRoute from "@/routes/ProtectedRoute";
 
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
@@ -27,6 +27,10 @@ import { getAllMarkers } from "@/firebase/firestore";
 
 import NotVerifiedUserPopup from "@/components/informationPopups/notVerifiedUserPopup/NotVerifiedUserPopup";
 import DeletePostPopup from "@/components/informationPopups/deletePostPopup/DeletePostPopup";
+
+import createRoute from '@/routes/Route';
+
+import {auth} from '../firebase/config'
 
 export interface IPost {
   title: string,
@@ -67,6 +71,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 }
 
+const ProtectedRoute = createRoute("protected");
+
 const LoggedInMain: React.FC = (): ReactElement => {
   const { i18n } = useTranslation();
 
@@ -106,8 +112,9 @@ const LoggedInMain: React.FC = (): ReactElement => {
       setCoordinates(markers);
       console.log(markers);
     }
-
-    fetchMarkers();
+    if (auth.currentUser) {
+      fetchMarkers();
+    }
   }, []);
 
   const popupRef = useRef<HTMLDivElement | null>(null);
