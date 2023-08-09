@@ -32,7 +32,7 @@ interface BigPostOnMapProps {
   setActivePost: Dispatch<SetStateAction<IPost | null>>,
   photoStatus: photoStatus,
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
-  setCoordinates: Dispatch<SetStateAction<IMarker[]>>,
+  setMarkers: Dispatch<SetStateAction<IMarker[]>>,
   setIsDeletePostPopupOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -40,10 +40,8 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
   (
     {
       activePost,
-      setActivePost,
       photoStatus,
       setPhotoStatus,
-      setCoordinates,
       setIsDeletePostPopupOpen
     },
     ref: ForwardedRef<HTMLDivElement>

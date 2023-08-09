@@ -89,7 +89,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   // todo переименовать coordinates в markers, все что щас есть со словом marker - в post, newMarker - в newPost 
   // ? стейт маркеров
-  const [markers, setCoordinates] = useState<IMarker[]>([]);
+  const [markers, setMarkers] = useState<IMarker[]>([]);
 
   const [newMarker, setNewMarker] = useState<IMarker | null>(null);
 
@@ -109,12 +109,14 @@ const LoggedInMain: React.FC = (): ReactElement => {
   useEffect(() => {
     const fetchMarkers = async () => {
       const markers = await getAllMarkers();
-      setCoordinates(markers);
+      setMarkers(markers);
       console.log(markers);
     }
-    if (auth.currentUser) {
-      fetchMarkers();
-    }
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetchMarkers();
+      }
+    })
   }, []);
 
   const popupRef = useRef<HTMLDivElement | null>(null);
@@ -163,7 +165,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setActivePost={setActivePost}
           photoStatus={photoStatus}
           setPhotoStatus={setPhotoStatus}
-          setCoordinates={setCoordinates}
+          setMarkers={setMarkers}
           setIsDeletePostPopupOpen={setIsDeletePostPopupOpen}
         />
         <AddPostPopup
@@ -172,7 +174,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           setNewPost={setNewPost}
           newMarker={newMarker}
           setNewMarker={setNewMarker}
-          setCoordinates={setCoordinates}
+          setMarkers={setMarkers}
         />
         <NotVerifiedUserPopup
           open={isPopupForNotVerifiedUsersOpen}
@@ -183,7 +185,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
           onClose={setIsDeletePostPopupOpen}
           activePost={activePost}
           setActivePost={setActivePost}
-          setCoordinates={setCoordinates}
+          setMarkers={setMarkers}
         />
         <Footer />
       </div>

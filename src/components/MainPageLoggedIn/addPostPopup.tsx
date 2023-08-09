@@ -34,7 +34,7 @@ interface AddPostPopupProps {
   setNewPost: Dispatch<SetStateAction<IPost | null>>,
   newMarker: IMarker | null,
   setNewMarker: Dispatch<SetStateAction<IMarker | null>>,
-  setCoordinates: Dispatch<SetStateAction<IMarker[]>>
+  setMarkers: Dispatch<SetStateAction<IMarker[]>>
 }
 
 const photoUploadInputStyles = 'border border-solid border-[#00265F] border-opacity-10 rounded-[10px] mt-[8px] w-full h-[330px] focus:outline-none active:outline-none';
@@ -49,7 +49,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
     setNewPost,
     newMarker,
     setNewMarker,
-    setCoordinates
+    setMarkers
   }: AddPostPopupProps): ReactElement => {
   
   const { t, i18n } = useTranslation('addPostPopup');
@@ -85,7 +85,7 @@ const AddPostPopup: React.FC<AddPostPopupProps> = (
   
         setActivePost(newPost);
 
-        setCoordinates((prevCoordinates) => {
+        setMarkers((prevCoordinates) => {
           if (newMarker !== null) {
             const newCoordinates = [...prevCoordinates, {...newMarker, id: markerId}];
             return newCoordinates;

@@ -10,17 +10,17 @@ interface DeletePostPopupProps {
   onClose: Dispatch<SetStateAction<boolean>>,
   activePost: IPost | null,
   setActivePost: Dispatch<SetStateAction<IPost | null>>,
-  setCoordinates: Dispatch<SetStateAction<IMarker[]>>
+  setMarkers: Dispatch<SetStateAction<IMarker[]>>
 }
 
-const DeletePostPopup: React.FC<DeletePostPopupProps> = ({open, onClose, activePost, setActivePost, setCoordinates}): ReactElement => {
+const DeletePostPopup: React.FC<DeletePostPopupProps> = ({open, onClose, activePost, setActivePost, setMarkers}): ReactElement => {
   return (
     <InformationPopup open={open} onClose={onClose}>
       <DeletePostPopupContent
         onClose={onClose}
         activePost={activePost}
         setActivePost={setActivePost}
-        setCoordinates={setCoordinates} />
+        setMarkers={setMarkers} />
     </InformationPopup>
   )
 }

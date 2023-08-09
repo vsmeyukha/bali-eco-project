@@ -14,7 +14,7 @@ interface DeletePostPopupContentProps {
   onClose: Dispatch<SetStateAction<boolean>>,
   activePost: IPost | null,
   setActivePost: Dispatch<SetStateAction<IPost | null>>,
-  setCoordinates: Dispatch<SetStateAction<IMarker[]>>
+  setMarkers: Dispatch<SetStateAction<IMarker[]>>
 }
 
 const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
@@ -22,7 +22,7 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
     onClose,
     activePost,
     setActivePost,
-    setCoordinates
+    setMarkers
   }
 ): ReactElement => {
 
@@ -33,7 +33,7 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
       console.log(activePost);
       await deletePost(activePost);
 
-      setCoordinates((prevCoordinates) => {
+      setMarkers((prevCoordinates) => {
         const newCoordinates = prevCoordinates.filter(marker => marker.id !== activePost?.id);
         return newCoordinates;
       });

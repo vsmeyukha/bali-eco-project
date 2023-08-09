@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
+
 import type {
   GetStaticProps,
   GetStaticPaths,
 } from 'next';
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+
 
 import { ArticleType } from '@/data/climate-articles';
 
@@ -22,7 +28,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {paths, fallback: false};
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   if (!params || typeof params.article !== 'string') {
     return {
       notFound: true,
@@ -31,10 +37,36 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const article = articles.find(article => article.id.toString() === params.article);
 
-  return { props: { article } };
+  const typedLocale = locale as string;
+  
+  return {
+    props: {
+      article,
+      ...(await serverSideTranslations(
+        typedLocale,
+        [
+          'headerMenu',
+          'footer',
+          'quickToolsPopup',
+        ],
+        null,
+        ['en', 'ru', 'id']
+      )),
+    },
+  }
 }
 
-const Article = ({article }: {article: ArticleType}) => {
+const Article = ({ article }: { article: ArticleType }) => {
+  const { i18n } = useTranslation();
+
+    // ? устанавливаем для страницы ранее выбранный пользователем язык, если он сохранен в localStorage
+    useEffect(() => { 
+      const defaultLang = localStorage.getItem('language');
+      if (defaultLang) {
+        i18n.changeLanguage(defaultLang);
+      }
+    }, [i18n]);
+  
   return (
     <>
       <Header />
