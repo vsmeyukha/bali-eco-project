@@ -1,5 +1,7 @@
 import { ReactElement } from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from 'next-i18next';
+
 import { auth } from '../firebase/config';
 
 interface ErrorPageLayoutProps {
@@ -14,6 +16,8 @@ const ErrorPageLayout: React.FC<ErrorPageLayoutProps> = ({errorCode, errorMessag
     auth.currentUser ? router.push('/map') : router.push('/');
   }
 
+  const { t } = useTranslation('404');
+  
   return (
     <main
     className="
@@ -51,7 +55,7 @@ const ErrorPageLayout: React.FC<ErrorPageLayoutProps> = ({errorCode, errorMessag
       transition-all 
       duration-300 
       ease-in-out">
-      Вернуться на главную
+      {t('toMain')}
     </button>
   </main>
   )

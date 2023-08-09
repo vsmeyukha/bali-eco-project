@@ -55,7 +55,17 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   }
 }
 
-const Article = ({article }: {article: ArticleType}) => {
+const Article = ({ article }: { article: ArticleType }) => {
+  const { i18n } = useTranslation();
+
+  // ? устанавливаем для страницы ранее выбранный пользователем язык, если он сохранен в localStorage
+  useEffect(() => { 
+    const defaultLang = localStorage.getItem('language');
+    if (defaultLang) {
+      i18n.changeLanguage(defaultLang);
+    }
+  }, [i18n]);
+  
   return (
     <>
       <Header />
