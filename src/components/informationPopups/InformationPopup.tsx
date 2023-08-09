@@ -1,6 +1,5 @@
 import { Dispatch, ReactElement, ReactNode, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
-import Cross from "../../../public/images/svgs/cross.svg";
 
 interface PopupProps {
   open: boolean,

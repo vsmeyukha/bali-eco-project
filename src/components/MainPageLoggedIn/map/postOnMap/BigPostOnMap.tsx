@@ -14,23 +14,18 @@ import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
 
-import DirtButton from "./DirtButton";
 import useViewportWidth from "@/hooks/calculateWidth";
+
+import ImageBlock from "./ImageBlock";
+import DirtButton from "./DirtButton";
+
+import { IPost, IMarker, photoStatus } from "@/pages/map";
 
 import Manatee from '../../../../../public/images/backgrounds/manatee.png';
 import SadSmile from '../../../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile.svg';
-import ShareArrow from '../../../../../public/images/svgs/icons/shareArrow.svg';
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
-
-import { IPost, IMarker } from "@/pages/map";
-
-import { deletePost } from "@/firebase/firestore";
-
-import { photoStatus } from "@/pages/map";
-
-import ImageBlock from "./ImageBlock";
 
 interface BigPostOnMapProps {
   activePost: IPost | null,
@@ -74,22 +69,6 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
   }, []);
 
   const { t } = useTranslation('bigPostPopup');
-
-  const deleteCurrentPost = async (): Promise<void> => {
-    try {
-      console.log(activePost);
-      await deletePost(activePost);
-
-      setCoordinates((prevCoordinates) => {
-        const newCoordinates = prevCoordinates.filter(marker => marker.id !== activePost?.id);
-        return newCoordinates;
-      });
-
-      setActivePost(null);
-    } catch (error: any) {
-      console.log(error);
-    } 
-  }
 
   return (
     <Transition

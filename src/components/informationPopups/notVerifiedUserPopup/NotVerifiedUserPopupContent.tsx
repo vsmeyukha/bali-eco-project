@@ -1,5 +1,6 @@
 import { ReactElement, Dispatch, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
+import { useTranslation } from "next-i18next";
 
 import DirtButton from "@/components/MainPageLoggedIn/map/postOnMap/DirtButton";
 
@@ -9,7 +10,9 @@ interface NotVerifiedUserPopupContentProps {
   onClose: Dispatch<SetStateAction<boolean>>,
 }
 
-const NotVerifiedUserPopupContent: React.FC<NotVerifiedUserPopupContentProps> = ({onClose}): ReactElement => {
+const NotVerifiedUserPopupContent: React.FC<NotVerifiedUserPopupContentProps> = ({ onClose }): ReactElement => {
+  const { t } = useTranslation('notVerifiedEmailPopup');
+  
   return (
     <>
       <button className="flex flex-row-reverse">
@@ -22,12 +25,12 @@ const NotVerifiedUserPopupContent: React.FC<NotVerifiedUserPopupContentProps> = 
         <Dialog.Title
           className="font-montserrat-bold text-[#0D87FF] text-[20px] leading-[24px] mx-[8px] text-center"
         >
-          Нет доступа
+          {t('title')}
         </Dialog.Title>
         <Dialog.Description
           className="font-montserrat text-[#0D87FF] mt-[24px] mx-[8px] mb-[24px] text-center"
         >
-          Вы зарегистрировались, но не подтвердили свою почту. Пройдите по ссылке в отправленном вам письме (возможно, оно попало в спам), и возможность добавлять посты на карту разблокируется.
+          {t('description')}
         </Dialog.Description>
         <DirtButton text="OK" textColor="text-[#0D87FF]" fontWeight="font-semibold" onClick={() => onClose(false)} />
       </div>
