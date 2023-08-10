@@ -36,6 +36,7 @@ export interface IPost {
   comment: string,
   imageUrl: string | undefined,
   id?: string,
+  owner?: string
   // isItDirtyMarks: number
 }
 

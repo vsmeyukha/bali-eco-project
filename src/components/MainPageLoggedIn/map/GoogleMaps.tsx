@@ -111,6 +111,7 @@ const MapComponent: React.FC<MapProps> = (
           title: '',
           comment: '',
           imageUrl: undefined,
+          owner: auth.currentUser?.uid
         }
 
       if (!Boolean(activePost)) {
@@ -132,7 +133,8 @@ const MapComponent: React.FC<MapProps> = (
           title: currentPost?.title || '',
           comment: currentPost?.comment || '',
           imageUrl: currentPost?.imageUrl || '',
-          id: marker.id
+          id: marker.id,
+          owner: currentPost?.owner
         }), delay);
       }
       else {
@@ -140,7 +142,8 @@ const MapComponent: React.FC<MapProps> = (
           title: currentPost?.title || '',
           comment: currentPost?.comment || '',
           imageUrl: currentPost?.imageUrl || '',
-          id: marker.id
+          id: marker.id,
+          owner: currentPost?.owner
         });
       }
     }
@@ -149,7 +152,7 @@ const MapComponent: React.FC<MapProps> = (
   const handleMarkerClick = async (event: google.maps.MapMouseEvent, marker: IMarker): Promise<void> => {
     setIsPopupForNotVerifiedUsersOpen(false);
     setPhotoStatus('loading');
-    // ? 4 строчки выше - это то, что выполняется в любом случае
+    // ? строчки выше - это то, что выполняется в любом случае
     // ? фетч ниже выполняется тоже в любом случае
 
     // todo щас открывается все только когда каррентпост зафетчится, поэтому есть лаг. стоит, видимо, показывать лоадер, пока он грузится

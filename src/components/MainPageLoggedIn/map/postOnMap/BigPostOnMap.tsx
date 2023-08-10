@@ -27,6 +27,8 @@ import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
 
+import { auth } from "@/firebase/config";
+
 interface BigPostOnMapProps {
   activePost: IPost | null,
   setActivePost: Dispatch<SetStateAction<IPost | null>>,
@@ -111,9 +113,13 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
               <button>
                 <CopyIcon />
               </button>
-              <button onClick={() => setIsDeletePostPopupOpen(true)}>
-                <TrashBin className="ml-[16px]" />
-              </button>
+              {
+                auth.currentUser?.uid === activePost?.owner
+                &&
+                <button onClick={() => setIsDeletePostPopupOpen(true)}>
+                  <TrashBin className="ml-[16px]" />
+                </button>
+              }
             </div>
           </div>
           <div className="flex flex-row justify-start items-center mt-[12px]">
