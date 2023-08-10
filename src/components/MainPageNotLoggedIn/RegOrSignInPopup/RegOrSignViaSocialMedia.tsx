@@ -24,7 +24,7 @@ const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ popup
 
   return (
     <div className="mt-[24px] w-full flex flex-col items-center">
-      <button className={buttonStyles}>
+      {/* <button className={buttonStyles}>
         <Apple style={{ fill: "#00265F" }} className="h-[20px] w-[17px]" />
         <p className="ml-[10px]">{
           popup === 'regPopup'
@@ -33,7 +33,7 @@ const RegOrSignViaSocialMedia: React.FC<RegOrSignViaSocialMediaProps> = ({ popup
             :
             t('signInPopup:signInWithApple')
         }</p>
-      </button>
+      </button> */}
       <button className={buttonStyles} onClick={handleGoogleSignIn} type="button">
         <Google style={{ fill: "#00265F" }} className="h-[21px] w-[21px]" />
         <p className="ml-[10px]">{

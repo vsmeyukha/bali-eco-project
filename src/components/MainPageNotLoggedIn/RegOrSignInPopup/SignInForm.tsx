@@ -11,7 +11,6 @@ import SmallLoader from "@/components/loaders/SmallLoader";
 import useViewportWidth from "@/hooks/calculateWidth";
 
 import { signIn } from "@/firebase/auth";
-import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
 import handleSubmitConstructor from "@/helpers/handleSubmit";
@@ -89,41 +88,10 @@ const SignInForm: React.FC<SignInFormPropsType> = ({ onClose }: SignInFormPropsT
   }
 
   // ? кнопка сабмита активна только тогда, когда и емэйл, и пароль прошли zod-валидацию, и свойство success объекта, возвращаемого функцией safeParse, равно true
-  const isButtonActive: boolean = emailValidation.success && passwordValidation.success;
-
-  // ? инициализируем некстовый роутер
-  const router = useRouter();
-
-  // ? функция сабмита формы. по клику на кнопку меняем стейт текста кнопки и вызываем асинхронную функцию входа в firebase, в которую передаем емэйл и пароль. если вход прошел успешно (то есть auth.currentUser не равен null), то мы меняем текст на кнопке на успешный, выжидаем полсекунды, редиректим пользователя на страницу с картой и закрываем попап. если при входе произошла ошибка (то есть auth.currentUser равен null), то мы показываем спан с конкретизацией ошибки и просьбой залогиниться снова, возвращаем форме изначальный текст и чистим стейт, тем самым деактивируем кнопку 
-  // todo дописать негативный сценарий
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    try { 
-      e.preventDefault();
-
-      setSubmitButtonText(t('signInInProcess') || 'Signing in...');
-
-      setIsLoading(true);
-
-      await signIn(signInFormState.email, signInFormState.password);
-
-      setSubmitButtonText(t('signInSuccessful') || 'Success!');
-
-      setIsLoading(false);
-
-      setFirebaseErrorCode('');
-
-      setTimeout(() => { 
-        onClose();
-      }, 500);
-    } catch (error: any) {
-      setFirebaseErrorCode(error.code);
-      setSubmitButtonText(t('signIn') || 'Sign In');
-      setSignInFormState({
-        email: '',
-        password: '',
-      });
-    }
-  }
+  const isButtonActive: boolean =
+    Boolean(emailValidation.success)
+    &&
+    Boolean(passwordValidation.success);
 
   const handleSubmitRegistration = handleSubmitConstructor();
 

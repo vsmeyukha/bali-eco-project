@@ -125,6 +125,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
     if (Boolean(activePost) && popupRef.current && !popupRef.current.contains(e.target as Node)) {
       setActivePost(null);
       setPhotoStatus('loading');
+      setIsPopupForNotVerifiedUsersOpen(false);
     }
 
     console.log('handlePopupClose');

@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
 import { signUp } from "@/firebase/auth";
-import { auth } from '../../../firebase/config';
 import { errorMessages, firebaseErrorCode } from '../../../utils/consts';
 
 import BigBlueButton from '../BigBlueButton';
@@ -77,7 +76,12 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
     setFirebaseErrorCode('');
   }
 
-  const isButtonActive: boolean = nameValidation.success && emailValidation.success && passwordValidation.success;
+  const isButtonActive: boolean =
+    Boolean(nameValidation.success)
+    &&
+    Boolean(emailValidation.success)
+    &&
+    Boolean(passwordValidation.success);
 
   const handleSubmitRegistration = handleSubmitConstructor();
 
