@@ -80,7 +80,7 @@ const RegistrationForm: React.FC<RegFormPropsType> = ({ onClose }: RegFormPropsT
     Boolean(nameValidation.success)
     &&
     Boolean(emailValidation.success)
-    &&
+    && 
     Boolean(passwordValidation.success);
 
   const handleSubmitRegistration = handleSubmitConstructor();

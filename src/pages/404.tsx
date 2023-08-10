@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
+import AppHead from '@/components/AppHead';
 import Header from "@/components/HeaderFor404";
 import Footer from "@/components/Footer/Footer";
 import ErrorPageLayout from "@/components/ErrorPageLayout";
@@ -39,6 +40,7 @@ const NotFountPage: React.FC = (): ReactElement => {
 
   return (
     <div className="w-full relative">
+      <AppHead />
       <Header />
       <ErrorPageLayout errorCode={404} errorMessage={t('pageNotFound')} />
       <Footer />

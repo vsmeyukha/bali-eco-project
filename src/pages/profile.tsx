@@ -3,12 +3,13 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 
+import AppHead from '@/components/AppHead';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer/Footer";
 import AvatarBlock from "@/components/Profile/AvatarBlock";
 import ProfileForm from "@/components/Profile/ProfileForm";
 
-import ProtectedRoute from "@/routes/ProtectedRoute";
+import createRoute from '@/routes/Route';
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   const typedLocale = locale as string;
@@ -30,6 +31,8 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
   }
 }
 
+const ProtectedRoute = createRoute("protected");
+
 const Profile: React.FC = (): ReactElement => {
   const { t, i18n } = useTranslation('profile');
 
@@ -38,10 +41,11 @@ const Profile: React.FC = (): ReactElement => {
     if (defaultLang) {
       i18n.changeLanguage(defaultLang);
     }
-  }, []);
+  }, [i18n]);
 
   return (
     <ProtectedRoute>
+      <AppHead />
       <Header />
       <section className="bg-[#F5F5F5] 1440px:px-[152px] xl:px-[100px] lg:px-[50px] py-[60px]">
         <h3 className="font-oceanic-bold text-[20px] leading-[24px] text-[#00265F]">{ t('yourData')}</h3>

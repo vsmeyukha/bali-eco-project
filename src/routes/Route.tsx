@@ -20,10 +20,14 @@ export const createRoute = (routeType: RouteType): React.FC<RouteProps> => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
         if (routeType === "protected" && !user) {
           // ? Если это защищенный маршрут и пользователь не авторизован, перенаправить на главную
+          setTimeout(() => {
             router.push('/');
+          }, 500);
         } else if (routeType === "unauthenticated" && user) {
           // ? Если это незащищенный маршрут и пользователь авторизован, перенаправить на карту
+          setTimeout(() => {
             router.push('/map');
+          }, 500);
         }
         setIsLoading(false);
       });

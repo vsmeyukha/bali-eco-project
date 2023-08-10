@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { z } from 'zod';
 
+import AppHead from "@/components/AppHead";
 import Header from "@/components/Header";
 import PublishPhoto from "@/components/MainPageLoggedIn/PublishPhoto";
 import MapComponent from "@/components/MainPageLoggedIn/map/GoogleMaps";
@@ -133,6 +134,7 @@ const LoggedInMain: React.FC = (): ReactElement => {
 
   return (
     <ProtectedRoute>
+      <AppHead />
       <div className="w-full relative" onClick={handlePopupClose}>
         <Header />
         {viewportWidth > 640 && <PublishPhoto />}
