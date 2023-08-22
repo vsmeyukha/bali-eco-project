@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import Form from "../Form/Form";
 import Input from "../Form/Input";
-import BigBlueButton from "../BigBlueButton";
+import BigBlueButton from "../MainPageNotLoggedIn/BigBlueButton";
 
 import { auth } from '../../firebase/config';
 

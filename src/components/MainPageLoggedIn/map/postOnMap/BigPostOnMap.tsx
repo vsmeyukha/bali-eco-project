@@ -6,7 +6,8 @@ import {
   useState,
   useEffect,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  FormEvent
 } from "react";
 
 import Image from "next/image";
@@ -26,8 +27,11 @@ import SadSmile from '../../../../../public/images/svgs/icons/sadsmile.svg';
 import CheerfulSmile from '../../../../../public/images/svgs/icons/cheerfulsmile.svg';
 import CopyIcon from '../../../../../public/images/svgs/icons/copyIcon.svg';
 import TrashBin from '../../../../../public/images/svgs/icons/trashbin.svg';
+import PaperAirplane from '../../../../../public/images/svgs/icons/paperAirplane.svg';
 
 import { auth } from "@/firebase/config";
+
+import { addComment } from "@/firebase/firestore";
 
 interface BigPostOnMapProps {
   activePost: IPost | null,
@@ -36,6 +40,11 @@ interface BigPostOnMapProps {
   setPhotoStatus: Dispatch<SetStateAction<photoStatus>>,
   setMarkers: Dispatch<SetStateAction<IMarker[]>>,
   setIsDeletePostPopupOpen: Dispatch<SetStateAction<boolean>>
+}
+
+interface Comment {
+  comment: string,
+  owner?: string
 }
 
 const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
@@ -69,6 +78,17 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
   }, []);
 
   const { t } = useTranslation('bigPostPopup');
+
+  const [newComment, setNewComment] = useState<Comment | null>(null);
+  
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  const handleAddComment = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (activePost && auth.currentUser?.uid && newComment) {
+      addComment(activePost, auth.currentUser?.uid, newComment?.comment);
+     }
+  }
 
   return (
     <Transition
@@ -131,7 +151,7 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
                 className="rounded-full object-cover object-center"
               />
             </Link>
-            <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Имя Фамилия</p>
+            <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">Username</p>
           </div>
             <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">{activePost?.comment}</p>
           <div className="bg-[#F5F5F5] rounded-[10px] w-full flex flex-col">
@@ -139,13 +159,21 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
             <div className="w-full border-[#00265F] border-opacity-10 border-[0.5px] mt-[12px]"></div>
               <p className="font-montserrat text-[14px] leading-[17px] ml-[12px] mt-[8px]">{ t('isItDirty')}</p>
             <div className="flex flex-row justify-center w-full mt-[6px] mb-[15px] space-x-[14px]">
-              <DirtButton smile={<SadSmile />} text={t('itIsDirty')} />
-              <DirtButton smile={<CheerfulSmile />} text={t('itIsNotDirty')} />
+              <DirtButton
+                smile={<SadSmile />}
+                text={t('itIsDirty')}
+                onClick={() => console.log('This is the button. Actual logic will be added later)')}
+              />
+              <DirtButton
+                smile={<CheerfulSmile />}
+                text={t('itIsNotDirty')}
+                onClick={() => console.log('This is the button. Actual logic will be added later)')}
+              />
             </div>
           </div>
             <h4 className="font-montserrat font-semibold text-[14px] leading-[17px] my-[16px]">{`${t('comments')} (2)`}</h4>
-          <h3 className="font-montserrat font-semibold text-[16px] leading-[19.5px]">Имя Фамилия</h3>
-          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">Место отличное! Красиво, уютно, птички поют, Можно покормить обезьянок. Советую всем)</p>
+          <h3 className="font-montserrat font-semibold text-[16px] leading-[19.5px]">Username</h3>
+          <p className="font-montserrat text-[16px] leading-[19.5px] mt-[8px] mb-[16px]">This is the mock comment. Actual logic will be added later)</p>
           <div className="flex flex-row justify-start items-center mb-[24px]">
             <Link href="/profile" className="w-[30px] h-[30px] relative rounded-full overflow-hidden">
               <Image
@@ -155,7 +183,47 @@ const BigPostOnMap = forwardRef<HTMLDivElement, BigPostOnMapProps>(
                 className="rounded-full object-cover object-center"
               />
             </Link>
-              <p className="font-montserrat font-semibold text-[16px] leading-[19.5px] ml-[8px]">{ t('addAComment') }</p>
+            <form
+              onSubmit={(e) => handleAddComment(e)}
+              className="w-full ml-[8px] flex flex-row justify-between items-center">
+              <input
+                className="
+                bg-[#F5F5F5]
+                rounded-[12px]
+                  font-montserrat
+                  font-semibold
+                  text-[#00265F]
+                  text-[16px]
+                  leading-[19.5px]
+                  h-[34px]
+                  pl-[8px]
+                  w-full 
+                  focus:outline-none"
+                placeholder={t('addAComment') || 'Add a comment'}
+                type="text"
+                name="comment"
+                value={newComment?.comment || ''}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewComment({...newComment, comment: e.target.value})}
+              />
+              <button
+                type="submit"
+                className="
+                rounded-full
+                h-[24px]
+                w-[24px]
+                bg-[#00265F]
+                mr-[8px]
+                flex
+                flex-row
+                justify-center
+                items-center
+                hover:transform
+                hover:scale-110
+                duration-200"
+              >
+                <PaperAirplane className="text-white h-[16px] w-[16px]" />
+              </button>
+            </form>
           </div>
         </div>
       </div>

@@ -15,7 +15,6 @@ const ClimateChange: React.FC = (): ReactElement => {
 
   return (
       <div
-        // max-h-[579px] можно добавить, а можно и не добавлять
           className={`
             lg:grid
             lg:grid-cols-2
@@ -27,7 +26,17 @@ const ClimateChange: React.FC = (): ReactElement => {
             flex-col
           `}
         >
-      <h2 className="font-oceanic-bold text-[#00265F] text-[32px] leading-[38px] col-start-1 col-span-2">{ t('climateChange') }</h2>
+      <h2
+        className="
+        font-oceanic-bold
+        text-[#00265F]
+        text-[32px]
+        leading-[38px]
+        col-start-1
+        col-span-2"
+      >
+        {t('climateChange')}
+      </h2>
           {viewportWidth >= 1024
             ?
             articles.map((article, index) => {

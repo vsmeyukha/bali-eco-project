@@ -17,6 +17,12 @@ interface RegOrSignInPopupProps {
   openSignInPopup: () => void,
 }
 
+// ? Content component for registration or sign-in.
+// ? This component decides which layout to render(Registration or Sign - In) based on the 'popup' prop value.
+
+// ? Компонент контента для регистрации или входа.
+// ? Этот компонент решает, какой макет отображать (Регистрация или Вход) на основе значения свойства 'popup'.
+
 const RegOrSignInContent: React.FC<RegOrSignInPopupProps> = ({
   popup,
   onClose,
@@ -24,16 +30,26 @@ const RegOrSignInContent: React.FC<RegOrSignInPopupProps> = ({
   openSignInPopup
 }: RegOrSignInPopupProps): ReactElement => {
 
+  // ? Function to switch between registration and sign-in popups.
+  // ? Функция для переключения между попапами регистрации и входа.
   const handleSwitchPopups = (): void => popup === 'regPopup' ? openSignInPopup() : openRegPopup();
 
   const { t } = useTranslation(['registerPopup', 'signInPopup']);
 
   return (
     <>
+      {/* 
+      Container for popups switcher and language choice.
+      Контейнер для переключателя попапов и выбора языка.
+      */}
       <SwitchAndLangsContainer >
         <SwitchPopups popup={popup} handleSwitchPopups={handleSwitchPopups} />
         <LanguageChoice />
       </SwitchAndLangsContainer>
+      {/*
+      Title that changes depending on the chosen popup (registration or sign-in).
+      Заголовок, который меняется в зависимости от выбранного попапа (регистрация или вход).
+       */}
       <Dialog.Title className="mt-[80px] font-oceanic-bold text-[40px] leading-[48px] text-[#00265F]">
         {popup === 'regPopup'
           ?
@@ -42,6 +58,10 @@ const RegOrSignInContent: React.FC<RegOrSignInPopupProps> = ({
           t('signInPopup:enter')
         }
       </Dialog.Title>
+      {/*
+      Rendering either the registration layout or the sign-in layout based on the 'popup' prop value.
+      Рендеринг либо лэйаута регистрации, либо лэйаута входа в зависимости от значения свойства 'popup'.
+       */}
       {popup === 'regPopup'
         ?
         <RegistrationLayout onClose={onClose} popup={popup} />

@@ -1,5 +1,4 @@
 import { ReactElement, useState, useRef } from "react";
-import Image from "next/image";
 import { useTranslation } from "next-i18next";
 
 import AvatarButton from "./AvatarButton";
@@ -11,16 +10,19 @@ import Profile from '../../../public/images/svgs/icons/profile.svg';
 
 import { auth } from '../../firebase/config';
 
-
 const AvatarBlock: React.FC = (): ReactElement => {
   const { t } = useTranslation('profile');
 
+  // ? Creating a ref on the file upload input. This is necessary in order to be able to hide the input itself, because an input with the 'file' type cannot be customized by design, and create a custom element that simulates the file upload input.
+
+  // ? Создаем реф на инпут загрузки файла. Это нужно для того, чтобы иметь возможность скрыть сам инпут, потому что инпут с типом 'file' нельзя кастомизировать по дизайну, и нарисовать кастомный элемент, который имитирует инпут загрузки файла. 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [avaUrl, setAvaUrl] = useState<string | null>(auth.currentUser?.photoURL || null);
-  
-  console.log(auth.currentUser?.photoURL);
 
+  // ? The method that we pass to the button that simulates the input of the file download. First we stop the default action. If there is a ref to a real input, then we initiate a click on it.
+
+  // ? Метод, который мы вешаем на кнопку, которая имитирует инпут загрузки файла. Останавливаем действие по умолчанию. Если есть реф на настоящий инпут, то инициируем клик по нему.
   const handleFileUpload = (event: React.MouseEvent<HTMLElement>): void => {
     event.preventDefault();
     if (fileInputRef.current) {
@@ -28,6 +30,9 @@ const AvatarBlock: React.FC = (): ReactElement => {
     }
   };
 
+  // ? We pass this method to the file upload input itself. We take the first downloaded file from event.target.files. If there is a file and a newPost has been passed to AddPostPopup component props, then we add the file to the selectedFile state.
+
+  // ? Этот метод мы вешаем на сам инпут загрузки файла. Берем первый загруженный файл из event.target.files. Если есть file и пропсами пришел newPost, то складываем файл в стейт selectedFile. 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
 

@@ -66,7 +66,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({onSignInClick}): ReactElement =>
                 <div className="w-[20px] h-[20px] rounded-full relative overflow-hidden">
                   <Image src={Manatee} alt='manatee' fill className="object-cover object-center" />
                 </div>
-                <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] group-hover:text-[#0D87FF] transition-colors duration-200">Имя Фамилия</p>
+                <p className="ml-[10px] font-montserrat font-normal text-[18px] leading-[22px] group-hover:text-[#0D87FF] transition-colors duration-200">Username</p>
               </Link>
             )}
           </Menu.Item>

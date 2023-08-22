@@ -33,7 +33,7 @@ const PostForMainPage: React.FC<ArticleWithLayoutPreviewType> = ({title, id, lea
     date: 'line-clamp-2'
   }
 
-  // Styles for the smaller posts on the right
+  // ? Styles for the smaller posts on the right
   const smallPostStyles: StylesType = {
     div: 'col-start-2 relative grid grid-cols-[1fr,auto] auto-rows-min gap-[16px] place-items-start',
     imageWrapperDiv: 'w-[176px] row-span-2',

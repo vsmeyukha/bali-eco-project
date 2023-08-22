@@ -3,11 +3,6 @@ import { useTranslation } from "next-i18next";
 import { switchContent } from "@/utils/types";
 import QuickPopupSwitchButton from "./QuickPopupSwitchButton";
 
-interface QuickPopupSwitchContainerProps {
-  selectedLang: string,
-  handleSetSelectedLang: (code: string) => void,
-}
-
 const SwitchLanguage: React.FC = (): ReactElement => {
   const languages: Array<switchContent> = [
     { code: 'en', label: 'EN' },

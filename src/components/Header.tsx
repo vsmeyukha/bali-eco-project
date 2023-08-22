@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
 
 import Menu from './Menu';
 import Logo from "./Logo";
@@ -15,13 +14,17 @@ interface HeaderProps {
   openSignInPopup?: () => void,
 }
 
+// ? Header Component
+// ? This component renders the main navigation bar/header of the application.
+// ? It contains the site logo, main navigation menu, and user-related controls like sign -in button or quick tools popup depending on user's authentication status.
+
 export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
   const router = useRouter();
   const currentPage = router.pathname;
-  const is404 = router.asPath !== router.route;
 
-  const viewportWidth = useViewportWidth();
+  const viewportWidth = useViewportWidth(); // ? Custom hook to get the viewport width
 
+  // ? Determine background gradient/style based on current page route
   const backgroundDependingOnThePage =
     currentPage === '/'
     ?
@@ -31,14 +34,7 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
 
   // ! градиент хэдера bg-gradient-to-b from-green-800 via green-500 to-transparent
 
-  const { i18n } = useTranslation();
-
-  const [selectedLang, setSelectedLang] = useState<string>(i18n.language);
-
-  const handleSetSelectedLang = (code: string): void => {
-    setSelectedLang(code);
-  }
-
+  // ? State and handler for tracking day/night mode
   const [isDay, setIsDay] = useState<string>('on');
   
   const handleColorTheme = (code: string): void => {
@@ -61,10 +57,13 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
       ${backgroundDependingOnThePage}`}
     >
       <Logo />
+      {/* Display appropriate components based on viewport width */}
       {viewportWidth >= 1280
         ?
         <div className="flex flex-row items-center justify-center">
           <Menu />
+
+          {/* Conditionally render either the Sign In button or the QuickTools popup based on authentication status */}
           {
             !auth.currentUser
               ?
@@ -77,6 +76,7 @@ export default function Header({ openSignInPopup }: HeaderProps): ReactElement {
           }
         </div>
         :
+        // ? For smaller screens, display a burger menu
         <BurgerMenu onSignInClick={openSignInPopup} />
       }
     </header>

@@ -33,8 +33,16 @@ const ErrorPageLayout: React.FC<ErrorPageLayoutProps> = ({errorCode, errorMessag
     bg-center
     h-screen"
   >
-      <h2 className="sm:text-[150px] sm:leading-[183px] text-[100px] leading-[120px]">{errorCode}</h2>
-      <p className="sm:text-[35px] sm:leading-[42px] text-[24px] leading-[24px] mt-[8px]">{errorMessage}</p>
+    <h2
+      className="sm:text-[150px] sm:leading-[183px] text-[100px] leading-[120px]"
+    >
+      {errorCode}
+    </h2>
+    <p
+      className="sm:text-[35px] sm:leading-[42px] text-[24px] leading-[24px] mt-[8px]"
+    >
+      {errorMessage}
+    </p>
     <button
       onClick={goBackToHomePage}
       type="button"
@@ -54,8 +62,9 @@ const ErrorPageLayout: React.FC<ErrorPageLayoutProps> = ({errorCode, errorMessag
       hover:scale-105
       transition-all 
       duration-300 
-      ease-in-out">
-      {t('toMain')}
+      ease-in-out"
+    >
+        {t('toMain')}
     </button>
   </main>
   )

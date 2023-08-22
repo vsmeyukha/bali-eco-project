@@ -17,10 +17,24 @@ interface MainProps {
   openSignInPopup: () => void,
 }
 
+// ? Main Component
+
+// ? This component serves as the primary content for the landing page meant for users who are not logged in.
+// ? It showcases the project name, a brief description, and provides buttons for registration and sign-in.
+
+// ? Этот компонент служит контейнером для основного содержимого стартовой страницы для незалогиненных пользователей.
+// ? Он отображает название проекта, краткое описание и предоставляет кнопки для регистрации и входа в систему.
+// ? Также в нем хранится компонент сайдбара регистрации и входа.
+
+
 export default function Main({ popup, onPopupClose, openRegPopup, openSignInPopup }: MainProps): ReactElement {
 
+  // ? Determine the viewport width to adjust styles dynamically
+  // ? Определяем ширину области видимости для динамической настройки стилей
   const viewportWidth = useViewportWidth();
 
+  // ? Determine button size based on the viewport width
+  // ? Задаем размер кнопки в зависимости от ширины области видимости
   const buttonSize = viewportWidth >= 600 ? 'big' : 'small';
 
   const { t } = useTranslation('mainPageNotLoggedIn');
@@ -63,18 +77,36 @@ export default function Main({ popup, onPopupClose, openRegPopup, openSignInPopu
         <div className='flex flex-col sm:items-start items-center '>
           <HiddenDesc />
           <div className='flex flex-col items-center'>
-            <BigBlueButton size={buttonSize} type="button" onClick={openRegPopup} text={t('register')} />
+            <BigBlueButton
+              size={buttonSize}
+              type="button"
+              onClick={openRegPopup}
+              text={t('register')}
+            />
+
+            {/* Conditional rendering for smaller screens: dDisplay a message and button for users who are already registered */}
+            {/* Условный рендеринг вопроса "Вы уже зарегистрированы?" и кнопки "Войти" на малых разрешениях. на больших экранах эта кнопка отображается в хэдере, однако на малых нет. */}
             {viewportWidth < 1280
               &&
               <div className=' flex flex-row mt-[15px] font-montserrat text-[14px] leading-[17px] text-white'>
                 <p className='font-normal'>{ t('alreadyRegistered')}</p>
-                <button className='ml-[10px] font-bold text-[#0D87FF]' onClick={openSignInPopup}>{ t('signIn')}</button>
+                <button
+                  className='ml-[10px] font-bold text-[#0D87FF]'
+                  onClick={openSignInPopup}
+                >
+                  {t('signIn')}
+                </button>
               </div>
             }
           </div>
         </div>
+
+        {/* Display a map illustration for larger screens */}
         {viewportWidth >= 1280 && <BaliMap className="max-w-[533px] max-h-[330px]" />}
       </div>
+
+      {/* Popup for registration or sign-in */}
+      {/* Попап-сайдбар для регистрации или входа */}
       <RegOrSignInPopup
         popup={popup}
         onClose={onPopupClose}

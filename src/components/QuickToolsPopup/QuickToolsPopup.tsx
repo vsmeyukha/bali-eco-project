@@ -1,17 +1,14 @@
 import { ReactElement, Fragment} from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import { useTranslation } from 'next-i18next';
 
-import Manatee from '../../../public/images/backgrounds/manatee.png';
 const ManateeImage = require('../../../public/images/backgrounds/manatee.png');
 import { quickToolsMenu } from "@/utils/consts";
 import Profile from '../../../public/images/svgs/icons/profile.svg';
 import { QuickToolsMenuType } from '../../utils/types';
 import QuickToolsMenuItem from './QuickToolsMenuItem';
 import QuickPopupSwitchContainer from './QuickPopupSwitchContainer';
-import { switchContent } from '../../utils/types';
 import SwitchLanguage from "./SwitchLanguage";
 import SwitchDayAndNight from "./SwitchDayAndNight";
 
@@ -23,9 +20,18 @@ interface QuickToolsPopupProps {
   handleColorTheme: (code: string) => void,
 }
 
+// ? QuickToolsPopup Component
+// ? This component renders a popup menu for quick user tools. It provides the user with options like switching language and signing out.
+// ? It also displays the user's profile picture and provides a shortcut to the user's profile page.
+
+// ? Попап быстрых настроек
+// ? Этот компонент отображает всплывающее меню для быстрых пользовательских инструментов. Он предоставляет пользователю такие опции, как переключение языка и выход из системы.
+// ? Он также отображает изображение профиля пользователя и предоставляет ярлык для перехода на страницу профиля пользователя.
+
 const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorTheme }): ReactElement => {
   const { t } = useTranslation('quickToolsPopup');
 
+  // ? Function to sign out the user
   const signOut = async () => {
     try {
       await logOut();
@@ -40,7 +46,9 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
     <Popover>
       {({ open }) => (
         <div className="relative"> 
+          {/* Button to trigger the popup */}
           <Popover.Button className="active:border-none active:outline-none focus:outline-none">
+            {/* Display user's profile picture or default picture */}
             {auth.currentUser?.photoURL
               ?
               <img className="h-[28px] w-[28px] rounded-full" src={auth.currentUser?.photoURL} alt='ava-img' /> 
@@ -66,13 +74,13 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                 z-300
                 bg-white
                 w-[430px]
-                
                 rounded-[10px]
                 py-[32px]
                 flex
                 flex-col
                 items-center"
             >
+              {/* User's profile picture or default picture with link to profile */}
               <Link href="/profile" className="w-[90px] h-[90px] relative rounded-full overflow-hidden">
                 <img
                   src={auth.currentUser?.photoURL || ManateeImage}
@@ -81,10 +89,11 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                 />
               </Link>
               <Link href="/profile" className="font-montserrat-bold text-[20px] leading-[24px] text-[#00265F] mt-[16px]">
-                Имя Фамилия
+                {auth.currentUser?.email}
               </Link>
+              {/* List of quick tools */}
               <ul className="w-full px-[36px] mt-[16px]">
-                {quickToolsMenu.map((paragraph: QuickToolsMenuType, index) => {
+                {quickToolsMenu.map((paragraph: QuickToolsMenuType) => {
                   const Icon = paragraph.icon;
                   return (
                     <QuickToolsMenuItem
@@ -96,6 +105,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                       isButton={paragraph.id === 5}
                       onButtonClick={signOut}
                     >
+                      {/* Conditional rendering for switch items */}
                       {paragraph.id === 3
                         &&
                         (
@@ -104,6 +114,7 @@ const QuickToolsPopup: React.FC<QuickToolsPopupProps> = ({ isDay, handleColorThe
                           </QuickPopupSwitchContainer>
                         )
                       }
+                      {/* Conditional rendering for switch items */}
                       {paragraph.id === 4
                         &&
                         (

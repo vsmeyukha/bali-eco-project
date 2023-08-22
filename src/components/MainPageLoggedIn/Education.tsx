@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 import PostForFour from "@/components/MainPageLoggedIn/PostForFour";
 import extractArticleChunks from "@/helpers/extractArticleChunks";
 
-import { UseTranslation, useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
 
 import { articles } from '../../data/edu-articles';
 
@@ -22,7 +22,9 @@ const Education: React.FC = (): ReactElement => {
           text-[32px]
           leading-[38px]
           self-start"
-        >{ t('ecoLife') }</h2>
+        >
+          {t('ecoLife')}
+        </h2>
         <div className="
           w-full 
           flex

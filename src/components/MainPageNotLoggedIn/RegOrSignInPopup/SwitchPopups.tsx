@@ -8,6 +8,9 @@ interface SwitchPopupsPropsType {
   handleSwitchPopups: () => void,
 }
 
+// ? Component for switching between registration and sign-in popups.
+// ? Компонент для переключения между попапами регистрации и входа.
+
 const SwitchPopups: React.FC<SwitchPopupsPropsType> = ({ popup, handleSwitchPopups }: SwitchPopupsPropsType): ReactElement => {
   const { t } = useTranslation(['registerPopup', 'signInPopup']);
 

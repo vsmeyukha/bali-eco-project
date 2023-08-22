@@ -168,12 +168,12 @@ const quickToolsMenu: Array<QuickToolsMenuType> = [
     titleKey: 'language',
     href: '/',
   },
-  {
-    id: 4,
-    icon: Laptop,
-    titleKey: 'darkTheme',
-    href: '/',
-  },
+  // {
+  //   id: 4,
+  //   icon: Laptop,
+  //   titleKey: 'darkTheme',
+  //   href: '/',
+  // },
   {
     id: 5,
     icon: Exit,

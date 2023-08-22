@@ -18,8 +18,22 @@ const QuickToolsMenuItem: React.FC<QuickToolsMenuType> = (
     (<>
       <div className="flex flex-row justify-between items-center w-full">
         <div className="flex flex-row">
-          <Icon className="text-[#00265F] group-hover:text-[#0D87FF] transition-colors duration-300" />
-          <p className="ml-[20px] font-montserrat text-[16px] leading-[20px] text-[#00265F] group-hover:text-[#0D87FF] transition-colors duration-300">{titleKey}</p>
+          <Icon
+            className="text-[#00265F] group-hover:text-[#0D87FF] transition-colors duration-300"
+          />
+          <p
+            className="
+            ml-[20px] 
+            font-montserrat 
+            text-[16px] 
+            leading-[20px] 
+            text-[#00265F] 
+            group-hover:text-[#0D87FF] 
+            transition-colors 
+            duration-300"
+          >
+            {titleKey}
+          </p>
         </div>
         {children}
       </div>

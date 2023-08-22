@@ -48,7 +48,6 @@ const Resources: React.FC = (): ReactElement => {
         </div>
       <Footer />      
       </section>
-      <Popup />
     </>
   )
 }

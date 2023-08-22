@@ -17,17 +17,17 @@ const ImageBlock: React.FC<ImageBlockProps> = ({ photoStatus, setPhotoStatus, ac
   const { t } = useTranslation('bigPostPopup');
 
   const handleImageLoadingSuccess = (): void => {
-    console.log('image loaded');
     setPhotoStatus('success');
   }
 
   const handleImageLoadigError = (): void => {
-    console.log('error while loading image!');
     setPhotoStatus('error');
   }
 
   return (
-    <div className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center justify-center rounded-[10px] py-[20px]">
+    <div
+      className="relative lg:ml-[32px] lg:mr-0 lg:mt-0 mx-[12px] mt-[12px] flex items-center justify-center rounded-[10px] py-[20px]"
+    >
       <img
         src={activePost?.imageUrl}
         alt="Jungle"

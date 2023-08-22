@@ -30,7 +30,6 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
 
   const deleteCurrentPost = async (): Promise<void> => {
     try {
-      console.log(activePost);
       await deletePost(activePost);
 
       setMarkers((prevCoordinates) => {
@@ -41,7 +40,6 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
       setActivePost(null);
       onClose(false);
     } catch (error: any) {
-      console.log(error);
     } 
   }
 
@@ -58,9 +56,21 @@ const DeletePostPopupContent: React.FC<DeletePostPopupContentProps> = (
       >
         {t('delete')}
       </Dialog.Title>
-      <div className="w-full px-[12px] mt-[36px] mb-[30px] flex flex-row justify-center items-center space-x-[21px]">
-        <DirtButton text={t('yes')} textColor="text-[#0D87FF]" fontWeight="font-semibold" onClick={deleteCurrentPost} />
-        <DirtButton text={t('no')} textColor="text-[#0D87FF]" fontWeight="font-semibold" onClick={() => onClose(false)} />
+      <div
+        className="w-full px-[12px] mt-[36px] mb-[30px] flex flex-row justify-center items-center space-x-[21px]"
+      >
+        <DirtButton
+          text={t('yes')}
+          textColor="text-[#0D87FF]"
+          fontWeight="font-semibold"
+          onClick={deleteCurrentPost}
+        />
+        <DirtButton
+          text={t('no')}
+          textColor="text-[#0D87FF]"
+          fontWeight="font-semibold"
+          onClick={() => onClose(false)}
+        />
       </div>
     </>
   )
