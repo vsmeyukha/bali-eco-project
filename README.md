@@ -1,6 +1,7 @@
 # 🌴 BaliGreenMap: Эко-проект для Бали
 
 ![The main page with the map](https://user-images.githubusercontent.com/63929116/268506738-477687bd-e931-4071-9837-a6f2089285dd.png)
+*Главный экран приложения*
 
 ## ✍🏼 Описание
 
@@ -17,9 +18,13 @@ BaliGreenMap - это веб-приложение, предназначенно�
 **Многоязычная поддержка**: Сайт доступен на трех языках - русском, английском и индонезийском.  
 **Комментируйте, лайкайте и делитесь (скоро)**: Комментарии, лайки и возможность поделиться постом улучшат взаимодействие между пользователями.  
 ![Adding a post](https://user-images.githubusercontent.com/63929116/268507913-a56a3fcf-78b5-4839-803e-a5b284fe4e01.png)
+*Добавление поста*
 ![A post on map](https://user-images.githubusercontent.com/63929116/268508004-411925fd-91b7-4696-bad5-21f06f0766a0.png)
+*Пост на карте*
 ![Main page for non logged-in users](https://user-images.githubusercontent.com/63929116/268508178-2376a2ea-d5df-49c2-b743-3d43e5f63ae4.png)
+*Главная страница для незалогиненных пользователей*
 ![Process of registration or sign in](https://user-images.githubusercontent.com/63929116/268511241-adbbc341-1e38-41d0-94e4-46e331aeea36.png)
+*Процесс регистрации или входа*
 
 ## 💻 Технический стек
 
@@ -43,6 +48,8 @@ BaliGreenMap - это веб-приложение, предназначенно�
 
 
 # 🌴 BaliGreenMap: An Eco-Inspired Initiative
+![Main page with map](https://user-images.githubusercontent.com/63929116/268511538-b9304896-74bb-4a1f-bf2a-f5190119dee7.png)
+*Main page with map*
 
 ## ✍🏼 Description
 
@@ -59,6 +66,15 @@ During a vacation to Bali in January and February — the months characterized b
 **User Registration**: Options for email-password-based registration or seamless sign-in via Google.
 **Multilingual Support**: The site is accessible in three languages - Russian, English, and Indonesian.
 **Engagement**: Planned features to allow users to like, comment on posts and share them to enhance user interaction.
+![Adding a post](https://user-images.githubusercontent.com/63929116/268511637-49838295-13e8-4f9e-8d0b-060a37126b51.png)
+*Adding a post*
+![A post on map](https://user-images.githubusercontent.com/63929116/268512495-12b919cd-5fbd-43fe-91ab-091b44daa837.png)
+*A post on map*
+![Main page for non logged-in users](https://user-images.githubusercontent.com/63929116/268512620-c287c268-5d92-48d7-bc58-4610f3f6d5d1.png)
+*Main page for non logged-in users*
+![Process of registration or sign in](https://user-images.githubusercontent.com/63929116/268512662-7c9e54c6-a6ae-443f-ac61-9b247cec8f99.png)
+*Process of registration or sign in*
+
 
 ## 💻 Technical Stack
 
