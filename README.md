@@ -19,7 +19,7 @@ BaliGreenMap - это веб-приложение, предназначенно�
 ![Adding a post](https://user-images.githubusercontent.com/63929116/268507913-a56a3fcf-78b5-4839-803e-a5b284fe4e01.png)
 ![A post on map](https://user-images.githubusercontent.com/63929116/268508004-411925fd-91b7-4696-bad5-21f06f0766a0.png)
 ![Main page for non logged-in users](https://user-images.githubusercontent.com/63929116/268508178-2376a2ea-d5df-49c2-b743-3d43e5f63ae4.png)
-![Process of registration or sign in](https://user-images.githubusercontent.com/63929116/268508004-411925fd-91b7-4696-bad5-21f06f0766a0.png)
+![Process of registration or sign in](https://user-images.githubusercontent.com/63929116/268511241-adbbc341-1e38-41d0-94e4-46e331aeea36.png)
 
 ## 💻 Технический стек
 
